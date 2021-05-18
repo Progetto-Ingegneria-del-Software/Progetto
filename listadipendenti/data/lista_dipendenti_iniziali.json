@@ -1,0 +1,22 @@
+[
+  {
+    "codice_id": 1,
+    "nome": "Mario",
+    "cognome": "Rossi",
+    "cf": "RSSMRA80A01L113T",
+    "email": "rossimario@gmail.it",
+    "telefono": 3432748962,
+    "mansione": "cassiere",
+    "stipendio": 1470
+  },
+    {
+    "codice_id": 2,
+    "nome": "Luigi",
+    "cognome": "Bruni",
+    "cf": "BRNLGI72F90T785P",
+    "email": "luigibruni@gmail.it",
+    "telefono": 3779515876,
+    "mansione": "addetto alle pulizie",
+    "stipendio": 1125
+  }
+]

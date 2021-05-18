@@ -1,0 +1,20 @@
+[
+  {
+    "codice_id": 1,
+    "ragione_sociale": "Luigi Bruni",
+    "partita_iva": "04917150155",
+    "citta": "Ancona",
+    "indirizzo": "Via Gialli 76",
+    "telefono": 3437588962,
+    "email": "bruniluigi62@gmail.com"
+  },
+  {
+    "codice_id": 2,
+    "ragione_sociale": "carta srl",
+    "partita_iva": "08642151195",
+    "citta": "Macerata",
+    "indirizzo": "Via Celesti 3",
+    "telefono": 3778922646,
+    "email": "cartasrlufficio@cartasrl.com"
+  }
+]

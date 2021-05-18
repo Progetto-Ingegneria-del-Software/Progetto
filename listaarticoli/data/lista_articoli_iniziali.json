@@ -1,0 +1,29 @@
+[
+  {
+  "codice_id": 1,
+  "gruppo_merceologico": "cartoleria",
+  "categoria": "penne",
+  "marca": "bic",
+  "prezzo_unitario": 0.25,
+  "sconto_perc": null,
+  "quantita": 200
+  },
+  {
+  "codice_id": 2,
+  "gruppo_merceologico": "cartoleria",
+  "categoria": "gomme",
+  "marca": "staedler",
+  "prezzo_unitario": 0.72,
+  "sconto_perc": null,
+  "quantita": 125
+  },
+  {
+  "codice_id": 3,
+  "gruppo_merceologico": "cartoleria",
+  "categoria": "penne",
+  "marca": "waterman",
+  "prezzo_unitario": 60,
+  "sconto_perc": 10,
+  "quantita": 30
+  }
+]
