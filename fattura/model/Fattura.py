@@ -6,7 +6,7 @@ class Fattura():
         super(Fattura, self).__init__()
 
         self.num_fatt = num_fatt
-        self.tipo = tipo
+        self.tipo = tipo  #Fattura di carico o scarico
         self.data = data
         #self.Cliente = Cliente
         self.Fornitore = Fornitore
