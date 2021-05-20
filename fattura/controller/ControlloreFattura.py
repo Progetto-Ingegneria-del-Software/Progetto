@@ -20,11 +20,11 @@ class ControlloreFattura:
     #def get_cliente(self):
     #    return self.model.Cliente
 
-    def get_fornitore(self):
-        return self.model.Fornitore
+    #def get_fornitore(self):
+    #    return self.model.Fornitore
 
-    def get_lista_articoli(self):
-        return self.model.ListaArticoli
+    #def get_lista_articoli(self):
+    #    return self.model.ListaArticoli
 
     def get_totale(self):
         return self.model.totale
@@ -45,11 +45,11 @@ class ControlloreFattura:
     #def set_cliente(self, Cliente):
     #    self.model.Cliente = Cliente
 
-    def set_fornitore(self, Fornitore):
-        self.model.Fornitore = Fornitore
+    #def set_fornitore(self, Fornitore):
+    #    self.model.Fornitore = Fornitore
 
-    def set_lista_articoli(self, ListaArticoli):
-        self.model.ListaArticoli = ListaArticoli
+    #def set_lista_articoli(self, ListaArticoli):
+    #   self.model.ListaArticoli = ListaArticoli
 
     def set_totale(self, totale):
         self.model.totale = totale

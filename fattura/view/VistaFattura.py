@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QTextBrowser, QWidget, QVBoxLayout, QLabel, QPushButton, QGridLayout, \
+from PyQt5.QtWidgets import QTableWidget, QTextBrowser, QWidget, QVBoxLayout, QLabel, QPushButton, QGridLayout, \
     QMessageBox
 
 from fattura.controller.ControlloreFattura import ControlloreFattura
@@ -35,49 +35,77 @@ class VistaFattura(QWidget):
             label_dati_fornitore = QLabel("Dati Fornitore:")
             grid_layout.addWidget(label_dati_fornitore, 3, 0)
 
-            ## Ragione Sociale ##
-            text_nome_fornitore = QTextBrowser(ControlloreFornitore.get_ragione_sociale_fornitore)
+            ## Ragione Sociale Fornitore ##
+            label_nome_fornitore = QLabel("Ragione sociale:")
+            grid_layout.addWidget(label_nome_fornitore, 4, 0)
+            text_nome_fornitore = QTextBrowser(ControlloreFornitore.get_ragione_sociale_fornitore())
             text_nome_fornitore.isReadOnly(True)
             text_nome_fornitore.adjustSize
+            grid_layout.addWidget(text_nome_fornitore, 4, 1)
+
+            ## Partita Iva Fornitore ##
+            label_piva_fornitore = QLabel("Partita IVA:")
+            grid_layout.addWidget(label_piva_fornitore, 4, 3)
+            text_piva_fornitore = QTextBrowser(ControlloreFornitore.get_partita_iva_fornitore())
+            text_piva_fornitore.isReadOnly(True)
+            text_piva_fornitore.adjustSize
+            grid_layout.addWidget(text_piva_fornitore, 4, 4)
+
+            ## Indirizzo Fornitore ##
+            label_indirizzo_fornitore = QLabel("Indirizzo:")
+            grid_layout.addWidget(label_indirizzo_fornitore, 5, 0)
+            text_indirizzo_fornitore = QTextBrowser(ControlloreFornitore.get_indirizzo_fornitore())
+            text_indirizzo_fornitore.isReadOnly(True)
+            text_indirizzo_fornitore.adjustSize
+            grid_layout.addWidget(text_indirizzo_fornitore, 5, 1)
+
+            ## Citta Fornitore ##
+            label_citta_fornitore = QLabel("Città:")
+            grid_layout.addWidget(label_citta_fornitore, 5, 3)
+            text_citta_fornitore = QTextBrowser(ControlloreFornitore.get_citta_fornitore())
+            text_citta_fornitore.isReadOnly(True)
+            text_citta_fornitore.adjustSize
+            grid_layout.addWidget(text_citta_fornitore, 5, 4)
+
+            ## Telefono Fornitore ##
+            label_telefono_fornitore = QLabel("Telefono:")
+            grid_layout.addWidget(label_telefono_fornitore, 6, 0)
+            text_telefono_fornitore = QTextBrowser(ControlloreFornitore.get_telefono_fornitore())
+            text_telefono_fornitore.isReadOnly(True)
+            text_telefono_fornitore.adjustSize
+            grid_layout.addWidget(text_telefono_fornitore, 6, 1)
+
+            ## Email Fornitore ##
+            label_email_fornitore = QLabel("Email:")
+            grid_layout.addWidget(label_email_fornitore, 6, 3)
+            text_email_fornitore = QTextBrowser(ControlloreFornitore.get_email_fornitore())
+            text_email_fornitore.isReadOnly(True)
+            text_email_fornitore.adjustSize
+            grid_layout.addWidget(text_email_fornitore, 6, 4)
 
 
-        label_prezzo_unitario = QLabel("Prezzo: €" + str(self.controller.get_prezzo_unitario_articolo()))
-        grid_layout.addWidget(label_prezzo_unitario, 4, 0)
-
-        button_prezzo_unitario = QPushButton("Modifica Prezzo Unitario")
-        button_prezzo_unitario.clicked.connect(lambda: self.show_modifica_articolo("Modifica Prezzo Unitario"))
-        grid_layout.addWidget(button_prezzo_unitario, 4, 1)
-
-        label_sconto_perc = QLabel("Sconto: " + str(self.controller.get_sconto_perc_articolo()) + "%")
-        grid_layout.addWidget(label_sconto_perc, 5, 0)
-
-        button_sconto_perc = QPushButton("Modifica Sconto")
-        button_sconto_perc.clicked.connect(lambda: self.show_modifica_articolo("Modifica Sconto"))
-        grid_layout.addWidget(button_sconto_perc, 5, 1)
-
-        label_quantita = QLabel("Quantità: " + str(self.controller.get_quantita_articolo()) + " pezzi")
-        grid_layout.addWidget(label_quantita, 6, 0)
-
-        v_layout.addLayout(grid_layout)
-        button_elimina_articolo = QPushButton("Elimina Articolo " + str(self.controller.get_codice_id_articolo()))
-        button_elimina_articolo.clicked.connect(self.delete_articolo)
-        v_layout.addWidget(button_elimina_articolo)
+        ## LISTA DEGLI ARTICOLI COMPRATI ##
+        self.tableWidget = QTableWidget() 
+        self.tableWidget.setColumnCount(2) #Numero prefissato di colonne
+        
+        
 
         self.setLayout(v_layout)
         self.resize(500, 300)
         self.setFixedSize(self.size())
         self.setWindowTitle("Articolo " + str(self.controller.get_codice_id_articolo()))
 
-    def delete_articolo(self):
-        delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare l\'articolo ' + str(self.controller.get_codice_id_articolo()) + '?',
-                                          'L\'articolo ' + str(self.controller.get_codice_id_articolo()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
+
+    ##############################################
+    ###   FUNZIONE PER ELIMINARE UNA FATTURA   ###
+    ##############################################
+    def delete_fattura(self):
+        delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare la fattura numero:' + str(self.controller.get_numero_fattura()) + '?',
+                                          'La fattura numero: ' + str(self.controller.get_numero_fattura()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
                                           QMessageBox.Yes,
                                           QMessageBox.No)
+        
         if delete_view == QMessageBox.Yes:
-            self.elimina_articolo(self.controller.get_codice_id_articolo())
+            self.elimina_fattura(self.controller.get_numero_fattura())
             self.callback()
             self.close()
-
-    def show_modifica_articolo(self, elemento_modifica):
-        self.vista_modifica_articolo = VistaModificaArticolo(elemento_modifica, self.controller, self.callback)
-        self.vista_modifica_articolo.show()

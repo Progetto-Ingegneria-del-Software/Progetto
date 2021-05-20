@@ -9,7 +9,7 @@ class Fattura():
         self.tipo = tipo  #Fattura di carico o scarico
         self.data = data
         #self.Cliente = Cliente
-        self.Fornitore = Fornitore
-        self.ListaArticoli = ListaArticoli
+        #self.Fornitore = Fornitore
+        #self.ListaArticoli = ListaArticoli
         self.totale = totale
 
