@@ -22,6 +22,8 @@ class VistaCreaFattura(QWidget):
 
         self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
+        
+
         btn_ok = QPushButton("Crea")
         btn_ok.clicked.connect(self.add_fattura)
 
