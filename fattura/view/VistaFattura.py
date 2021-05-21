@@ -86,7 +86,8 @@ class VistaFattura(QWidget):
 
         ## LISTA DEGLI ARTICOLI COMPRATI ##
         self.tableWidget = QTableWidget() 
-        self.tableWidget.setColumnCount(2) #Numero prefissato di colonne
+        self.tableWidget.setColumnCount(7) #Numero prefissato di colonne
+        
         
         
 
