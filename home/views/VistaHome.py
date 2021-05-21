@@ -1,5 +1,6 @@
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout, QHBoxLayout, QComboBox, QLabel, QSizePolicy, QFrame
+from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout, \
+    QHBoxLayout, QComboBox, QLabel, QSizePolicy, QFrame, QHeaderView
 
 from listaarticoli.view.VistaListaArticoli import VistaListaArticoli
 from listadipendenti.view.VistaListaDipendenti import VistaListaDipendenti

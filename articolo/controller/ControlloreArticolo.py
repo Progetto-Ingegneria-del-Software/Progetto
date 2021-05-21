@@ -22,8 +22,8 @@ class ControlloreArticolo:
     def get_sconto_perc_articolo(self):
         return self.model.sconto_perc
 
-    def get_quantita_articolo(self):
-        return self.model.quantita
+    def get_descrizione_articolo(self):
+        return self.model.descrizione
 
     def set_gruppo_merceologico_articolo(self, gruppo_merceologico):
         self.model.gruppo_merceologico = gruppo_merceologico
@@ -40,5 +40,5 @@ class ControlloreArticolo:
     def set_sconto_perc_articolo(self, sconto_perc):
         self.model.sconto_perc = sconto_perc
 
-    def set_quantita_articolo(self, quantita):
-        self.model.quantita = quantita
+    def set_descrizione_articolo(self, descrizione):
+        self.model.descrizione = descrizione

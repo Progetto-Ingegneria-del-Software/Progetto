@@ -55,8 +55,12 @@ class VistaArticolo(QWidget):
         button_sconto_perc.clicked.connect(lambda: self.show_modifica_articolo("Modifica Sconto"))
         grid_layout.addWidget(button_sconto_perc, 5, 1)
 
-        label_quantita = QLabel("Quantità: " + str(self.controller.get_quantita_articolo()) + " pezzi")
+        label_quantita = QLabel("Descrizione: " + str(self.controller.get_descrizione_articolo()))
         grid_layout.addWidget(label_quantita, 6, 0)
+
+        button_sconto_perc = QPushButton("Modifica Descrizione")
+        button_sconto_perc.clicked.connect(lambda: self.show_modifica_articolo("Modifica Descrizione"))
+        grid_layout.addWidget(button_sconto_perc, 6, 1)
 
         v_layout.addLayout(grid_layout)
         button_elimina_articolo = QPushButton("Elimina Articolo " + str(self.controller.get_codice_id_articolo()))

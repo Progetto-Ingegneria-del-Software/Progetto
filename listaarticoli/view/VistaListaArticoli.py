@@ -12,7 +12,7 @@ class VistaListaArticoli(QWidget):
 
         self.controller = ControlloreListaArticoli()
         self.name_colonne = ['Codice ID', 'Gruppo Merceologico', 'Categoria', 'Marca', 'Prezzo Unitario',
-                   'Sconto', 'Quantità']
+                   'Sconto', 'Descrizione']
 
         self.v_layout = QVBoxLayout()
         self.table_view = QTableWidget()
@@ -130,7 +130,7 @@ class VistaListaArticoli(QWidget):
             self.table_view.setItem(i, 4, item)
             item = QTableWidgetItem(str(articolo.sconto_perc) + "%")
             self.table_view.setItem(i, 5, item)
-            item = QTableWidgetItem(str(articolo.quantita) + " pezzi")
+            item = QTableWidgetItem(str(articolo.descrizione))
             self.table_view.setItem(i, 6, item)
             i = i + 1
 

@@ -1,6 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout
+
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout, QSizePolicy
 from PyQt5.QtGui import QIcon, QPixmap
+
 
 class App(QWidget):
 
@@ -19,14 +22,8 @@ class App(QWidget):
 
         # Create widget
         label = QLabel(self)
-        pixmap = QPixmap("home/logo/logo.png")
+        label.setScaledContents(True)
+        pixmap = QPixmap("home/logo/logo.png").scaled(1600, 480, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
+        label.resize(label.pixmap().size())
         self.resize(pixmap.width(), pixmap.height())
-
-
-       # self.show()
-
-#if __name__ == '__main__':
- #   app = QApplication(sys.argv)
-  #  ex = App()
-   # sys.exit(app.exec_())

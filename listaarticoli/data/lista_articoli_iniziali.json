@@ -6,7 +6,7 @@
   "marca": "bic",
   "prezzo_unitario": 0.25,
   "sconto_perc": null,
-  "quantita": 200
+  "descrizione": ""
   },
   {
   "codice_id": 2,
@@ -15,7 +15,7 @@
   "marca": "staedler",
   "prezzo_unitario": 0.72,
   "sconto_perc": null,
-  "quantita": 125
+  "descrizione": ""
   },
   {
   "codice_id": 3,
@@ -24,6 +24,6 @@
   "marca": "waterman",
   "prezzo_unitario": 60,
   "sconto_perc": 10,
-  "quantita": 30
+  "descrizione": ""
   }
 ]

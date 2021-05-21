@@ -30,7 +30,7 @@ class ListaArticoli():
             for articolo_iniziale in lista_articoli_iniziali:
                 self.aggiungi_articolo(Articolo(articolo_iniziale["codice_id"], articolo_iniziale["gruppo_merceologico"], articolo_iniziale["categoria"],
                                                 articolo_iniziale["marca"], articolo_iniziale["prezzo_unitario"], articolo_iniziale["sconto_perc"],
-                                                articolo_iniziale["quantita"]))
+                                                articolo_iniziale["descrizione"]))
 
     def aggiungi_articolo(self, articolo):
         self.lista_articoli.append(articolo)

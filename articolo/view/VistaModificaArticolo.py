@@ -45,5 +45,7 @@ class VistaModificaArticolo(QWidget):
                 self.controller.set_prezzo_unitario_articolo(self.info.text())
             if self.elemento_modifica == "Modifica Sconto":
                 self.controller.set_sconto_perc_articolo(self.info.text())
+            if self.elemento_modifica == "Modifica Descrizione":
+                self.controller.set_descrizione_articolo(self.info.text())
             self.callback()
             self.close()
