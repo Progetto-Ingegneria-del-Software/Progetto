@@ -24,7 +24,7 @@ class VistaListaArticoli(QWidget):
 
         self.search_label = QLabel("Cerca tra gli articoli:")
         self.navbar_layout.addWidget(self.search_label)
-        self.search_bar = QLineEdit("categoria marca")
+        self.search_bar = QLineEdit("Categoria Marca")
         self.navbar_layout.addWidget(self.search_bar)
 
         self.navbar_layout.addStretch()
@@ -78,8 +78,8 @@ class VistaListaArticoli(QWidget):
         filter_list = []
         for articolo in self.controller.get_lista_articoli():
 
-            if self.search_bar.text() in articolo.categoria + " " + articolo.marca \
-                    or articolo.categoria + " " + articolo.marca in self.search_bar.text():
+            if self.search_bar.text().upper() in articolo.categoria.upper() + " " + articolo.marca.upper() \
+                    or articolo.categoria.upper() + " " + articolo.marca.upper() in self.search_bar.text().upper():
                 filter_list.append(articolo)
 
         self.table_view.setRowCount(len(filter_list))

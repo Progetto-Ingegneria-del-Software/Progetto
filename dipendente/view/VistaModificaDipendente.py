@@ -11,7 +11,21 @@ class VistaModificaDipendente(QWidget):
 
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
-        self.info = QLineEdit(self)
+
+        if self.elemento_modifica == "Modifica Nome":
+            self.info = QLineEdit(self.controller.get_nome_dipendente())
+        if self.elemento_modifica == "Modifica Cognome":
+            self.info = QLineEdit(self.controller.get_cognome_dipendente())
+        if self.elemento_modifica == "Modifica CF":
+            self.info = QLineEdit(self.controller.get_cf_dipendente())
+        if self.elemento_modifica == "Modifica Email":
+            self.info = QLineEdit(str(self.controller.get_email_dipendente()))
+        if self.elemento_modifica == "Modifica Telefono":
+            self.info = QLineEdit(str(self.controller.get_telefono_dipendente()))
+        if self.elemento_modifica == "Modifica Mansione":
+            self.info = QLineEdit(self.controller.get_mansione_dipendente())
+        if self.elemento_modifica == "Modifica Stipendio":
+            self.info = QLineEdit(self.controller.get_stipendio_dipendente())
 
         self.layout.addRow(self.elemento_modifica + ':', self.info)
 
@@ -47,6 +61,27 @@ class VistaModificaDipendente(QWidget):
             if self.elemento_modifica == "Modifica Mansione":
                 self.controller.set_mansione_dipendente(self.info.text())
             if self.elemento_modifica == "Modifica Stipendio":
-                self.controller.set_stipendio_dipendente(self.info.text())
+                if self.is_int(self.info.text()):
+                    self.controller.set_stipendio_dipendente(int(self.info.text()))
+                    print(int(self.info.text()))
+                elif self.is_float(self.info.text()):
+                    self.controller.set_stipendio_dipendente(float(self.info.text()))
+                else:
+                    QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico',
+                                         QMessageBox.Ok, QMessageBox.Ok)
             self.callback()
             self.close()
+
+    def is_float(self, val):
+        try:
+            num = float(val)
+        except ValueError:
+            return False
+        return True
+
+    def is_int(self, val):
+        try:
+            num = int(val)
+        except ValueError:
+            return False
+        return True

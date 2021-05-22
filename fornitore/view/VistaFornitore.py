@@ -67,7 +67,7 @@ class VistaFornitore(QWidget):
         v_layout.addWidget(button_elimina_fornitore)
 
         self.setLayout(v_layout)
-        self.resize(500, 400)
+        self.resize(600, 350)
         self.setFixedSize(self.size())
         self.setWindowTitle("Fornitore " + str(self.controller.get_codice_id_fornitore()))
 

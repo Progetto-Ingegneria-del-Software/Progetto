@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QGridLayo
     QMessageBox
 
 from articolo.controller.ControlloreArticolo import ControlloreArticolo
+from articolo.view.VistaDescrizioneArticolo import VistaDescrizioneArticolo
 from articolo.view.VistaModificaArticolo import VistaModificaArticolo
 
 
@@ -55,8 +56,9 @@ class VistaArticolo(QWidget):
         button_sconto_perc.clicked.connect(lambda: self.show_modifica_articolo("Modifica Sconto"))
         grid_layout.addWidget(button_sconto_perc, 5, 1)
 
-        label_quantita = QLabel("Descrizione: " + str(self.controller.get_descrizione_articolo()))
-        grid_layout.addWidget(label_quantita, 6, 0)
+        button_sconto_perc = QPushButton("Visualizza Descrizione")
+        button_sconto_perc.clicked.connect(self.show_descrizione_articolo)
+        grid_layout.addWidget(button_sconto_perc, 6, 0)
 
         button_sconto_perc = QPushButton("Modifica Descrizione")
         button_sconto_perc.clicked.connect(lambda: self.show_modifica_articolo("Modifica Descrizione"))
@@ -68,7 +70,7 @@ class VistaArticolo(QWidget):
         v_layout.addWidget(button_elimina_articolo)
 
         self.setLayout(v_layout)
-        self.resize(500, 300)
+        self.resize(600, 350)
         self.setFixedSize(self.size())
         self.setWindowTitle("Articolo " + str(self.controller.get_codice_id_articolo()))
 
@@ -85,6 +87,10 @@ class VistaArticolo(QWidget):
     def show_modifica_articolo(self, elemento_modifica):
         self.vista_modifica_articolo = VistaModificaArticolo(elemento_modifica, self.controller, self.callback)
         self.vista_modifica_articolo.show()
+
+    def show_descrizione_articolo(self):
+        self.vista_descrizione_articolo = VistaDescrizioneArticolo(self.controller, self.callback)
+        self.vista_descrizione_articolo.show()
 
 
 

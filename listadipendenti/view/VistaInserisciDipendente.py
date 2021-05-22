@@ -51,15 +51,32 @@ class VistaInserisciDipendente(QWidget):
         mansione = self.info["Mansione:"].text()
         stipendio = self.info["Stipendio Mensile:"].text()
 
-        '''
-        if nome == "" or cognome == "" or cf == "" or email == "" or telefono == "" or mansione == "" or stipendio == "":
-            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.',
+        if nome == "" or cognome == "" or cf == "" or stipendio == "":
+            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, riempi i seguenti campi: Nome, Cognome, Codice Fiscale e Stipendio.',
                                  QMessageBox.Ok, QMessageBox.Ok)
                             
-        else:'''
-        self.controller.model.codice_id = self.controller.model.codice_id+1
-        self.controller.aggiungi_dipendente(Dipendente(self.controller.model.codice_id, nome, cognome, cf, email, telefono, mansione, stipendio))
-        self.callback()
-        self.close()
+        elif not self.is_float(stipendio) and not self.is_int(stipendio):
+            QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico nel campo Stipendio.',
+                                 QMessageBox.Ok, QMessageBox.Ok)
+
+        else:
+            self.controller.model.codice_id = self.controller.model.codice_id+1
+            self.controller.aggiungi_dipendente(Dipendente(self.controller.model.codice_id, nome, cognome, cf, email, telefono, mansione, stipendio))
+            self.callback()
+            self.close()
+
+    def is_float(self, val):
+        try:
+            num = float(val)
+        except ValueError:
+            return False
+        return True
+
+    def is_int(self, val):
+        try:
+            num = int(val)
+        except ValueError:
+            return False
+        return True
 
 

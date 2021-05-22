@@ -12,7 +12,19 @@ class VistaModificaArticolo(QWidget):
 
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
-        self.info = QLineEdit(self)
+
+        if self.elemento_modifica == "Modifica Gruppo Merceologico":
+            self.info = QLineEdit(self.controller.get_gruppo_merceologico_articolo())
+        if self.elemento_modifica == "Modifica Categoria":
+            self.info = QLineEdit(self.controller.get_categoria_articolo())
+        if self.elemento_modifica == "Modifica Marca":
+            self.info = QLineEdit(self.controller.get_marca_articolo())
+        if self.elemento_modifica == "Modifica Prezzo Unitario":
+            self.info = QLineEdit(str(self.controller.get_prezzo_unitario_articolo()))
+        if self.elemento_modifica == "Modifica Sconto":
+            self.info = QLineEdit(str(self.controller.get_sconto_perc_articolo()))
+        if self.elemento_modifica == "Modifica Descrizione":
+            self.info = QLineEdit(self.controller.get_descrizione_articolo())
 
         self.layout.addRow(self.elemento_modifica + ':', self.info)
 
@@ -42,10 +54,36 @@ class VistaModificaArticolo(QWidget):
             if self.elemento_modifica == "Modifica Marca":
                 self.controller.set_marca_articolo(self.info.text())
             if self.elemento_modifica == "Modifica Prezzo Unitario":
-                self.controller.set_prezzo_unitario_articolo(self.info.text())
+                if self.is_int(self.info.text()):
+                    self.controller.set_prezzo_unitario_articolo(int(self.info.text()))
+                elif self.is_float(self.info.text()):
+                    self.controller.set_prezzo_unitario_articolo(float(self.info.text()))
+                else:
+                    QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico',
+                                         QMessageBox.Ok, QMessageBox.Ok)
             if self.elemento_modifica == "Modifica Sconto":
-                self.controller.set_sconto_perc_articolo(self.info.text())
+                if self.is_int(self.info.text()):
+                    self.controller.set_prezzo_unitario_articolo(int(self.info.text()))
+                elif self.is_float(self.info.text()):
+                    self.controller.set_prezzo_unitario_articolo(float(self.info.text()))
+                else:
+                    QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico',
+                                         QMessageBox.Ok, QMessageBox.Ok)
             if self.elemento_modifica == "Modifica Descrizione":
                 self.controller.set_descrizione_articolo(self.info.text())
             self.callback()
             self.close()
+
+    def is_float(self, val):
+        try:
+            num = float(val)
+        except ValueError:
+            return False
+        return True
+
+    def is_int(self, val):
+        try:
+            num = int(val)
+        except ValueError:
+            return False
+        return True

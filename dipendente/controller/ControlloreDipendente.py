@@ -47,4 +47,4 @@ class ControlloreDipendente():
         self.model.mansione = mansione
 
     def set_stipendio_dipendente(self, stipendio):
-        self.model.stipendio = stipendio
+        self.model.stipendio_mensile = stipendio

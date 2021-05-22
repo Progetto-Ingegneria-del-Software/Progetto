@@ -74,7 +74,7 @@ class VistaDipendente(QWidget):
         v_layout.addWidget(button_elimina_dipendente)
 
         self.setLayout(v_layout)
-        self.resize(500, 400)
+        self.resize(500, 350)
         self.setFixedSize(self.size())
         self.setWindowTitle("Dipendente " + str(self.controller.get_codice_id_dipendente()))
 

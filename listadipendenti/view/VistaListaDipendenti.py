@@ -78,18 +78,18 @@ class VistaListaDipendenti(QWidget):
         filter_list = []
         for dipendente in self.controller.get_lista_dipendenti():
 
-            if self.search_bar.text() in dipendente.nome + " " + dipendente.cognome \
-                    or dipendente.nome + " " + dipendente.cognome in self.search_bar.text():
+            if self.search_bar.text().upper() in dipendente.nome.upper() + " " + dipendente.cognome.upper() \
+                    or dipendente.nome.upper() + " " + dipendente.cognome.upper() in self.search_bar.text().upper():
                 filter_list.append(dipendente)
 
         self.table_view.setRowCount(len(filter_list))
-        self.table_view.setColumnCount(7)
+        self.table_view.setColumnCount(8)
         self.show_table_view_items(filter_list)
 
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_dipendente = VistaDipendente(self.controller.get_dipendente_by_id(
-            int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0))), self.controller.elimina_dipendente_by_id, self.update_table_view)
+            int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.controller.elimina_dipendente_by_id, self.update_table_view)
             self.vista_dipendente.show()
 
     def show_insert_dipendente(self):

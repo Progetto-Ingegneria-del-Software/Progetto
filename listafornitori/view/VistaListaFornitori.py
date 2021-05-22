@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTableWidget, QAbstractItemView, QHeaderView, QHBoxLayout, \
-    QPushButton, QTableWidgetItem, QMessageBox
+    QPushButton, QTableWidgetItem, QMessageBox, QLabel, QLineEdit
 
 from fornitore.view.VistaFornitore import VistaFornitore
 from listafornitori.control.ControlloreListaFornitori import ControlloreListaFornitori
@@ -15,8 +15,22 @@ class VistaListaFornitori(QWidget):
 
         self.v_layout = QVBoxLayout()
         self.table_view = QTableWidget()
+        self.navbar_layout= QHBoxLayout()
 
-        self.update_ui()
+        self.show_all_button = QPushButton("Mostra tutto")
+        self.show_all_button.clicked.connect(self.update_table_view)
+        self.navbar_layout.addWidget(self.show_all_button)
+
+        self.search_label = QLabel("Cerca tra i fornitori:")
+        self.navbar_layout.addWidget(self.search_label)
+        self.search_bar = QLineEdit("Ragione Sociale")
+        self.navbar_layout.addWidget(self.search_bar)
+
+        self.navbar_layout.addStretch()
+        self.search_bar.returnPressed.connect(self.filter_fornitori)
+        self.v_layout.addLayout(self.navbar_layout)
+
+        self.update_table_view()
 
         self.table_view.setHorizontalHeaderLabels(self.name_colonne)
         self.table_view.verticalHeader().setVisible(False)
@@ -56,10 +70,25 @@ class VistaListaFornitori(QWidget):
         self.resize(1500, 480)
         self.setWindowTitle("Fornitori")
 
+    def filter_fornitori(self):
+        self.table_view.clearContents()
+        self.table_view.model().removeRows(0, self.table_view.rowCount())
+
+        filter_list = []
+        for fornitore in self.controller.get_lista_fornitori():
+
+            if self.search_bar.text().upper() in fornitore.ragione_sociale.upper() \
+                    or fornitore.ragione_sociale.upper() in self.search_bar.text().upper():
+                filter_list.append(fornitore)
+
+        self.table_view.setRowCount(len(filter_list))
+        self.table_view.setColumnCount(7)
+        self.show_table_view_items(filter_list)
+
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_fornitore = VistaFornitore(self.controller.get_fornitore_by_index(
-            self.table_view.selectedIndexes()[0].row()), self.controller.elimina_fornitore_by_id, self.update_ui)
+            self.table_view.selectedIndexes()[0].row()), self.controller.elimina_fornitore_by_id, self.update_table_view)
             self.vista_fornitore.show()
 
     def show_insert_fornitore(self):
@@ -76,15 +105,17 @@ class VistaListaFornitori(QWidget):
                              QMessageBox.No)
             if delete_view == QMessageBox.Yes:
                 self.controller.elimina_fornitore_by_id(fornitore_selezionato.codice_id)
-                self.update_ui()
+                self.update_table_view()
 
-    def update_ui(self):
+    def update_table_view(self):
         self.controller.save_data()
         self.table_view.setRowCount(len(self.controller.model.lista_fornitori))
         self.table_view.setColumnCount(7)
+        self.show_table_view_items(self.controller.get_lista_fornitori())
 
+    def show_table_view_items(self, item_list):
         i = 0
-        for fornitore in self.controller.get_lista_fornitori():
+        for fornitore in item_list:
             item = QTableWidgetItem(str(fornitore.codice_id))
             self.table_view.setItem(i, 0, item)
             item = QTableWidgetItem(str(fornitore.ragione_sociale))
