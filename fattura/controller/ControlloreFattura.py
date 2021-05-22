@@ -23,8 +23,8 @@ class ControlloreFattura:
     #def get_fornitore(self):
     #    return self.model.Fornitore
 
-    #def get_lista_articoli(self):
-    #    return self.model.ListaArticoli
+    def get_articolo(self):
+        return self.model.Articolo
 
     def get_totale(self):
         return self.model.totale

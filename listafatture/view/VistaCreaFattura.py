@@ -1,3 +1,4 @@
+from fattura.controller.ControlloreFattura import ControlloreFattura
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QSpacerItem, QSizePolicy, QPushButton, \
     QMessageBox, QGridLayout
 
@@ -7,6 +8,9 @@ from fattura.model.Fattura import Fattura
 class VistaCreaFattura(QWidget):
     def __init__(self, controller, callback):
         super(VistaCreaFattura, self).__init__()
+
+        self.messaggio_tipo_fattura(ControlloreFattura.get_tipo_fattura)  # Viene stabilito il tipo di fattura Carico/Scarico
+        
 
         self.controller = controller
         self.callback = callback
@@ -58,3 +62,10 @@ class VistaCreaFattura(QWidget):
             self.controller.aggiungi_articolo(Fattura(self.controller.model.codice_id, gruppo_merciologico, categoria, marca, prezzo_unitario, None, None))
             self.callback()
             self.close()
+
+    def messaggio_tipo_fattura(self, tipo):
+        message_tipo = QMessageBox.warning(self, 'Che tipo di fattura vuoi creare?', 'Carico o Scarico?', QMessageBox.Carico, QMessageBox.Scarico)
+        if message_tipo == QMessageBox.Carico:
+            tipo = 'Carico'
+        else:
+            tipo = 'Scarico'
