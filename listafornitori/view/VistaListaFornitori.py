@@ -92,7 +92,7 @@ class VistaListaFornitori(QWidget):
             self.vista_fornitore.show()
 
     def show_insert_fornitore(self):
-        self.vista_inserisci_fornitore = VistaInserisciFornitore(self.controller, self.update_ui)
+        self.vista_inserisci_fornitore = VistaInserisciFornitore(self.controller, self.show_table_view_items)
         self.vista_inserisci_fornitore.show()
 
     def delete_fornitore(self):
