@@ -12,10 +12,13 @@ class ControlloreFattura:
         return self.model.num_fatt
 
     def get_tipo_fattura(self):
-        return self.model.tipo
+        return self.model.tipo_fatt
 
     def get_data(self):
         return self.model.data
+
+    def get_tipo_cliente(self):
+        return self.model.tipo_cliente
 
     #def get_cliente(self):
     #    return self.model.Cliente
