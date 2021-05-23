@@ -11,7 +11,20 @@ class Vista_modifica_cliente(QWidget):
 
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
-        self.info = QLineEdit(self)
+        #self.info = QLineEdit(self)
+        
+        if self.elemento_modifica == "Modifica Nome":
+            self.info = QLineEdit(self.controller.get_nome_cliente())
+        if self.elemento_modifica == "Modifica Cognome":
+            self.info = QLineEdit(self.controller.get_cognome_cliente())
+        if self.elemento_modifica == "Modifica CF":
+            self.info = QLineEdit(self.controller.get_cf_cliente())
+        if self.elemento_modifica == "Modifica Email":
+            self.info = QLineEdit(self.controller.get_email_cliente())
+        if self.elemento_modifica == "Modifica Telefono":
+            self.info = QLineEdit(self.controller.get_telefono_cliente())
+        if self.elemento_modifica == "Modifica Indirizzo":
+            self.info = QLineEdit(self.controller.get_indirizzo_cliente())
 
         self.layout.addRow(self.elemento_modifica + ':', self.info)
 
