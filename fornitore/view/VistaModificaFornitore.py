@@ -11,7 +11,19 @@ class VistaModificaFornitore(QWidget):
 
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
-        self.info = QLineEdit(self)
+
+        if self.elemento_modifica == "Modifica Ragione Sociale":
+            self.info = QLineEdit(self.controller.get_ragione_sociale_fornitore())
+        if self.elemento_modifica == "Modifica Partita IVA":
+            self.info = QLineEdit(self.controller.get_partita_iva_fornitore())
+        if self.elemento_modifica == "Modifica Città":
+            self.info = QLineEdit(self.controller.get_citta_fornitore())
+        if self.elemento_modifica == "Modifica Indirizzo":
+            self.info = QLineEdit(self.controller.get_indirizzo_fornitore())
+        if self.elemento_modifica == "Modifica Telefono":
+            self.info = QLineEdit(str(self.controller.get_telefono_fornitore()))
+        if self.elemento_modifica == "Modifica Email":
+            self.info = QLineEdit(self.controller.get_email_fornitore())
 
         self.layout.addRow(self.elemento_modifica + ':', self.info)
 
