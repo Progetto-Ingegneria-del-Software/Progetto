@@ -9,7 +9,6 @@ class VistaCreaFatturaScarico(QWidget):
 
         self.v_layout = QVBoxLayout()
         self.h_layout = QHBoxLayout()
-        self.controller = ControlloreFattura()
 
         self.label_numero_fattura = QLabel("Numero: {}".format(self.controller.get_numero_fattura()))
         self.h_layout.addWidget(self.label_numero_fattura)

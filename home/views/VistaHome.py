@@ -90,7 +90,6 @@ class VistaHome(QWidget):
             tabs.addTab(self.Fornitori(), "Fornitori")
             tabs.addTab(self.Clienti(), "Clienti")
             tabs.addTab(self.ClientiPIva(), "Clienti PIVA")
-            tabs.addTab(self.FatturaScarico(), "Fattura scarico")
 
             layout.addWidget(tabs)
 
@@ -161,18 +160,6 @@ class VistaHome(QWidget):
 
 
             layout.addWidget(Vista_Lista_clienti())
-
-            generalTab.setLayout(layout)
-            return generalTab
-
-        def FatturaScarico(self):
-            """Create the General page UI."""
-            generalTab = QWidget()
-            layout = QVBoxLayout()
-
-
-
-            layout.addWidget(VistaCreaFatturaScarico())
 
             generalTab.setLayout(layout)
             return generalTab
