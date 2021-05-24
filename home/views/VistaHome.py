@@ -3,7 +3,10 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAc
     QHBoxLayout, QComboBox, QLabel, QSizePolicy, QFrame, QHeaderView
 
 from listaarticoli.view.VistaListaArticoli import VistaListaArticoli
+from listaclienti.view.Vista_Lista_clienti import Vista_Lista_clienti
+from listaclientiPIva.view.Vista_lista_clientipiva import Vista_lista_clientipiva
 from listadipendenti.view.VistaListaDipendenti import VistaListaDipendenti
+from listafatture.view.VistaCreaFatturaScarico import VistaCreaFatturaScarico
 from listafornitori.view.VistaListaFornitori import VistaListaFornitori
 from home.views.logoo import App
 
@@ -84,9 +87,10 @@ class VistaHome(QWidget):
             tabs.addTab(self.prova(), "Logo")
             tabs.addTab(self.Dipendenti(), "Dipendenti")
             tabs.addTab(self.Articoli(), "Articoli")
-            tabs.addTab(self.Fornitori(), "Forinitori")
+            tabs.addTab(self.Fornitori(), "Fornitori")
             tabs.addTab(self.Clienti(), "Clienti")
             tabs.addTab(self.ClientiPIva(), "Clienti PIVA")
+            tabs.addTab(self.FatturaScarico(), "Fattura scarico")
 
             layout.addWidget(tabs)
 
@@ -161,6 +165,17 @@ class VistaHome(QWidget):
             generalTab.setLayout(layout)
             return generalTab
 
+        def FatturaScarico(self):
+            """Create the General page UI."""
+            generalTab = QWidget()
+            layout = QVBoxLayout()
+
+
+
+            layout.addWidget(VistaCreaFatturaScarico())
+
+            generalTab.setLayout(layout)
+            return generalTab
 
 '''
 class Window(QWidget):
