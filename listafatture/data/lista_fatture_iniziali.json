@@ -3,7 +3,7 @@
       "num_fatt": 1,
       "tipo": "Scarico",
       "data": "05-01-2021",
-      "cliente": [
+      "cliente": 
           {
             "codice_id": 2,
             "nome": "Antonio",
@@ -12,8 +12,7 @@
             "indirizzo": "Via Celesti 3",
             "telefono": 3778922646,
             "email": "antonio.rossi88@gmail.com"
-          }
-      ],
+          },
       "lista_articoli": [
           {
             "codice_id": 1,

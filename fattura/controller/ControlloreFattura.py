@@ -20,14 +20,8 @@ class ControlloreFattura:
     def get_tipo_cliente(self):
         return self.model.tipo_cliente
 
-    #def get_cliente(self):
-    #    return self.model.Cliente
-
-    #def get_fornitore(self):
-    #    return self.model.Fornitore
-
-    def get_articolo(self):
-        return self.model.Articolo
+    #def get_articolo(self):
+    #    return self.model.Articolo
 
     def get_totale(self):
         return self.model.totale

@@ -2,7 +2,7 @@ from fornitore.model.Fornitore import Fornitore
 from listaarticoli.model.ListaArticoli import ListaArticoli
 
 class Fattura():
-    def __init__(self, num_fatt, tipo_fatt, data, tipo_cliente, Fornitore, ListaArticoli, totale):
+    def __init__(self, num_fatt, tipo_fatt, data, tipo_cliente, totale):
         super(Fattura, self).__init__()
 
         self.num_fatt = num_fatt
