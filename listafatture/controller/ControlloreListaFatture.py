@@ -16,8 +16,5 @@ class ControlloreListaFatture():
     def get_fattura_by_index(self, id):
         return self.model.get_fattura_by_index(id)
 
-    #def elimina_fattura_by_id(self, id):
-    #    self.model.rimuovi_fattura_by_index(id)
-
     def save_data(self):
         self.model.save_data()

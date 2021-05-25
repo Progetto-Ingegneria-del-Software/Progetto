@@ -8,6 +8,7 @@ from listaclientiPIva.view.Vista_lista_clientipiva import Vista_lista_clientipiv
 from listadipendenti.view.VistaListaDipendenti import VistaListaDipendenti
 from listafatture.view.VistaCreaFatturaScarico import VistaCreaFatturaScarico
 from listafornitori.view.VistaListaFornitori import VistaListaFornitori
+from listafatture.view.VistaListaFatture import VistaListaFatture
 from home.views.logoo import App
 
 
@@ -90,6 +91,7 @@ class VistaHome(QWidget):
             tabs.addTab(self.Fornitori(), "Fornitori")
             tabs.addTab(self.Clienti(), "Clienti")
             tabs.addTab(self.ClientiPIva(), "Clienti PIVA")
+            tabs.addTab(self.Fatture(), "Fatture")
 
             layout.addWidget(tabs)
 
@@ -105,6 +107,10 @@ class VistaHome(QWidget):
             return generalTab
 
 
+        ###################################################
+        ###  FUNZIONE CHE RICHIAMA L'INTERFACCIA DELLA  ###
+        ###            LISTA DEI DIPENDENTI             ###
+        ###################################################
         def Dipendenti(self):
             """Create the General page UI."""
             generalTab = QWidget()
@@ -117,6 +123,11 @@ class VistaHome(QWidget):
             generalTab.setLayout(layout)
             return generalTab
 
+
+        ###################################################
+        ###  FUNZIONE CHE RICHIAMA L'INTERFACCIA DELLA  ###
+        ###            LISTA DEGLI ARTICOLI             ###
+        ###################################################
         def Articoli(self):
             """Create the General page UI."""
             generalTab = QWidget()
@@ -127,6 +138,11 @@ class VistaHome(QWidget):
             generalTab.setLayout(layout)
             return generalTab
 
+
+        ###################################################
+        ###  FUNZIONE CHE RICHIAMA L'INTERFACCIA DELLA  ###
+        ###             LISTA DEI FORNITORI             ###
+        ###################################################
         def Fornitori(self):
             """Create the General page UI."""
             generalTab = QWidget()
@@ -138,8 +154,10 @@ class VistaHome(QWidget):
             return generalTab
         
         
-        
-        
+        ###################################################
+        ###  FUNZIONE CHE RICHIAMA L'INTERFACCIA DELLA  ###
+        ###      LISTA DEI CLIENTI CON PARTITA IVA      ###
+        ###################################################
         def ClientiPIva(self):
             """Create the General page UI."""
             generalTab = QWidget()
@@ -152,17 +170,34 @@ class VistaHome(QWidget):
             return generalTab 
         
         
+        ###################################################
+        ###  FUNZIONE CHE RICHIAMA L'INTERFACCIA DELLA  ###
+        ###         LISTA DEI CLIENTI PRIVATI           ###
+        ###################################################
         def Clienti(self):
             """Create the General page UI."""
             generalTab = QWidget()
             layout = QVBoxLayout()
 
-
-
             layout.addWidget(Vista_Lista_clienti())
 
             generalTab.setLayout(layout)
             return generalTab
+
+        
+        ###################################################
+        ###  FUNZIONE CHE RICHIAMA L'INTERFACCIA DELLA  ###
+        ###             LISTA DELLE FATTURE             ###
+        ###################################################
+        def Fatture(self):
+            generalTab = QWidget()
+            layout = QVBoxLayout()
+
+            layout.addWidget(VistaListaFatture())
+
+            generalTab.setLayout(layout)
+            return generalTab
+
 
 '''
 class Window(QWidget):

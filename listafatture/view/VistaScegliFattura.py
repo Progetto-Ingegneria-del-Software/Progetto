@@ -1,33 +1,32 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
+from PyQt5.QtWidgets import QGridLayout, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
     QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
 
-
+from fattura.controller.ControlloreFattura import ControlloreFattura
 class VistaScegliFattura(QtWidgets):
-    def __init__(self, controller, callback):
+    def __init__(self, callback):
         super(VistaScegliFattura, self).__init__()
 
-        self.controller = controller
+        self.controller = ControlloreFattura
         self.callback = callback
         self.info = {}
 
         self.v_layout = QVBoxLayout()
         self.grid_layout = QGridLayout()
 
-        self.testo = QLabel
+        self.testo = QLabel("Che tipo di fattura vuoi creare?")
 
         self.v_layout.addLayout(self.grid_layout)
 
-        self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        self.button_layout = QHBoxLayout()
+        self.carico_btn = QPushButton("Carico")
+        self.scarico_btn = QPushButton("Scarico")
+        self.v_layout.addLayout(self.button_layout)
 
-        
-
-        btn_ok = QPushButton("Crea")
-        btn_ok.clicked.connect(lambda: self.add_fattura(tipo_cliente))
-
-        self.v_layout.addWidget(btn_ok)
+        self.carico_btn.clicked.connect(self.controller.set_tipo_fattura('Carico'))
+        self.scarico_btn.clicked.connect(self.controller.set_tipo_fattura('Scarico'))
 
         self.setLayout(self.v_layout)
-        self.resize(400, 300)
+        self.resize(400, 500)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Crea Fattura")
+        self.setWindowTitle("Scegli il tipo di fattura")
