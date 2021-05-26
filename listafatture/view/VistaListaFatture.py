@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTab
 
 from fattura.view.VistaFattura import VistaFattura
 from listafatture.controller.ControlloreListaFatture import ControlloreListaFatture
+from fattura.controller.ControlloreFattura import ControlloreFattura
 from listafatture.view.VistaScegliFattura import VistaScegliFattura
 
 
@@ -104,7 +105,8 @@ class VistaListaFatture(QWidget):
     ###             DEL TIPO DI FATTURA               ###
     #####################################################
     def show_crea_fattura(self):
-        self.vista_scegli_fattura = VistaScegliFattura(self.update_table_view)  ## CONTROLLARE GLI ARGOMENTI DA PASSARE A Vista_Scegli_Fattura
+        controller2 = ControlloreFattura()
+        self.vista_scegli_fattura = VistaScegliFattura(controller2 , self.update_table_view)  ## CONTROLLARE GLI ARGOMENTI DA PASSARE A Vista_Scegli_Fattura
         self.vista_scegli_fattura.show()
 
 

@@ -1,3 +1,5 @@
+from fattura.model.Fattura import Fattura
+
 class ControlloreFattura:
 
     def __init__(self, fattura):
@@ -25,10 +27,3 @@ class ControlloreFattura:
 
     def get_totale_fattura(self):
         return self.model.totale
-
-
-    ###################
-    ###   SETTERS   ###
-    ###################
-    def set_tipo_fattura(self, tipo):
-        self.model.tipo_fatt = tipo
