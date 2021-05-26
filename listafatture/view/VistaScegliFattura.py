@@ -1,13 +1,14 @@
+#from listafatture.view.VistaCreaFattura import VistaCreaFattura
+from listafatture.view.VistaCreaFatturaScarico import VistaCreaFatturaScarico
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QWidget, QLabel, QHBoxLayout, QPushButton
 
 from fattura.controller.ControlloreFattura import ControlloreFattura
 
 class VistaScegliFattura(QWidget):
-    def __init__(self, controller, callback):
+    def __init__(self, callback):
         super(VistaScegliFattura, self).__init__()
 
-        self.controller = controller
         self.callback = callback
 
         self.v_layout = QVBoxLayout()
@@ -50,9 +51,8 @@ class VistaScegliFattura(QWidget):
     ###        FATTURA SU "CARICO"        ###
     #########################################
     def funzione_carico_btn(self):
-        tipo = "Carico"
-        self.controller.set_tipo_fattura(tipo)
-        self.callback()
+        #self.vista_crea_fattura_carico = VistaCreaFattura()
+        #self.vista_crea_fattura_carico.show()
         self.close()
     
 
@@ -61,8 +61,7 @@ class VistaScegliFattura(QWidget):
     ###       FATTURA SU "SCARICO"        ###
     #########################################
     def funzione_scarico_btn(self):
-        tipo = "Scarico"
-        self.controller.set_tipo_fattura(tipo)
-        self.callback()
+        self.vista_crea_fattura_scarico = VistaCreaFatturaScarico()
+        self.vista_crea_fattura_scarico.show()
         self.close()
     
