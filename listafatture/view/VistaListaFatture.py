@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTab
 
 from fattura.view.VistaFattura import VistaFattura
 from listafatture.controller.ControlloreListaFatture import ControlloreListaFatture
-from listafatture.view.VistaCreaFattura import VistaCreaFattura
 from listafatture.view.VistaScegliFattura import VistaScegliFattura
 
 
@@ -114,7 +113,7 @@ class VistaListaFatture(QWidget):
     ##########################################
     def update_table_view(self):
         self.controller.save_data()
-        self.table_view.setRowCount(len(self.controller.model.lista_articoli))
+        self.table_view.setRowCount(len(self.controller.model.lista_fatture))
         self.table_view.setColumnCount(7)
         self.show_table_view_items(self.controller.get_lista_fatture())
 

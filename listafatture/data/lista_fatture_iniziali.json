@@ -3,7 +3,7 @@
       "num_fatt": 1,
       "tipo": "Scarico",
       "data": "05-01-2021",
-      "cliente": 
+      "soggetto":
           {
             "codice_id": 2,
             "nome": "Antonio",
@@ -37,7 +37,7 @@
         "num_fatt": 2,
         "tipo": "Carico",
         "data": "10-02-2021",
-        "fornitore": [
+        "soggetto": [
             {
                 "codice_id": 1,
                 "ragione_sociale": "Luigi Bruni",
@@ -72,7 +72,7 @@
         "num_fatt": 3,
         "tipo": "Scarico",
         "data": "17-03-2021",
-        "cliente_piva": [
+        "soggetto": [
             {
               "codice_id": 2,
               "ragione_sociale": "Antonio Rossi s.r.l.",

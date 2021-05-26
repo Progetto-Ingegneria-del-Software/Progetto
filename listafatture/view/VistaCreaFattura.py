@@ -97,7 +97,7 @@ class VistaCreaFattura(QWidget):
             
 
         self.current_text_edit = QLineEdit(self)
-        self.current_text_edit.returnPressed.connect(self.add_fattura(tipo_cliente))
+        self.current_text_edit.returnPressed.connect(lambda: self.add_fattura(tipo_cliente))
         self.grid_layout.addWidget(self.current_text_edit, 1, 1)
 
 
@@ -106,7 +106,7 @@ class VistaCreaFattura(QWidget):
         for name in self.labels:
             self.grid_layout.addWidget(QLabel(name), i, 0)
             self.current_text_edit = QLineEdit(self)
-            self.current_text_edit.returnPressed.connect(self.add_fattura(tipo_cliente))
+            self.current_text_edit.returnPressed.connect(lambda: self.add_fattura(tipo_cliente))
             self.grid_layout.addWidget(self.current_text_edit, i, 1)
             self.info[name] = self.current_text_edit
             i = i+1

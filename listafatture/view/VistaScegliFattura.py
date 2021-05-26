@@ -1,9 +1,8 @@
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QGridLayout, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
-    QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
+from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QWidget, QLabel, QHBoxLayout, QPushButton
 
 from fattura.controller.ControlloreFattura import ControlloreFattura
-class VistaScegliFattura(QtWidgets):
+
+class VistaScegliFattura(QWidget):
     def __init__(self, callback):
         super(VistaScegliFattura, self).__init__()
 
