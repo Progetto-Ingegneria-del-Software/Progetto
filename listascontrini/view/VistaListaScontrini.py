@@ -1,36 +1,35 @@
-from fattura.model.Fattura import Fattura
+from scontrino.model.Scontrino import Scontrino
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
     QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
 
-from fattura.view.VistaFattura import VistaFattura
-from listafatture.controller.ControlloreListaFatture import ControlloreListaFatture
-from fattura.controller.ControlloreFattura import ControlloreFattura
-from listafatture.view.VistaScegliFattura import VistaScegliFattura
+from scontrino.view.VistaScontrino import VistaScontrino
+from listascontrini.controller.ControlloreListaScontrini import ControlloreListaScontrini
+from scontrino.controller.ControlloreScontrino import ControlloreScontrino
 
 
-class VistaListaFatture(QWidget):
+class VistaListaScontrini(QWidget):
     def __init__(self, parent=None):
-        super(VistaListaFatture, self).__init__(parent)
+        super(VistaListaScontrini, self).__init__(parent)
 
-        self.controller = ControlloreListaFatture()
-        self.name_colonne = ['Numero Fattura', 'Tipo', 'Data', 'Cliente/Fornitore', 'Totale Prezzo']  # Nomi delle colonne della tabella delle fatture
+        self.controller = ControlloreListaScontrini()
+        self.name_colonne = ['Numero Scontrino', 'Data', 'Totale Prezzo']  # Nomi delle colonne della tabella degli scontrini
 
         self.v_layout = QVBoxLayout()
         self.table_view = QTableWidget()
         self.navbar_layout = QHBoxLayout()
 
-        ## PULSANTE CHE MOSTRA L'INTERA LISTA DI FATTURE
+        ## PULSANTE CHE MOSTRA L'INTERA LISTA DI SCONTRINI
         self.show_all_button = QPushButton("Mostra tutto")
         self.show_all_button.clicked.connect(self.update_table_view)
         self.navbar_layout.addWidget(self.show_all_button)
 
-        ## BARRA DI RICERCA PER RICERCARE UNA FATTURA SPECIFICA
-        self.search_label = QLabel("Cerca tra le fatture:")
+        ## BARRA DI RICERCA PER RICERCARE UNO SCONTRINI SPECIFICO
+        self.search_label = QLabel("Cerca tra gli scontrini:")
         self.navbar_layout.addWidget(self.search_label)
-        self.search_bar = QLineEdit("Inserire il numero della fattura")
+        self.search_bar = QLineEdit("Inserire il numero dello scontrino")
         self.navbar_layout.addWidget(self.search_bar)
         self.navbar_layout.addStretch()
-        self.search_bar.returnPressed.connect(self.filter_fatture)  ## LA BARRA DI RICERCA RICHIAMA LA FUNZIONE filter_fatture
+        self.search_bar.returnPressed.connect(self.filter_scontrini)  ## LA BARRA DI RICERCA RICHIAMA LA FUNZIONE filter_scontrini
         self.v_layout.addLayout(self.navbar_layout)
 
         self.update_table_view()
@@ -51,39 +50,39 @@ class VistaListaFatture(QWidget):
 
         self.v_layout.addWidget(self.table_view)
 
-        ## BOTTONE CHE RICHIAMA LA FUNZIONE show_selected_info PER LA VISUALIZZAZIONE DELLA FATTURA SELEZIONATA
+        ## BOTTONE CHE RICHIAMA LA FUNZIONE show_selected_info PER LA VISUALIZZAZIONE DELLO SCONTRINO SELEZIONATO
         self.buttons_layout = QHBoxLayout()
-        self.open_button = QPushButton("Visualizza Fattura")
+        self.open_button = QPushButton("Visualizza Scontrino")
         self.open_button.clicked.connect(self.show_selected_info)
 
         self.buttons_layout.addWidget(self.open_button)
         self.v_layout.addLayout(self.buttons_layout)
 
-        ## BOTTONE CHE RICHIAMA LA FUNZIONE show_crea_fattura PER LA CREAZIONE DI UNA NUOVA FATTURA
-        self.insert_button = QPushButton("Crea fattura")
-        self.insert_button.clicked.connect(self.show_crea_fattura)
+        ## BOTTONE CHE RICHIAMA LA FUNZIONE show_crea_scontrino PER LA CREAZIONE DI UNO NUOVO SCONTRINO
+        self.insert_button = QPushButton("Crea scotrino")
+        self.insert_button.clicked.connect(self.show_crea_scontrino)
         self.buttons_layout.addWidget(self.insert_button)
         self.v_layout.addLayout(self.buttons_layout)
 
         self.setLayout(self.v_layout)
         self.resize(1500, 480)
-        self.setWindowTitle("Fatture")
+        self.setWindowTitle("Scontrini")
 
 
     #############################################
     ###  FUNZIONE CHE EFFETTUA IL FILTRAGGIO  ###
-    ###    DELLE FATTURE IN BASE AL NUMERO    ###
+    ###   DEGLI SCONTRINI IN BASE AL NUMERO   ###
     #############################################
-    def filter_fatture(self):
+    def filter_scontrini(self):
         self.table_view.clearContents()
         self.table_view.model().removeRows(0, self.table_view.rowCount())
 
         filter_list = []
-        ## In questo ciclo vengono iterate tutte le fatture in cerca di quella con il numero cercato ##
-        for fattura in self.controller.get_lista_fatture():
+        ## In questo ciclo vengono iterati tutti gli scontrini in cerca di quello con il numero cercato ##
+        for scontrino in self.controller.get_lista_scontrini():
 
-            if self.search_bar.text() in  fattura.num_fatt  or fattura.num_fatt in self.search_bar.text():
-                filter_list.append(fattura)  # Una volta trovata la fattura viene messa in append alla lista
+            if self.search_bar.text() in  scontrino.num_scontrino  or scontrino.num_scontrino in self.search_bar.text():
+                filter_list.append(scontrino)  # Una volta trovata la fattura viene messa in append alla lista
 
         self.table_view.setRowCount(len(filter_list))
         self.table_view.setColumnCount(7)
@@ -91,22 +90,22 @@ class VistaListaFatture(QWidget):
 
 
     ####################################################
-    ###  FUNZIONE CHE MOSTRA LE INFORMAZIONI DI UNA  ###
-    ###       FATTURA SELEZIONATA NELLA LISTA        ###
+    ###  FUNZIONE CHE MOSTRA LE INFORMAZIONI DI UNO  ###
+    ###      SCONTRINO SELEZIONATO NELLA LISTA       ###
     ####################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
-            self.vista_fattura = VistaFattura(self.controller.get_fattura_by_index(int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.update_table_view)
-            self.vista_fattura.show()
+            self.vista_scontrino = VistaScontrino(self.controller.get_scontrino_by_index(int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.update_table_view)
+            self.vista_scontrino.show()
 
 
     #####################################################
     ###  FUNZIONE CHE MOSTRA L'INTERFACCIA DI SCELTA  ###
     ###             DEL TIPO DI FATTURA               ###
     #####################################################
-    def show_crea_fattura(self):
-        self.vista_scegli_fattura = VistaScegliFattura(self.update_table_view)  ## CONTROLLARE GLI ARGOMENTI DA PASSARE A Vista_Scegli_Fattura
-        self.vista_scegli_fattura.show()
+    #def show_crea_scontrino(self):
+        #self.vista_scegli_fattura = VistaScegliFattura(self.update_table_view)  ## CONTROLLARE GLI ARGOMENTI DA PASSARE A Vista_Scegli_Fattura
+        #self.vista_scegli_fattura.show()
 
 
     ##########################################
@@ -114,28 +113,24 @@ class VistaListaFatture(QWidget):
     ##########################################
     def update_table_view(self):
         self.controller.save_data()
-        self.table_view.setRowCount(len(self.controller.model.lista_fatture))
+        self.table_view.setRowCount(len(self.controller.model.lista_scontrini))
         self.table_view.setColumnCount(7)
-        self.show_table_view_items(self.controller.get_lista_fatture())
+        self.show_table_view_items(self.controller.get_lista_scontrini())
 
 
     ###########################################
     ###  FUNZIONE CHE STAMPA OGNI ELEMENTO  ###
-    ###      DELLA LISTA DELLE FATTURE      ###
+    ###     DELLA LISTA DEGLI SCONTRINI     ###
     ###########################################
     def show_table_view_items(self, item_list):
         i = 0
-        for fattura in item_list:
-            item = QTableWidgetItem(str(fattura.num_fatt))
+        for scontrino in item_list:
+            item = QTableWidgetItem(str(scontrino.num_scontrino))
             self.table_view.setItem(i, 0, item)
-            item = QTableWidgetItem(str(fattura.tipo_fatt))
+            item = QTableWidgetItem(str(scontrino.data))
             self.table_view.setItem(i, 1, item)
-            item = QTableWidgetItem(str(fattura.data))
+            item = QTableWidgetItem("€" + str(scontrino.totale))
             self.table_view.setItem(i, 2, item)
-            item = QTableWidgetItem(str(fattura.soggetto))
-            self.table_view.setItem(i, 3, item)
-            item = QTableWidgetItem("€" + str(fattura.totale))
-            self.table_view.setItem(i, 4, item)
             i = i + 1
 
 

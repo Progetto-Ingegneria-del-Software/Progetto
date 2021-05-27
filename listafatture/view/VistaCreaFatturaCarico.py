@@ -4,12 +4,12 @@ from listafatture.controller.ControlloreListaFatture import ControlloreListaFatt
 from listafornitori.control.ControlloreListaFornitori import ControlloreListaFornitori
 
 
-class VistaCreaFatturaScarico(QWidget):
-    def __init__(self, tipo_fattura, data_fattura):
-        super(VistaCreaFatturaScarico, self).__init__()
+class VistaCreaFatturaCarico(QWidget):
+    def __init__(self, tipo_fattura):
+        super(VistaCreaFatturaCarico, self).__init__()
 
         self.tipo_fattura = tipo_fattura
-        self.data_fattura = data_fattura
+        self.data_fattura = ''
 
         self.controller = ControlloreListaFatture()
 

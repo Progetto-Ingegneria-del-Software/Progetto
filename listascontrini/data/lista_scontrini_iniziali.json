@@ -1,0 +1,79 @@
+[
+    {
+      "num_scontrino": 1,
+      "data": "05-01-2021",
+      "lista_articoli": [
+          {
+            "codice_id": 1,
+            "descrizione": "penne nere",
+            "marca": "bic",
+            "prezzo_unitario": 0.25,
+            "quantita": 6,
+            "totale_riga": 1.5
+          },
+          {
+            "codice_id": 2,
+            "descrizione": "classiche gomme per cancellare",
+            "marca": "staedler",
+            "prezzo_unitario": 0.72,
+            "quantita": 10,
+            "totale_riga": 7.2
+          }
+      ],
+      "totale": 8.7
+    },
+    {
+        "num_scontrino": 2,
+        "data": "10-02-2021",
+        "lista_articoli": [
+            {
+                "codice_id": 2,
+                "descrizione": "classiche gomme per cancellare",
+                "marca": "staedler",
+                "prezzo_unitario": 0.72,
+                "quantita": 10,
+                "totale_riga": 7.2
+            },
+            {
+                "codice_id": 3,
+                "descrizione": "penne di alta fattura",
+                "marca": "waterman",
+                "prezzo_unitario": 60,
+                "quantita": 4,
+                "totale_riga": 240
+            }
+        ],
+        "totale": 247.2
+    },
+    {
+        "num_scontrino": 3,
+        "data": "17-03-2021",
+        "lista_articoli": [
+            {
+              "codice_id": 1,
+              "descrizione": "penne nere",
+              "marca": "bic",
+              "prezzo_unitario": 0.25,
+              "quantita": 6,
+              "totale_riga": 1.5
+            },
+            {
+              "codice_id": 2,
+              "descrizione": "classiche gomme per cancellare",
+              "marca": "staedler",
+              "prezzo_unitario": 0.72,
+              "quantita": 10,
+              "totale_riga": 7.2
+            },
+            {
+              "codice_id": 3,
+              "descrizione": "penne di alta fattura",
+              "marca": "waterman",
+              "prezzo_unitario": 60,
+              "quantita": 5,
+              "totale_riga": 300
+            }
+        ],
+        "totale": 308.7
+      }
+  ]
