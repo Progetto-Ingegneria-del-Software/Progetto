@@ -5,14 +5,10 @@ from listaarticoli.view.VistaListaArticoli import VistaListaArticoli
 from listaclienti.view.Vista_Lista_clienti import Vista_Lista_clienti
 from listaclientiPIva.view.Vista_lista_clientipiva import Vista_lista_clientipiva
 from listadipendenti.view.VistaListaDipendenti import VistaListaDipendenti
-from listafatture.view.VistaCreaFatturaScarico import VistaCreaFatturaScarico
 from listafornitori.view.VistaListaFornitori import VistaListaFornitori
 from listafatture.view.VistaListaFatture import VistaListaFatture
 from listascontrini.view.VistaListaScontrini import VistaListaScontrini
 from home.views.logoo import App
-
-
-
 
 
 
@@ -73,6 +69,7 @@ class VistaHome(QWidget):
        # self.layout.addWidget(self.tabs)
        # self.setLayout(self.layout)
 '''
+
 class VistaHome(QWidget):
         def __init__(self, parent=None):
             super(VistaHome, self).__init__(parent)
