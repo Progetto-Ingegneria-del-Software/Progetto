@@ -13,11 +13,11 @@ class ControlloreListaArticoli():
     def get_lista_articoli(self):
         return self.model.lista_articoli
 
-    def get_articolo_by_id(self, id):
-        return self.model.get_articolo_by_id(id)
+    def get_articolo_by_codice(self, codice):
+        return self.model.get_articolo_by_codice(codice)
 
-    def elimina_articolo_by_id(self, id):
-        self.model.rimuovi_articolo_by_id(id)
+    def elimina_articolo_by_codice(self, codice):
+        self.model.rimuovi_articolo_by_codice(codice)
 
     def save_data(self):
         self.model.save_data()

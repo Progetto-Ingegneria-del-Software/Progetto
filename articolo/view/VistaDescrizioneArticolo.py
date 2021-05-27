@@ -14,4 +14,4 @@ class VistaDescrizioneArticolo(QWidget):
         self.setLayout(layout)
         self.resize(450, 100)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Descrizione Articolo " + str(controller.get_codice_id_articolo()))
+        self.setWindowTitle("Descrizione Articolo " + str(controller.get_codice_articolo()))

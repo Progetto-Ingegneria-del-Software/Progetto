@@ -1,6 +1,6 @@
 [
   {
-  "codice_id": 1,
+  "codice": "9005235068131",
   "gruppo_merceologico": "cartoleria",
   "categoria": "penne",
   "marca": "bic",
@@ -9,7 +9,7 @@
   "descrizione": "penne nere"
   },
   {
-  "codice_id": 2,
+  "codice": "4856235112831",
   "gruppo_merceologico": "cartoleria",
   "categoria": "gomme",
   "marca": "staedler",
@@ -18,7 +18,7 @@
   "descrizione": "classiche gomme per cancellare"
   },
   {
-  "codice_id": 3,
+  "codice": "7898545117785",
   "gruppo_merceologico": "cartoleria",
   "categoria": "penne",
   "marca": "waterman",

@@ -13,6 +13,8 @@ class VistaModificaArticolo(QWidget):
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
 
+        if self.elemento_modifica == "Modifica Codice":
+            self.info = QLineEdit(self.controller.get_codice_articolo())
         if self.elemento_modifica == "Modifica Gruppo Merceologico":
             self.info = QLineEdit(self.controller.get_gruppo_merceologico_articolo())
         if self.elemento_modifica == "Modifica Categoria":
@@ -47,6 +49,8 @@ class VistaModificaArticolo(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',
                                  QMessageBox.Ok, QMessageBox.Ok)
         else:
+            if self.elemento_modifica == "Modifica Codice":
+                self.controller.set_codice_articolo(self.info.text())
             if self.elemento_modifica == "Modifica Gruppo Merceologico":
                 self.controller.set_gruppo_merceologico_articolo(self.info.text())
             if self.elemento_modifica == "Modifica Categoria":

@@ -11,7 +11,7 @@ class VistaInserisciArticolo(QWidget):
         self.controller = controller
         self.callback = callback
         self.info = {}
-        self.labels = ["Gruppo Merciologico:", "Categoria:", "Marca:", "Prezzo Unitario:", "Descrizione:"]
+        self.labels = ["Codice a Barre:", "Gruppo Merceologico:", "Categoria:", "Marca:", "Prezzo Unitario:", "Descrizione:"]
 
         self.v_layout = QVBoxLayout()
         self.grid_layout = QGridLayout()
@@ -43,21 +43,21 @@ class VistaInserisciArticolo(QWidget):
             i = i+1
 
     def add_articolo(self):
-        gruppo_merciologico = self.info["Gruppo Merciologico:"].text()
+        codice = self.info["Codice a Barre:"].text()
+        gruppo_merciologico = self.info["Gruppo Merceologico:"].text()
         categoria = self.info["Categoria:"].text()
         marca = self.info["Marca:"].text()
         prezzo_unitario = self.info["Prezzo Unitario:"].text()
         descrizione = self.info["Descrizione:"].text()
 
-        if gruppo_merciologico == "" or categoria == "" or marca == "" or prezzo_unitario == "":
+        if codice == "" or gruppo_merciologico == "" or categoria == "" or marca == "" or prezzo_unitario == "":
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.',
                                  QMessageBox.Ok, QMessageBox.Ok)
         elif not self.is_float(prezzo_unitario) and not self.is_int(prezzo_unitario):
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico nel campo Prezzo Unitario.',
                                  QMessageBox.Ok, QMessageBox.Ok)
         else:
-            self.controller.model.codice_id = self.controller.model.codice_id+1
-            self.controller.aggiungi_articolo(Articolo(self.controller.model.codice_id, gruppo_merciologico, categoria, marca, prezzo_unitario, 0, descrizione))
+            self.controller.aggiungi_articolo(Articolo(codice, gruppo_merciologico, categoria, marca, prezzo_unitario, 0, descrizione))
             self.callback()
             self.close()
 

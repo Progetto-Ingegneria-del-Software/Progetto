@@ -11,7 +11,7 @@ class VistaListaArticoli(QWidget):
         super(VistaListaArticoli, self).__init__(parent)
 
         self.controller = ControlloreListaArticoli()
-        self.name_colonne = ['Codice ID', 'Gruppo Merceologico', 'Categoria', 'Marca', 'Prezzo Unitario',
+        self.name_colonne = ['Codice a Barre', 'Gruppo Merceologico', 'Categoria', 'Marca', 'Prezzo Unitario',
                    'Sconto', 'Descrizione']
 
         self.v_layout = QVBoxLayout()
@@ -88,8 +88,8 @@ class VistaListaArticoli(QWidget):
 
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
-            self.vista_articolo = VistaArticolo(self.controller.get_articolo_by_id(
-            int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.controller.elimina_articolo_by_id, self.update_table_view)
+            self.vista_articolo = VistaArticolo(self.controller.get_articolo_by_codice(
+            self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()), self.controller.elimina_articolo_by_codice, self.update_table_view)
             self.vista_articolo.show()
 
 
@@ -99,14 +99,14 @@ class VistaListaArticoli(QWidget):
 
     def delete_articolo(self):
         if self.table_view.selectedIndexes():
-            articolo_selezionato = self.controller.get_articolo_by_id(
-                int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()))
-            delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare l\'articolo '  + str(articolo_selezionato.codice_id) + '?',
-                                          'L\'articolo ' + str(articolo_selezionato.codice_id) +' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
+            articolo_selezionato = self.controller.get_articolo_by_codice(
+                self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())
+            delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare l\'articolo '  + str(articolo_selezionato.codice) + '?',
+                                          'L\'articolo ' + str(articolo_selezionato.codice) +' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
                                           QMessageBox.Yes,
                              QMessageBox.No)
             if delete_view == QMessageBox.Yes:
-                self.controller.elimina_articolo_by_id(articolo_selezionato.codice_id)
+                self.controller.elimina_articolo_by_codice(articolo_selezionato.codice)
                 self.update_table_view()
 
     def update_table_view(self):
@@ -118,7 +118,7 @@ class VistaListaArticoli(QWidget):
     def show_table_view_items(self, item_list):
         i = 0
         for articolo in item_list:
-            item = QTableWidgetItem(str(articolo.codice_id))
+            item = QTableWidgetItem(str(articolo.codice))
             self.table_view.setItem(i, 0, item)
             item = QTableWidgetItem(str(articolo.gruppo_merceologico))
             self.table_view.setItem(i, 1, item)

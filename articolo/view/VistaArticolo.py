@@ -18,8 +18,12 @@ class VistaArticolo(QWidget):
 
         grid_layout = QGridLayout()
 
-        label_codice_id = QLabel("Codice ID: " + str(self.controller.get_codice_id_articolo()))
-        grid_layout.addWidget(label_codice_id, 0, 0)
+        label_codice = QLabel("Codice: " + str(self.controller.get_codice_articolo()))
+        grid_layout.addWidget(label_codice, 0, 0)
+
+        button_gruppo_merceologico = QPushButton("Modifica Codice")
+        button_gruppo_merceologico.clicked.connect(lambda: self.show_modifica_articolo("Modifica Codice"))
+        grid_layout.addWidget(button_gruppo_merceologico, 0, 1)
 
         label_gruppo_merceologico = QLabel("Gruppo Merceologico: " + str(self.controller.get_gruppo_merceologico_articolo()))
         grid_layout.addWidget(label_gruppo_merceologico, 1, 0)
@@ -65,22 +69,22 @@ class VistaArticolo(QWidget):
         grid_layout.addWidget(button_sconto_perc, 6, 1)
 
         v_layout.addLayout(grid_layout)
-        button_elimina_articolo = QPushButton("Elimina Articolo " + str(self.controller.get_codice_id_articolo()))
+        button_elimina_articolo = QPushButton("Elimina Articolo " + str(self.controller.get_codice_articolo()))
         button_elimina_articolo.clicked.connect(self.delete_articolo)
         v_layout.addWidget(button_elimina_articolo)
 
         self.setLayout(v_layout)
         self.resize(600, 350)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Articolo " + str(self.controller.get_codice_id_articolo()))
+        self.setWindowTitle("Articolo " + str(self.controller.get_codice_articolo()))
 
     def delete_articolo(self):
-        delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare l\'articolo ' + str(self.controller.get_codice_id_articolo()) + '?',
-                                          'L\'articolo ' + str(self.controller.get_codice_id_articolo()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
+        delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare l\'articolo ' + str(self.controller.get_codice_articolo()) + '?',
+                                          'L\'articolo ' + str(self.controller.get_codice_articolo()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
                                           QMessageBox.Yes,
                                           QMessageBox.No)
         if delete_view == QMessageBox.Yes:
-            self.elimina_articolo(self.controller.get_codice_id_articolo())
+            self.elimina_articolo(self.controller.get_codice_articolo())
             self.callback()
             self.close()
 

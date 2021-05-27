@@ -4,8 +4,8 @@ class ControlloreArticolo:
 
         self.model = articolo
 
-    def get_codice_id_articolo(self):
-        return self.model.codice_id
+    def get_codice_articolo(self):
+        return self.model.codice
 
     def get_gruppo_merceologico_articolo(self):
         return self.model.gruppo_merceologico
@@ -24,6 +24,9 @@ class ControlloreArticolo:
 
     def get_descrizione_articolo(self):
         return self.model.descrizione
+
+    def set_codice_articolo(self, codice):
+        self.model.codice = codice
 
     def set_gruppo_merceologico_articolo(self, gruppo_merceologico):
         self.model.gruppo_merceologico = gruppo_merceologico
