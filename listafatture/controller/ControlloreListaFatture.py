@@ -7,6 +7,9 @@ class ControlloreListaFatture():
 
         self.model = ListaFatture()
 
+    def get_assegnamento_numero_fattura(self):
+        return self.model.numero_fattura
+
     def aggiungi_fattura(self, fattura):
         self.model.aggiungi_fattura(fattura)
 
