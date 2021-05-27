@@ -104,8 +104,9 @@ class VistaListaScontrini(QWidget):
     ###             DEL TIPO DI FATTURA               ###
     #####################################################
     #def show_crea_scontrino(self):
-        #self.vista_scegli_fattura = VistaScegliFattura(self.update_table_view)  ## CONTROLLARE GLI ARGOMENTI DA PASSARE A Vista_Scegli_Fattura
-        #self.vista_scegli_fattura.show()
+        #numero_scontrino = self.table_view.rowCount() + 1
+        #self.vista_crea_scontrino = VistaCreaScontrino(numero_scontrino, self.update_table_view)
+        #self.vista_crea_scontrino.show()
 
 
     ##########################################

@@ -1,3 +1,4 @@
+
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout, \
     QHBoxLayout, QComboBox, QLabel, QSizePolicy, QFrame, QHeaderView
 
@@ -8,6 +9,7 @@ from listadipendenti.view.VistaListaDipendenti import VistaListaDipendenti
 from listafornitori.view.VistaListaFornitori import VistaListaFornitori
 from listafatture.view.VistaListaFatture import VistaListaFatture
 from listascontrini.view.VistaListaScontrini import VistaListaScontrini
+from listascontrini.view.VistaCreaScontrino import VistaCreaScontrino
 from home.views.logoo import App
 
 
@@ -89,7 +91,7 @@ class VistaHome(QWidget):
             tabs.addTab(self.Clienti(), "Clienti")
             tabs.addTab(self.ClientiPIva(), "Clienti PIVA")
             tabs.addTab(self.Fatture(), "Fatture")
-            #tabs.addTab(self.Scontrini(), "Scontrini")
+            tabs.addTab(self.Scontrini(), "Scontrini")
 
             layout.addWidget(tabs)
 
@@ -205,7 +207,7 @@ class VistaHome(QWidget):
             generalTab = QWidget()
             layout = QVBoxLayout()
 
-            layout.addWidget(VistaListaScontrini())
+            layout.addWidget(VistaCreaScontrino(2))
 
             generalTab.setLayout(layout)
             return generalTab

@@ -1,37 +1,107 @@
-from PyQt5.QtWidgets import QAbstractItemView, QHeaderView, QTableWidget, QWidget, QVBoxLayout, QLabel, QLineEdit, QSpacerItem, QSizePolicy, QPushButton, \
-    QMessageBox, QGridLayout
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QAbstractItemView, QHBoxLayout, QHeaderView, QTableWidget, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox
 
 from scontrino.model.Scontrino import Scontrino
 from scontrino.controller.ControlloreScontrino import ControlloreScontrino
+from listascontrini.controller.ControlloreListaScontrini import ControlloreListaScontrini
 
 class VistaCreaScontrino(QWidget):
-    def __init__(self, controller, callback):
+    def __init__(self, numero_scontrino):
         super(VistaCreaScontrino, self).__init__()
 
-        self.controller = controller
-        self.callback = callback
+        self.controller = ControlloreListaScontrini
+        #self.callback = callback
+        self.numero_scontrino = numero_scontrino
         self.info = {}
 
-        self.labels = ["Data:"]
+        # Impostazione del font da applicare ad alcune Label
+        bold_font = QtGui.QFont()
+        bold_font.setBold(True)
+        bold_font.setPixelSize(12)
+
+        #self.labels = ["Data:"]
 
         self.v_layout = QVBoxLayout()
-        self.grid_layout = QGridLayout()
+        self.h_layout = QHBoxLayout()
 
-        self.add_item_view()
+        # Viene stampato il numero dello scontrino
+        self.label_num_scontrino = QLabel("Scontrino numero: ")
+        self.label_num_scontrino.setFont(bold_font)
+        self.label_numero = QLabel("{}        ".format(self.numero_scontrino))
+        self.h_layout.addWidget(self.label_num_scontrino)
+        self.h_layout.addWidget(self.label_numero)
 
-        self.v_layout.addLayout(self.grid_layout)
+        # Viene permesso l'inserimento della Data
+        self.label_data_scontrino = QLabel("Data: ")
+        self.label_data_scontrino.setFont(bold_font)
+        self.h_layout.addWidget(self.label_data_scontrino)
+        self.edit_data_scontrino = QLineEdit("gg/mm/aaaa")
+        self.edit_data_scontrino.setFixedWidth(100)
+        self.h_layout.addWidget(self.edit_data_scontrino)
 
-        self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        self.h_layout.addStretch()
 
+        self.v_layout.addLayout(self.h_layout)
+
+        self.h_layout2 = QHBoxLayout()
+
+        # Qui inizia la tabella degli articoli acquistati
+        self.label_search_articolo = QLabel("Dati Articolo/i:")
+        self.label_search_articolo.setFont(bold_font)
+        self.h_layout2.addWidget(self.label_search_articolo)
+        self.search_bar_articolo = QLineEdit("Inserisci il codice a barre dell'articolo")
+        self.search_bar_articolo.setFixedWidth(300)
+        self.h_layout2.addWidget(self.search_bar_articolo)
+        self.search_bar_quantita = QLineEdit()
+        self.search_bar_quantita.setFixedWidth(50)
+        self.h_layout2.addWidget(self.search_bar_quantita)
+        self.search_button = QPushButton("Aggiungi Articolo")
+        self.h_layout2.addWidget(self.search_button)
+        # self.search_button.pressed.connect(self.add_articolo_in_fattura)
+        self.h_layout2.addStretch()
+
+        self.v_layout.addLayout(self.h_layout2)
+
+        self.table_articoli = QTableWidget()
+        self.table_articoli.setColumnCount(5)
+        self.table_articoli.setRowCount(0)
+        self.table_articoli.setHorizontalHeaderLabels(["Codice", "Descrizione", "Prezzo Unitario", "Sconto", "Totale Riga"]) # Nomi delle colonne della tabella 
+        self.table_articoli.verticalHeader().setVisible(False)
+        self.table_articoli.setAlternatingRowColors(True)
+        self.table_articoli.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_articoli.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.table_articoli.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+        self.table_articoli.resizeColumnsToContents()
+        self.table_articoli.resizeRowsToContents()
+
+        self.table_articoli.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        self.v_layout.addWidget(self.table_articoli)
+        
+        # Bottone che conferma la creazione dello scontrino
         btn_ok = QPushButton("Crea")
         btn_ok.clicked.connect(lambda: self.add_fattura())
 
-        self.v_layout.addWidget(btn_ok)
-
         self.setLayout(self.v_layout)
-        self.resize(400, 300)
+        self.resize(800, 350)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Crea Scontrino")
+        self.setWindowTitle("Creazione Scontrino Numero {}".format(self.numero_scontrino))
+
+        #self.add_item_view()
+
+        #self.v_layout.addLayout(self.grid_layout)
+
+        #self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+
+        
+
+        #self.v_layout.addWidget(btn_ok)
+
+        #self.setLayout(self.v_layout)
+        #self.resize(400, 300)
+        #self.setFixedSize(self.size())
+        #self.setWindowTitle("Crea Scontrino")
 
 
     ###########################################
@@ -41,7 +111,7 @@ class VistaCreaScontrino(QWidget):
         ## PRIMA LABEL "DATA"
         self.grid_layout.addWidget(QLabel(self.labels[0]), 1, 0)
         self.current_text_edit = QLineEdit(self)
-        self.current_text_edit.returnPressed.connect(lambda: self.add_fattura())
+        self.current_text_edit.returnPressed.connect(lambda: self.add_scontrino())
         self.grid_layout.addWidget(self.current_text_edit, 1, 1)
         self.info["Data:"] = self.current_text_edit
 
@@ -66,7 +136,7 @@ class VistaCreaScontrino(QWidget):
         self.table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         self.current_text_edit = QLineEdit(self)
-        self.current_text_edit.returnPressed.connect(lambda: self.add_fattura(tipo_cliente))
+        self.current_text_edit.returnPressed.connect(lambda: self.add_scontrino())
         self.grid_layout.addWidget(self.current_text_edit, 1, 1)
 
 
@@ -75,7 +145,7 @@ class VistaCreaScontrino(QWidget):
         for name in self.labels:
             self.grid_layout.addWidget(QLabel(name), i, 0)
             self.current_text_edit = QLineEdit(self)
-            self.current_text_edit.returnPressed.connect(lambda: self.add_fattura(tipo_cliente))
+            self.current_text_edit.returnPressed.connect(lambda: self.add_scontrino())
             self.grid_layout.addWidget(self.current_text_edit, i, 1)
             self.info[name] = self.current_text_edit
             i = i+1
@@ -85,68 +155,19 @@ class VistaCreaScontrino(QWidget):
     ##  FUNZIONE CHE PERMETTE LA CREAZIONE   ## 
     ##            DELLO SCONTRINO            ##
     ###########################################
-    def add_fattura(self):
+    def add_scontrino(self):
         numero_scontrino = self.info["Numero:"].text()
         data = self.info["Data:"].text()
 
-        if tipo_cliente == 'Privato': #Caso in cui è stato impostato il Cliente Privato
-            cliente = self.info["Cliente:"].text()
-            if numero_fattura == "" or data == "" or cliente == "":
-                QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.', QMessageBox.Ok, QMessageBox.Ok)
-            else:
-                self.controller.model.numero_fattura = self.controller.model.numero_fattura+1
-                #self.controller.aggiungi_fattura(Fattura(self.controller.model.numero_fattura, gruppo_merciologico, categoria, marca, prezzo_unitario, None, None))   #CONTROLLARE QUESTA FUNZIONE
-                self.callback()
-                self.close()
-
-        elif tipo_cliente == 'IVA': #Caso in cui è stato impostato il Cliente con Partita IVA
-            cliente = self.info["Cliente Partita IVA:"].text()
-            if numero_fattura == "" or data == "" or cliente == "":
-                QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.', QMessageBox.Ok, QMessageBox.Ok)
-            else:
-                self.controller.model.numero_fattura = self.controller.model.numero_fattura+1
-                #self.controller.aggiungi_fattura(Fattura(self.controller.model.numero_fattura, gruppo_merciologico, categoria, marca, prezzo_unitario, None, None))   #CONTROLLARE QUESTA FUNZIONE
-                self.callback()
-                self.close()
-        
-        else:  #Caso in cui è stato impostato il Fornitore
-            fornitore = self.info["Fornitore:"].text()
-            if numero_fattura == "" or data == "" or fornitore == "":
-                QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.', QMessageBox.Ok, QMessageBox.Ok)
-            else:
-                self.controller.model.numero_fattura = self.controller.model.numero_fattura+1
-                #self.controller.aggiungi_fattura(Fattura(self.controller.model.numero_fattura, gruppo_merciologico, categoria, marca, prezzo_unitario, None, None))   #CONTROLLARE QUESTA FUNZIONE
-                self.callback()
-                self.close()
-
-        
-    ###########################################
-    ##  FUNZIONE CHE MOSTRA UN POPUP PER LA  ## 
-    ##      SCELTA DEL TIPO DI FATTURA       ##
-    ###########################################
-    def messaggio_tipo_fattura(self, tipo_fatt):
-        message_tipo = QMessageBox.question(self, 'Che tipo di fattura vuoi creare?', 'Carico o Scarico?', QMessageBox.Carico, QMessageBox.Scarico)
-        if message_tipo == QMessageBox.Carico:
-            tipo_fatt = 'Carico'
+        if numero_scontrino == "" or data == "":
+            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.', QMessageBox.Ok, QMessageBox.Ok)
         else:
-            tipo_fatt = 'Scarico'
+            self.controller.model.numero_scontrino = self.controller.model.numero_scontrino + 1
+            #self.controller.aggiungi_fattura(Fattura(self.controller.model.numero_fattura, gruppo_merciologico, categoria, marca, prezzo_unitario, None, None))   #CONTROLLARE QUESTA FUNZIONE
+            self.callback()
+            self.close()
 
 
-    ###########################################
-    ##  FUNZIONE CHE MOSTRA UN POPUP PER LA  ## 
-    ##      SCELTA DEL TIPO DI CLIENTE       ##
-    ##                                       ##
-    ##    PRE-CONDIZIONE: La fattura deve    ##
-    ##        essere di tipo "SCARICO"       ##
-    ###########################################
-    def messaggio_tipo_cliente(self, tipo_cliente):
-        message_tipo = QMessageBox.question(self, 'Che tipo di cliente richiede la fattura?', 'Cliente Privato o possessore di Partita IVA?', QMessageBox.Privato, QMessageBox.Partita_IVA)
-        if message_tipo == QMessageBox.Privato:
-            tipo_cliente = 'Privato'
-        else:
-            tipo_cliente = 'IVA'
-
-    
     def filter(self, tipo_cliente):
         if tipo_cliente == 'Privato': #Caso in cui è stato impostato il Cliente Privato
             filter_list = []
