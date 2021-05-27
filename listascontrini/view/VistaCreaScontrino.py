@@ -1,82 +1,58 @@
 from PyQt5.QtWidgets import QAbstractItemView, QHeaderView, QTableWidget, QWidget, QVBoxLayout, QLabel, QLineEdit, QSpacerItem, QSizePolicy, QPushButton, \
     QMessageBox, QGridLayout
 
-from fattura.model.Fattura import Fattura
-from cliente.model.Cliente import Cliente
-from listaclienti.controller.Controllore_Lista_clienti import Controllore_Lista_clienti
-from listaclientiPIva.control.Controllore_lista_clientipiva import Controllore_lista_clientipiva
-from listafornitori.control.ControlloreListaFornitori import ControlloreListaFornitori
-from fattura.controller.ControlloreFattura import ControlloreFattura
+from scontrino.model.Scontrino import Scontrino
+from scontrino.controller.ControlloreScontrino import ControlloreScontrino
 
-class VistaCreaFattura(QWidget):
+class VistaCreaScontrino(QWidget):
     def __init__(self, controller, callback):
-        super(VistaCreaFattura, self).__init__()
-
-        tipo_fatt = self.messaggio_tipo_fattura(ControlloreFattura.get_tipo_fattura())  # Viene stabilito il tipo di fattura Carico/Scarico
-        
-        #Se la fattura è di scarico allora viene lanciato il popup per la scelta del tipo di cliente
-        if tipo_fatt == 'Scarico':
-            tipo_cliente = self.messaggio_tipo_cliente(ControlloreFattura.get_tipo_cliente())
-            if tipo_cliente == 'Privato':
-                self.labels = ["Data:", "Cliente"]  # Nomi delle labels dei dati da prendere in input
-            else:
-                self.labels = ["Data:", "Cliente Partita IVA"]  # Nomi delle labels dei dati da prendere in input  
-        else: #Altrimenti il tipo di cliente viene impostato come Fornitore
-            tipo_cliente = 'Fornitore'
-            self.labels = ["Data:", "Fornitore:"]  # Nomi delle labels dei dati da prendere in input 
+        super(VistaCreaScontrino, self).__init__()
 
         self.controller = controller
         self.callback = callback
         self.info = {}
 
+        self.labels = ["Data:"]
+
         self.v_layout = QVBoxLayout()
         self.grid_layout = QGridLayout()
 
-        self.add_item_view(tipo_cliente)
+        self.add_item_view()
 
         self.v_layout.addLayout(self.grid_layout)
 
         self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-        
-
         btn_ok = QPushButton("Crea")
-        btn_ok.clicked.connect(lambda: self.add_fattura(tipo_cliente))
+        btn_ok.clicked.connect(lambda: self.add_fattura())
 
         self.v_layout.addWidget(btn_ok)
 
         self.setLayout(self.v_layout)
         self.resize(400, 300)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Crea Fattura")
+        self.setWindowTitle("Crea Scontrino")
 
 
     ###########################################
     ##  INTERFACCIA DI INSERIMENTO DEI DATI  ##
     ###########################################
-    def add_item_view(self, tipo_cliente):
+    def add_item_view(self):
         ## PRIMA LABEL "DATA"
         self.grid_layout.addWidget(QLabel(self.labels[0]), 1, 0)
         self.current_text_edit = QLineEdit(self)
-        self.current_text_edit.returnPressed.connect(lambda: self.add_fattura(tipo_cliente))
+        self.current_text_edit.returnPressed.connect(lambda: self.add_fattura())
         self.grid_layout.addWidget(self.current_text_edit, 1, 1)
         self.info["Data:"] = self.current_text_edit
 
         ## SECONDA LABEL
         self.grid_layout.addWidget(QLabel(self.labels[1]), 2, 0)
         self.search_bar = QLineEdit(self)
-        self.search_bar.returnPressed.connect(lambda: self.filter(tipo_cliente))
+        self.search_bar.returnPressed.connect(lambda: self.filter())
         self.grid_layout.addWidget(self.search_bar, 1, 1)
         self.table_view = QTableWidget()
         
-        if tipo_cliente == 'Privato': #Caso in cui è stato impostato il Cliente Privato
-            controller = Controllore_Lista_clienti
-            self.table_view.setRowCount(len(self.controller.model.lista_clienti))
-            self.table_view.setColumnCount(7)
-            self.show_table_view_items(self.controller.get_lista_clienti())
-        elif tipo_cliente == 'IVA': #Caso in cui è stato impostato il Cliente con Partita IVA
-            
-
+        
         self.table_view.setHorizontalHeaderLabels(self.name_colonne)
         self.table_view.verticalHeader().setVisible(False)
         self.table_view.setAlternatingRowColors(True)
@@ -88,13 +64,6 @@ class VistaCreaFattura(QWidget):
         self.table_view.resizeRowsToContents()
 
         self.table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-
-        #if tipo_cliente == 'Privato': #Caso in cui è stato impostato il Cliente Privato
-            
-        #elif tipo_cliente == 'IVA': #Caso in cui è stato impostato il Cliente con Partita IVA
-            
-        #else: #Caso in cui è stato impostato il Fornitore
-            
 
         self.current_text_edit = QLineEdit(self)
         self.current_text_edit.returnPressed.connect(lambda: self.add_fattura(tipo_cliente))
@@ -114,10 +83,10 @@ class VistaCreaFattura(QWidget):
 
     ###########################################
     ##  FUNZIONE CHE PERMETTE LA CREAZIONE   ## 
-    ##             DELLA FATTURA             ##
+    ##            DELLO SCONTRINO            ##
     ###########################################
-    def add_fattura(self, tipo_cliente):
-        numero_fattura = self.info["Numero:"].text()
+    def add_fattura(self):
+        numero_scontrino = self.info["Numero:"].text()
         data = self.info["Data:"].text()
 
         if tipo_cliente == 'Privato': #Caso in cui è stato impostato il Cliente Privato
