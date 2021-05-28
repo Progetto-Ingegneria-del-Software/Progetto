@@ -1,9 +1,10 @@
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QAbstractItemView, QHBoxLayout, QHeaderView, QTableWidget, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox
+from PyQt5.QtWidgets import QAbstractItemView, QHBoxLayout, QHeaderView, QTableWidget, QTableWidgetItem, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox
 
 from scontrino.model.Scontrino import Scontrino
 from scontrino.controller.ControlloreScontrino import ControlloreScontrino
 from listascontrini.controller.ControlloreListaScontrini import ControlloreListaScontrini
+from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 
 class VistaCreaScontrino(QWidget):
     def __init__(self, numero_scontrino):
@@ -12,14 +13,17 @@ class VistaCreaScontrino(QWidget):
         self.controller = ControlloreListaScontrini
         #self.callback = callback
         self.numero_scontrino = numero_scontrino
-        self.info = {}
+        self.carrello_acquisti = []
+        self.lista_totali_riga = []
 
         # Impostazione del font da applicare ad alcune Label
         bold_font = QtGui.QFont()
         bold_font.setBold(True)
         bold_font.setPixelSize(12)
 
-        #self.labels = ["Data:"]
+        # Impostazione del font corsivo da applicare alla scritta interna del QLineEdit
+        italic_font = QtGui.QFont()
+        italic_font.setItalic(True)
 
         self.v_layout = QVBoxLayout()
         self.h_layout = QHBoxLayout()
@@ -45,19 +49,23 @@ class VistaCreaScontrino(QWidget):
 
         self.h_layout2 = QHBoxLayout()
 
-        # Qui inizia la tabella degli articoli acquistati
+        # INSERIMENTO DEGLI ARTICOLI
         self.label_search_articolo = QLabel("Dati Articolo/i:")
         self.label_search_articolo.setFont(bold_font)
         self.h_layout2.addWidget(self.label_search_articolo)
-        self.search_bar_articolo = QLineEdit("Inserisci il codice a barre dell'articolo")
+        self.search_bar_articolo = QLineEdit("Inserisci il codice a barre dell'articolo") # Viene preso in input il codice a barre dell'articolo da inserire nello scontrino
         self.search_bar_articolo.setFixedWidth(300)
+        self.search_bar_articolo.setFont(italic_font)
         self.h_layout2.addWidget(self.search_bar_articolo)
+        self.label_quantita = QLabel("Quantità:") # Viene preso in input la quantità di pezzi dell'articolo
+        self.label_quantita.setFont(bold_font)
+        self.h_layout2.addWidget(self.label_quantita)
         self.search_bar_quantita = QLineEdit()
         self.search_bar_quantita.setFixedWidth(50)
         self.h_layout2.addWidget(self.search_bar_quantita)
-        self.search_button = QPushButton("Aggiungi Articolo")
+        self.search_button = QPushButton("Aggiungi Articolo")  # Bottone che aggiunge l'articolo alla lista
         self.h_layout2.addWidget(self.search_button)
-        # self.search_button.pressed.connect(self.add_articolo_in_fattura)
+        self.search_button.pressed.connect(self.controllo_inserimento)
         self.h_layout2.addStretch()
 
         self.v_layout.addLayout(self.h_layout2)
@@ -78,10 +86,19 @@ class VistaCreaScontrino(QWidget):
         self.table_articoli.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         self.v_layout.addWidget(self.table_articoli)
+
+        self.h_layout3 = QHBoxLayout()
+
+        # Label dove verrà stampato il totale dell'importo dell'intero scontrino
+        self.label_totale = QLabel("Totale: €0")
+        self.label_totale.setFont(bold_font)
+        self.h_layout3.addWidget(self.label_totale)
+
+        self.v_layout.addLayout(self.h_layout3)
         
         # Bottone che conferma la creazione dello scontrino
-        btn_ok = QPushButton("Crea")
-        btn_ok.clicked.connect(lambda: self.add_fattura())
+        btn_crea = QPushButton("Crea")
+        #btn_crea.clicked.connect(lambda: self.add_fattura())
 
         self.setLayout(self.v_layout)
         self.resize(800, 350)
@@ -151,6 +168,50 @@ class VistaCreaScontrino(QWidget):
             i = i+1
 
 
+
+    #######################################################
+    ##  FUNZIONE CHE AGGIUNGE L'ARTICOLI PRESO IN INPUT  ##
+    ##         DENTRO LA LISTA DELLO SCONTRINO           ##
+    #######################################################
+    def add_articolo_in_scontrino(self):
+        self.controllore_articoli = ControlloreListaArticoli()
+        self.lista_articoli = self.controllore_articoli.get_lista_articoli()
+
+        # Viene cercato l'articolo preso in input dentro la lista degli articoli dell'anagrafica articolo
+        for articolo in self.lista_articoli:
+
+            # Se c'è corrispondenza di codice a barre allora vengono inizializzate le variabili
+            if self.search_bar_articolo.text() == articolo.codice:
+                self.totale_riga = articolo.prezzo_unitario*int(self.search_bar_quantita.text())-(articolo.prezzo_unitario*articolo.sconto_perc/100)*int(self.search_bar_quantita.text())
+                self.lista_totali_riga.append(articolo.prezzo_unitario*int(self.search_bar_quantita.text())-(articolo.prezzo_unitario*articolo.sconto_perc/100)*int(self.search_bar_quantita.text()))
+                self.carrello_acquisti.append(articolo)
+
+        self.table_articoli.setRowCount(len(self.carrello_acquisti))
+        i = 0
+        for articolo in self.carrello_acquisti:
+            item = QTableWidgetItem(str(articolo.codice))
+            self.table_articoli.setItem(i, 0, item)
+            item = QTableWidgetItem(str(articolo.descrizione))
+            self.table_articoli.setItem(i, 1, item)
+            item = QTableWidgetItem("€" + str(articolo.prezzo_unitario))
+            self.table_articoli.setItem(i, 2, item)
+            item = QTableWidgetItem(str(articolo.sconto_perc) + "%")
+            self.table_articoli.setItem(i, 3, item)
+            item = QTableWidgetItem(self.search_bar_quantita.text())
+            self.table_articoli.setItem(i, 4, item)
+            item = QTableWidgetItem("€" + str(self.totale_riga))
+            self.table_articoli.setItem(i, 5, item)
+            i = i + 1
+
+        self.totale = 0
+
+        # Viene calcolato il totale dell'intero scontrino
+        for totale_riga in self.lista_totali_riga:
+            self.totale += totale_riga
+        self.label_totale.setText("Totale: {}".format(self.totale))
+
+
+
     ###########################################
     ##  FUNZIONE CHE PERMETTE LA CREAZIONE   ## 
     ##            DELLO SCONTRINO            ##
@@ -168,27 +229,41 @@ class VistaCreaScontrino(QWidget):
             self.close()
 
 
-    def filter(self, tipo_cliente):
-        if tipo_cliente == 'Privato': #Caso in cui è stato impostato il Cliente Privato
-            filter_list = []
-            controllore = Controllore_Lista_clienti
-            for cliente in controllore.get_lista_clienti():
+    ###########################################
+    ##  FUNZIONE CHE CONTROLLA IL CORRETTO   ## 
+    ##  INSERIMENTO DEI DATI DELL'ARTICOLO   ##
+    ###########################################
+    def controllo_inserimento(self):
+        if self.search_bar_quantita.text() == "":  # CASO IN CUI NON SIA STATA INSERITA NESSUNA QUANTITÀ
+            QMessageBox.critical(self, 'Errore',
+                                 "Il campo Quantità è vuoto!",
+                                 QMessageBox.Ok, QMessageBox.Ok)
+        elif not self.is_int(self.search_bar_quantita.text()):  # CASO IN CUI LA QUANTITÀ INSERITA NON SIA UN NUMERO INTERO
+            QMessageBox.critical(self, 'Errore',
+                                 "Il campo Quantità deve contenere un numero intero!",
+                                 QMessageBox.Ok, QMessageBox.Ok)
+        else:
+            if not self.carrello_acquisti:
+                self.add_articolo_in_scontrino()
+            else:
+                self.codici = []
+                for articolo in self.carrello_acquisti:
+                    self.codici.append(articolo.codice)
+                if self.search_bar_articolo.text() in self.codici:
+                    QMessageBox.critical(self, 'Errore',
+                                         "L'articolo {} è già presente in lista!".format(articolo.codice),
+                                         QMessageBox.Ok, QMessageBox.Ok)
+                else:
+                    self.add_articolo_in_scontrino()
+    
 
-                if (self.search_bar.text()).upper() in cliente.nome.upper() + " " + cliente.cognome.upper() or cliente.cognome.upper() + " " + cliente.nome.upper() in (self.search_bar.text()).upper():
-                    filter_list.append(cliente)
-
-        elif tipo_cliente == 'IVA': #Caso in cui è stato impostato il Cliente con Partita IVA
-            filter_list = []
-            controllore = Controllore_lista_clientipiva
-            for cliente in controllore.get_lista_clientipiva():
-
-                if (self.search_bar.text()).upper() in cliente.nome.upper() + " " + cliente.cognome.upper() or cliente.cognome.upper() + " " + cliente.nome.upper() in (self.search_bar.text()).upper():
-                    filter_list.append(cliente)
-
-        else: #Caso in cui è stato impostato il Fornitore
-            filter_list = []
-            controllore = ControlloreListaFornitori
-            for cliente in controllore.get_lista_fornitori():
-
-                if (self.search_bar.text()).upper() in cliente.nome.upper() + " " + cliente.cognome.upper() or cliente.cognome.upper() + " " + cliente.nome.upper() in (self.search_bar.text()).upper():
-                    filter_list.append(cliente)
+    ###################################################
+    ##  FUNZIONE CHE CONTROLLA CHE IL DATO IN ESAME  ## 
+    ##              SIA DI TIPO INTERO               ##
+    ###################################################
+    def is_int(self, val):
+        try:
+            num = int(val)
+        except ValueError:
+            return False
+        return True
