@@ -207,7 +207,7 @@ class VistaHome(QWidget):
             generalTab = QWidget()
             layout = QVBoxLayout()
 
-            layout.addWidget(VistaCreaScontrino(2))
+            layout.addWidget(VistaListaScontrini())
 
             generalTab.setLayout(layout)
             return generalTab

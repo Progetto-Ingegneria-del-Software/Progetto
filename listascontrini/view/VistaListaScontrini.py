@@ -1,11 +1,10 @@
-from scontrino.model.Scontrino import Scontrino
+from os import times
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
     QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
 
 from scontrino.view.VistaScontrino import VistaScontrino
 from listascontrini.controller.ControlloreListaScontrini import ControlloreListaScontrini
-from scontrino.controller.ControlloreScontrino import ControlloreScontrino
-
+from listascontrini.view.VistaCreaScontrino import VistaCreaScontrino
 
 class VistaListaScontrini(QWidget):
     def __init__(self, parent=None):
@@ -103,10 +102,14 @@ class VistaListaScontrini(QWidget):
     ###  FUNZIONE CHE MOSTRA L'INTERFACCIA DI SCELTA  ###
     ###             DEL TIPO DI FATTURA               ###
     #####################################################
-    #def show_crea_scontrino(self):
-        #numero_scontrino = self.table_view.rowCount() + 1
-        #self.vista_crea_scontrino = VistaCreaScontrino(numero_scontrino, self.update_table_view)
-        #self.vista_crea_scontrino.show()
+    def show_crea_scontrino(self):
+        numero_scontrino = self.table_view.rowCount() + 1
+        self.registratore_cassa = QMessageBox.information(self, "Collegamento...", 
+                                    "Collegamento al registratore di cassa in corso..." + '\n \n' + "Cliccare su OK per avanzare alla creazione dello scontrino!") # Avviso di collegamento al registratore di cassa.
+                                                                                                                                                                   # Non avviene nessun collegamento reale, questo è un esempio.
+                                                                                                                                                                   # Visionare il Diagramma dei sistemi
+        self.vista_crea_scontrino = VistaCreaScontrino(numero_scontrino) # Viene aperta l'interfaccia di creazione dello scontrino
+        self.vista_crea_scontrino.show()
 
 
     ##########################################
@@ -115,7 +118,7 @@ class VistaListaScontrini(QWidget):
     def update_table_view(self):
         self.controller.save_data()
         self.table_view.setRowCount(len(self.controller.model.lista_scontrini))
-        self.table_view.setColumnCount(7)
+        self.table_view.setColumnCount(3)
         self.show_table_view_items(self.controller.get_lista_scontrini())
 
 

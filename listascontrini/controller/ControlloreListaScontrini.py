@@ -14,7 +14,7 @@ class ControlloreListaScontrini():
         return self.model.lista_scontrini
 
     def get_scontrino_by_index(self, id):
-        return self.model.get_scontrini_by_index(id)
+        return self.model.get_scontrino_by_index(id)
 
     def save_data(self):
         self.model.save_data()
