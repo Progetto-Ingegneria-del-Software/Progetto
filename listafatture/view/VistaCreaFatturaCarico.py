@@ -8,10 +8,10 @@ from listafornitori.control.ControlloreListaFornitori import ControlloreListaFor
 
 
 class VistaCreaFatturaCarico(QWidget):
-    def __init__(self, tipo_fattura):
+    def __init__(self):
         super(VistaCreaFatturaCarico, self).__init__()
 
-        self.tipo_fattura = tipo_fattura
+        self.tipo_fattura = "Carico"
         self.controller = ControlloreListaFatture()
         self.carrello_acquisti = []
         self.lista_totali_riga = []

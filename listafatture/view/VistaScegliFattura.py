@@ -51,7 +51,7 @@ class VistaScegliFattura(QWidget):
     ###        FATTURA SU "CARICO"        ###
     #########################################
     def funzione_carico_btn(self):
-        self.vista_crea_fattura_carico = VistaCreaFatturaCarico("Carico")
+        self.vista_crea_fattura_carico = VistaCreaFatturaCarico()
         self.vista_crea_fattura_carico.show()
         self.close()
     
@@ -61,7 +61,7 @@ class VistaScegliFattura(QWidget):
     ###       FATTURA SU "SCARICO"        ###
     #########################################
     def funzione_scarico_btn(self):
-        #self.vista_crea_fattura_scarico = VistaCreaFatturaScarico("Scarico")
-        #self.vista_crea_fattura_scarico.show()
+        self.vista_crea_fattura_scarico = VistaCreaFatturaScarico()
+        self.vista_crea_fattura_scarico.show()
         self.close()
     
