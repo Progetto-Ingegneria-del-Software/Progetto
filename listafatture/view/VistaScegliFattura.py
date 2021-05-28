@@ -4,6 +4,8 @@ from PyQt5 import QtGui
 from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QWidget, QLabel, QHBoxLayout, QPushButton
 
 from fattura.controller.ControlloreFattura import ControlloreFattura
+from listafatture.view.VistaCreaFatturaScarico import VistaCreaFatturaScarico
+
 
 class VistaScegliFattura(QWidget):
     def __init__(self, callback):
