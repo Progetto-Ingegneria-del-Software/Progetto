@@ -15,6 +15,8 @@ class VistaCreaFatturaCarico(QWidget):
         self.controller = ControlloreListaFatture()
         self.carrello_acquisti = []
         self.lista_totali_riga = []
+        self.quantita_acquisti = {}
+        self.totale_riga_acquisti = {}
 
         bold_font = QtGui.QFont()
         bold_font.setBold(True)
@@ -83,9 +85,9 @@ class VistaCreaFatturaCarico(QWidget):
         self.v_layout.addLayout(self.h_layout4)
 
         self.table_articoli = QTableWidget()
-        self.table_articoli.setColumnCount(6)
+        self.table_articoli.setColumnCount(7)
         self.table_articoli.setRowCount(0)
-        self.table_articoli.setHorizontalHeaderLabels(["Codice", "Descrizione", "Prezzo Unitario", "Sconto", "Quantità", "Totale Riga"])
+        self.table_articoli.setHorizontalHeaderLabels(["Codice", "Descrizione", "Prezzo Unitario", "Sconto", "Quantità", "Totale Riga", ""])
         self.table_articoli.verticalHeader().setVisible(False)
         self.table_articoli.setAlternatingRowColors(True)
         self.table_articoli.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -134,14 +136,26 @@ class VistaCreaFatturaCarico(QWidget):
         self.lista_articoli = self.controllore_articoli.get_lista_articoli()
 
         for articolo in self.lista_articoli:
-
             if self.search_bar_articolo.text() == articolo.codice:
-                self.totale_riga = articolo.prezzo_unitario*int(self.search_bar_quantita.text())-(articolo.prezzo_unitario*articolo.sconto_perc/100)*int(self.search_bar_quantita.text())
-                self.lista_totali_riga.append(articolo.prezzo_unitario*int(self.search_bar_quantita.text())-(articolo.prezzo_unitario*articolo.sconto_perc/100)*int(self.search_bar_quantita.text()))
+                self.quantita_acquisti[articolo.codice] = self.search_bar_quantita.text()
+                self.totale_riga_acquisti[articolo.codice] = articolo.prezzo_unitario*int(self.search_bar_quantita.text())-(articolo.prezzo_unitario*articolo.sconto_perc/100)*int(self.search_bar_quantita.text())
                 self.carrello_acquisti.append(articolo)
 
-        self.table_articoli.setRowCount(len(self.carrello_acquisti))
+        self.show_table_items()
+
+    def rimuovi_articolo(self, codice):
+        for articolo in self.carrello_acquisti:
+            if articolo.codice == codice:
+                self.carrello_acquisti.remove(articolo)
+
+        self.quantita_acquisti[codice] = 0
+        self.totale_riga_acquisti[codice] = 0
+
+        self.show_table_items()
+
+    def show_table_items(self):
         i = 0
+        self.table_articoli.setRowCount(len(self.carrello_acquisti))
         for articolo in self.carrello_acquisti:
             item = QTableWidgetItem(str(articolo.codice))
             self.table_articoli.setItem(i, 0, item)
@@ -151,17 +165,20 @@ class VistaCreaFatturaCarico(QWidget):
             self.table_articoli.setItem(i, 2, item)
             item = QTableWidgetItem(str(articolo.sconto_perc) + "%")
             self.table_articoli.setItem(i, 3, item)
-            item = QTableWidgetItem(self.search_bar_quantita.text())
+            item = QTableWidgetItem(self.truncate(self.quantita_acquisti[articolo.codice], 2))
             self.table_articoli.setItem(i, 4, item)
-            item = QTableWidgetItem("€" + str(self.totale_riga))
+            item = QTableWidgetItem("€" + str(self.totale_riga_acquisti[articolo.codice]))
             self.table_articoli.setItem(i, 5, item)
+            remove_button = QPushButton("Rimuovi")
+            remove_button.clicked.connect(lambda: self.rimuovi_articolo(articolo.codice))
+            self.table_articoli.setCellWidget(i, 6, remove_button)
             i = i + 1
 
         self.totale = 0
 
-        for totale_riga in self.lista_totali_riga:
-            self.totale += totale_riga
-        self.label_totale.setText("Totale: {}".format(self.totale))
+        for totale_riga in self.totale_riga_acquisti:
+            self.totale += self.totale_riga_acquisti[totale_riga]
+        self.label_totale.setText("Totale: {}".format(self.truncate(self.totale, 2)))
 
     def controllo_inserimento(self):
         if self.search_bar_quantita.text() == "":
@@ -181,7 +198,7 @@ class VistaCreaFatturaCarico(QWidget):
                     self.codici.append(articolo.codice)
                 if self.search_bar_articolo.text() in self.codici:
                     QMessageBox.critical(self, 'Errore',
-                                         "L'articolo {} è già presente in lista!".format(articolo.codice),
+                                         "L'articolo {} è già presente in lista!".format(self.search_bar_articolo.text()),
                                          QMessageBox.Ok, QMessageBox.Ok)
                 else:
                     self.add_articolo_in_fattura()
@@ -192,6 +209,13 @@ class VistaCreaFatturaCarico(QWidget):
         except ValueError:
             return False
         return True
+
+    def truncate(self, f, n):
+        s = '{}'.format(f)
+        if 'e' in s or 'E' in s:
+            return '{0:.{1}f}'.format(f, n)
+        i, p, d = s.partition('.')
+        return '.'.join([i, (d + '0' * n)[:n]])
 
 
 
