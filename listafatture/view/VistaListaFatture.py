@@ -115,7 +115,7 @@ class VistaListaFatture(QWidget):
     def update_table_view(self):
         self.controller.save_data()
         self.table_view.setRowCount(len(self.controller.model.lista_fatture))
-        self.table_view.setColumnCount(7)
+        self.table_view.setColumnCount(5)
         self.show_table_view_items(self.controller.get_lista_fatture())
 
 

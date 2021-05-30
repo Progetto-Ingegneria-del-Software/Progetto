@@ -3,19 +3,10 @@
       "num_fatt": 1,
       "tipo": "Scarico",
       "data": "05-01-2021",
-      "soggetto":
-          {
-            "codice_id": 2,
-            "nome": "Antonio",
-            "cognome": "Rossi",
-            "cf": "RSSNTN88E24I359V",
-            "indirizzo": "Via Celesti 3",
-            "telefono": 3778922646,
-            "email": "antonio.rossi88@gmail.com"
-          },
+      "soggetto": "carta srl",
       "lista_articoli": [
           {
-            "codice_id": 1,
+            "codice": 1,
             "descrizione": "penne nere",
             "marca": "bic",
             "prezzo_unitario": 0.25,
@@ -23,7 +14,7 @@
             "totale_riga": 1.5
           },
           {
-            "codice_id": 2,
+            "codice": 2,
             "descrizione": "classiche gomme per cancellare",
             "marca": "staedler",
             "prezzo_unitario": 0.72,
@@ -35,22 +26,12 @@
     },
     {
         "num_fatt": 2,
-        "tipo": "Carico",
+        "tipo": "Scarico",
         "data": "10-02-2021",
-        "soggetto": [
-            {
-                "codice_id": 1,
-                "ragione_sociale": "Luigi Bruni",
-                "partita_iva": "04917150155",
-                "citta": "Ancona",
-                "indirizzo": "Via Gialli, 76",
-                "telefono": 3437588962,
-                "email": "bruniluigi62@gmail.com"
-            }
-        ],
+        "soggetto": "Luigi Bruni",
         "lista_articoli": [
             {
-                "codice_id": 2,
+                "codice": 2,
                 "descrizione": "classiche gomme per cancellare",
                 "marca": "staedler",
                 "prezzo_unitario": 0.72,
@@ -58,7 +39,7 @@
                 "totale_riga": 7.2
             },
             {
-                "codice_id": 3,
+                "codice": 3,
                 "descrizione": "penne di alta fattura",
                 "marca": "waterman",
                 "prezzo_unitario": 60,
@@ -67,48 +48,5 @@
             }
         ],
         "totale": 247.2
-    },
-    {
-        "num_fatt": 3,
-        "tipo": "Scarico",
-        "data": "17-03-2021",
-        "soggetto": [
-            {
-              "codice_id": 2,
-              "ragione_sociale": "Antonio Rossi s.r.l.",
-              "partita_iva": "8756940514",
-              "citta": "Trieste",
-              "indirizzo": "Via Celesti, 3",
-              "telefono": 3778922646,
-              "email": "info@rossisrl.com"
-            }
-        ],
-        "lista_articoli": [
-            {
-              "codice_id": 1,
-              "descrizione": "penne nere",
-              "marca": "bic",
-              "prezzo_unitario": 0.25,
-              "quantita": 6,
-              "totale_riga": 1.5
-            },
-            {
-              "codice_id": 2,
-              "descrizione": "classiche gomme per cancellare",
-              "marca": "staedler",
-              "prezzo_unitario": 0.72,
-              "quantita": 10,
-              "totale_riga": 7.2
-            },
-            {
-              "codice_id": 3,
-              "descrizione": "penne di alta fattura",
-              "marca": "waterman",
-              "prezzo_unitario": 60,
-              "quantita": 5,
-              "totale_riga": 300
-            }
-        ],
-        "totale": 308.7
-      }
+    }
   ]
