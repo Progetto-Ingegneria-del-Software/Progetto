@@ -1,4 +1,4 @@
-from PyQt5 import QtGui
+from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QTableWidget, QAbstractItemView, \
     QHeaderView, QPushButton, QTableWidgetItem, QMessageBox
 
@@ -14,7 +14,6 @@ class VistaCreaFatturaCarico(QWidget):
         self.tipo_fattura = "Carico"
         self.controller = ControlloreListaFatture()
         self.carrello_acquisti = []
-        self.lista_totali_riga = []
         self.quantita_acquisti = {}
         self.totale_riga_acquisti = {}
 
@@ -119,10 +118,10 @@ class VistaCreaFatturaCarico(QWidget):
         self.setWindowTitle("Fattura Numero {}".format(self.controller.get_assegnamento_numero_fattura()))
 
     def search_fornitore(self):
-        self.controller_fornitore = ControlloreListaFornitori()
-        self.lista_fornitori = self.controller_fornitore.get_lista_fornitori()
+        controller_fornitore = ControlloreListaFornitori()
+        lista_fornitori = controller_fornitore.get_lista_fornitori()
 
-        for fornitore in self.lista_fornitori:
+        for fornitore in lista_fornitori:
             if self.search_bar_fornitore.text().upper() in fornitore.ragione_sociale.upper() \
                     or fornitore.ragione_sociale.upper() in self.search_bar_fornitore.text().upper():
                 self.mostra_fornitore_cercato(fornitore)
@@ -132,24 +131,14 @@ class VistaCreaFatturaCarico(QWidget):
         self.label_riga2_fornitore.setText("Città: {} Indirizzo: {} Telefono: {} Email: {}".format(fornitore.citta, fornitore.indirizzo, fornitore.telefono, fornitore.email))
 
     def add_articolo_in_fattura(self):
-        self.controllore_articoli = ControlloreListaArticoli()
-        self.lista_articoli = self.controllore_articoli.get_lista_articoli()
+        controllore_articoli = ControlloreListaArticoli()
+        lista_articoli = controllore_articoli.get_lista_articoli()
 
-        for articolo in self.lista_articoli:
+        for articolo in lista_articoli:
             if self.search_bar_articolo.text() == articolo.codice:
                 self.quantita_acquisti[articolo.codice] = self.search_bar_quantita.text()
                 self.totale_riga_acquisti[articolo.codice] = articolo.prezzo_unitario*int(self.search_bar_quantita.text())-(articolo.prezzo_unitario*articolo.sconto_perc/100)*int(self.search_bar_quantita.text())
                 self.carrello_acquisti.append(articolo)
-
-        self.show_table_items()
-
-    def rimuovi_articolo(self, codice):
-        for articolo in self.carrello_acquisti:
-            if articolo.codice == codice:
-                self.carrello_acquisti.remove(articolo)
-
-        self.quantita_acquisti[codice] = 0
-        self.totale_riga_acquisti[codice] = 0
 
         self.show_table_items()
 
@@ -165,12 +154,13 @@ class VistaCreaFatturaCarico(QWidget):
             self.table_articoli.setItem(i, 2, item)
             item = QTableWidgetItem(str(articolo.sconto_perc) + "%")
             self.table_articoli.setItem(i, 3, item)
-            item = QTableWidgetItem(self.truncate(self.quantita_acquisti[articolo.codice], 2))
+            item = QTableWidgetItem(self.quantita_acquisti[articolo.codice], 2)
             self.table_articoli.setItem(i, 4, item)
-            item = QTableWidgetItem("€" + str(self.totale_riga_acquisti[articolo.codice]))
+            item = QTableWidgetItem("€" + str(self.truncate(self.totale_riga_acquisti[articolo.codice], 2)))
             self.table_articoli.setItem(i, 5, item)
             remove_button = QPushButton("Rimuovi")
-            remove_button.clicked.connect(lambda: self.rimuovi_articolo(articolo.codice))
+            remove_button = remove_button
+            remove_button.clicked.connect(self.deleteClicked)
             self.table_articoli.setCellWidget(i, 6, remove_button)
             i = i + 1
 
@@ -179,6 +169,17 @@ class VistaCreaFatturaCarico(QWidget):
         for totale_riga in self.totale_riga_acquisti:
             self.totale += self.totale_riga_acquisti[totale_riga]
         self.label_totale.setText("Totale: {}".format(self.truncate(self.totale, 2)))
+
+    @QtCore.pyqtSlot()
+    def deleteClicked(self):
+        button = self.sender()
+        if button:
+            row = self.table_articoli.indexAt(button.pos()).row()
+            self.table_articoli.removeRow(row)
+            articolo_rimosso = self.carrello_acquisti.pop(row)
+            self.quantita_acquisti[articolo_rimosso.codice] = 0
+            self.totale_riga_acquisti[articolo_rimosso.codice] = 0
+            self.show_table_items()
 
     def controllo_inserimento(self):
         if self.search_bar_quantita.text() == "":
