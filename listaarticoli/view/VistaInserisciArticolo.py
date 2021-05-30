@@ -2,14 +2,15 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QSpacerItem
     QMessageBox, QGridLayout
 
 from articolo.model.Articolo import Articolo
-
+from listaarticoli.view.Vista_lista_articoli_magazzino import Vista_lista_articoli_magazzino
 
 class VistaInserisciArticolo(QWidget):
-    def __init__(self, controller, callback):
+    def __init__(self, controller, callback_articoli, callback_magazzino):
         super(VistaInserisciArticolo, self).__init__()
 
         self.controller = controller
-        self.callback = callback
+        self.callback_articoli = callback_articoli
+        self.callback_magazzino = callback_magazzino
         self.info = {}
         self.labels = ["Codice a Barre:", "Gruppo Merceologico:", "Categoria:", "Marca:", "Prezzo Unitario:", "Descrizione:"]
 
@@ -57,8 +58,9 @@ class VistaInserisciArticolo(QWidget):
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico nel campo Prezzo Unitario.',
                                  QMessageBox.Ok, QMessageBox.Ok)
         else:
-            self.controller.aggiungi_articolo(Articolo(codice, gruppo_merciologico, categoria, marca, prezzo_unitario, 0, descrizione))
-            self.callback()
+            self.controller.aggiungi_articolo(Articolo(codice, gruppo_merciologico, categoria, marca, prezzo_unitario, 0, descrizione, 0))
+            self.callback_articoli()
+            self.callback_magazzino()
             self.close()
 
     def is_float(self, val):
@@ -74,4 +76,3 @@ class VistaInserisciArticolo(QWidget):
         except ValueError:
             return False
         return True
-

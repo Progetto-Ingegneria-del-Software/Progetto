@@ -25,6 +25,9 @@ class ControlloreArticolo:
     def get_descrizione_articolo(self):
         return self.model.descrizione
 
+    def get_stock_articolo(self):
+        return self.model.stock
+
     def set_codice_articolo(self, codice):
         self.model.codice = codice
 
@@ -45,3 +48,6 @@ class ControlloreArticolo:
 
     def set_descrizione_articolo(self, descrizione):
         self.model.descrizione = descrizione
+
+    def set_stock_articolo(self, stock):
+        self.model.stock = stock

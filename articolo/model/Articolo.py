@@ -1,5 +1,5 @@
 class Articolo():
-    def __init__(self, codice, gruppo_merceologico, categoria, marca, prezzo_unitario, sconto_perc, descrizione):
+    def __init__(self, codice, gruppo_merceologico, categoria, marca, prezzo_unitario, sconto_perc, descrizione, stock):
         super(Articolo, self).__init__()
 
         self.codice = codice
@@ -9,3 +9,4 @@ class Articolo():
         self.prezzo_unitario = prezzo_unitario
         self.sconto_perc = sconto_perc
         self.descrizione = descrizione
+        self.stock = stock

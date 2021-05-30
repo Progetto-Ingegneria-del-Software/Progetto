@@ -1,52 +1,18 @@
 [
     {
       "num_fatt": 1,
-      "tipo": "Scarico",
+      "tipo": "Carico",
       "data": "05-01-2021",
       "soggetto": "carta srl",
-      "lista_articoli": [
-          {
-            "codice": 1,
-            "descrizione": "penne nere",
-            "marca": "bic",
-            "prezzo_unitario": 0.25,
-            "quantita": 6,
-            "totale_riga": 1.5
-          },
-          {
-            "codice": 2,
-            "descrizione": "classiche gomme per cancellare",
-            "marca": "staedler",
-            "prezzo_unitario": 0.72,
-            "quantita": 10,
-            "totale_riga": 7.2
-          }
-      ],
-      "totale": 8.7
+      "lista_articoli": [{"codice": 1, "quantita": 4},{"codice": 2, "quantita": 2}],
+      "totale": 2.44
     },
     {
         "num_fatt": 2,
-        "tipo": "Scarico",
+        "tipo": "Carico",
         "data": "10-02-2021",
         "soggetto": "Luigi Bruni",
-        "lista_articoli": [
-            {
-                "codice": 2,
-                "descrizione": "classiche gomme per cancellare",
-                "marca": "staedler",
-                "prezzo_unitario": 0.72,
-                "quantita": 10,
-                "totale_riga": 7.2
-            },
-            {
-                "codice": 3,
-                "descrizione": "penne di alta fattura",
-                "marca": "waterman",
-                "prezzo_unitario": 60,
-                "quantita": 4,
-                "totale_riga": 240
-            }
-        ],
-        "totale": 247.2
+        "lista_articoli": [{"codice": 2, "quantita": 1},{"codice": 3, "quantita": 1}],
+        "totale": 54.72
     }
   ]

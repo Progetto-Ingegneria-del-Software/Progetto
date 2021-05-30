@@ -10,7 +10,9 @@ class VistaFattura(QWidget):
     def __init__(self, fattura, callback):
         super(VistaFattura, self).__init__()
 
-        self.controller = ControlloreFattura(fattura)
+        self.fattura = fattura
+        print(self.fattura)
+        self.controller = ControlloreFattura(self.fattura)
         self.callback = callback
 
         v_layout = QVBoxLayout()
@@ -26,9 +28,11 @@ class VistaFattura(QWidget):
         grid_layout.addWidget(label_tipo_fattura, 1, 0)
 
         ## DATA FATTURA ##
-        label_data_fattura = QLabel("Data: " + str(self.controller.get_data()))
+        label_data_fattura = QLabel("Data: " + str(self.controller.get_data_fattura()))
         grid_layout.addWidget(label_data_fattura, 2, 0)
 
+
+'''
         ## CONTROLLO SE LA FATTURA È DI CARICO ##
         ## IN QUESTO MODO STAMPO SOLO I DATI DEL FORNITORE E NON QUELLI DEL CLIENTE ##
         if self.controller.get_tipo_fattura() == 'Carico' :
@@ -151,3 +155,4 @@ class VistaFattura(QWidget):
     #        self.elimina_fattura(self.controller.get_numero_fattura())
     #        self.callback()
      #       self.close()
+     '''

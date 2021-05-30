@@ -6,7 +6,8 @@
   "marca": "bic",
   "prezzo_unitario": 0.25,
   "sconto_perc": 0,
-  "descrizione": "penne nere"
+  "descrizione": "penne nere",
+    "stock": 0
   },
   {
   "codice": "4856235112831",
@@ -15,7 +16,8 @@
   "marca": "staedler",
   "prezzo_unitario": 0.72,
   "sconto_perc": 0,
-  "descrizione": "classiche gomme per cancellare"
+  "descrizione": "classiche gomme per cancellare",
+    "stock": 0
   },
   {
   "codice": "7898545117785",
@@ -24,6 +26,7 @@
   "marca": "waterman",
   "prezzo_unitario": 60,
   "sconto_perc": 10,
-  "descrizione": "penne di alta fattura"
+  "descrizione": "penne di alta fattura",
+    "stock": 0
   }
 ]

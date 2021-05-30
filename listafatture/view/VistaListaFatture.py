@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTab
     QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
 
 from fattura.view.VistaFattura import VistaFattura
+from fattura.view.VistaFatturaNuova import VistaFatturaNuova
 from listafatture.controller.ControlloreListaFatture import ControlloreListaFatture
 from fattura.controller.ControlloreFattura import ControlloreFattura
 from listafatture.view.VistaScegliFattura import VistaScegliFattura
@@ -96,7 +97,8 @@ class VistaListaFatture(QWidget):
     ####################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
-            self.vista_fattura = VistaFattura(self.controller.get_fattura_by_index(int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.update_table_view)
+            self.vista_fattura = VistaFatturaNuova(self.controller.get_fattura_by_index(
+                int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())-1), self.update_table_view)
             self.vista_fattura.show()
 
 

@@ -4,13 +4,15 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTab
 from articolo.view.VistaArticolo import VistaArticolo
 from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 from listaarticoli.view.VistaInserisciArticolo import VistaInserisciArticolo
+from listaarticoli.view.Vista_lista_articoli_magazzino import Vista_lista_articoli_magazzino
 
 
 class VistaListaArticoli(QWidget):
-    def __init__(self, parent=None):
-        super(VistaListaArticoli, self).__init__(parent)
+    def __init__(self, controller, magazzino_update_table):
+        super(VistaListaArticoli, self).__init__()
 
-        self.controller = ControlloreListaArticoli()
+        self.magazzino_update_table = magazzino_update_table
+        self.controller = controller
         self.name_colonne = ['Codice a Barre', 'Gruppo Merceologico', 'Categoria', 'Marca', 'Prezzo Unitario',
                    'Sconto', 'Descrizione']
 
@@ -89,12 +91,12 @@ class VistaListaArticoli(QWidget):
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_articolo = VistaArticolo(self.controller.get_articolo_by_codice(
-            self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()), self.controller.elimina_articolo_by_codice, self.update_table_view)
+            self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()), self.controller.elimina_articolo_by_codice, self.update_table_view, self.magazzino_update_table)
             self.vista_articolo.show()
 
 
     def show_insert_articolo(self):
-        self.vista_inserisci_articolo = VistaInserisciArticolo(self.controller, self.update_table_view)
+        self.vista_inserisci_articolo = VistaInserisciArticolo(self.controller, self.update_table_view, self.magazzino_update_table)
         self.vista_inserisci_articolo.show()
 
     def delete_articolo(self):
@@ -107,10 +109,12 @@ class VistaListaArticoli(QWidget):
                              QMessageBox.No)
             if delete_view == QMessageBox.Yes:
                 self.controller.elimina_articolo_by_codice(articolo_selezionato.codice)
+                self.magazzino_update_table()
                 self.update_table_view()
 
     def update_table_view(self):
         self.controller.save_data()
+
         self.table_view.setRowCount(len(self.controller.model.lista_articoli))
         self.table_view.setColumnCount(7)
         self.show_table_view_items(self.controller.get_lista_articoli())
