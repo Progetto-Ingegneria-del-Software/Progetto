@@ -19,7 +19,7 @@ class VistaCreaFatturaCarico(QWidget):
         self.controller_articoli = controller_articoli
         self.controller_fattura = controller_fattura
         self.numero_fattura = self.controller_fattura.get_assegnamento_numero_fattura()+1
-        self.data = "gg-mm-aaaa"
+        self.data = None
         self.fornitore = None
         self.carrello_acquisti = []
         self.totale = None
@@ -38,9 +38,15 @@ class VistaCreaFatturaCarico(QWidget):
 
         self.label_data_fattura = QLabel("Data: ")
         self.h_layout.addWidget(self.label_data_fattura)
-        self.edit_data_fattura = QLineEdit(self.data)
-        self.edit_data_fattura.setFixedWidth(100)
-        self.h_layout.addWidget(self.edit_data_fattura)
+        self.edit_giorno_fattura = QLineEdit("gg")
+        self.edit_giorno_fattura.setFixedWidth(30)
+        self.edit_mese_fattura = QLineEdit("mm")
+        self.edit_mese_fattura.setFixedWidth(30)
+        self.edit_anno_fattura = QLineEdit("aaaa")
+        self.edit_anno_fattura.setFixedWidth(40)
+        self.h_layout.addWidget(self.edit_giorno_fattura)
+        self.h_layout.addWidget(self.edit_mese_fattura)
+        self.h_layout.addWidget(self.edit_anno_fattura)
 
         self.h_layout.addStretch()
 
@@ -150,9 +156,10 @@ class VistaCreaFatturaCarico(QWidget):
                 articolo_dict.pop("categoria")
                 articolo_dict.pop("marca")
                 articolo_dict["quantita"] = self.search_bar_quantita.text()
-                articolo_dict["totale_riga"] = int(articolo_dict["prezzo_unitario"])*int(self.search_bar_quantita.text())-(int(articolo_dict["prezzo_unitario"])*int(articolo["sconto_perc"])/100)*int(self.search_bar_quantita.text())
+                articolo_dict["totale_riga"] = float(articolo.prezzo_unitario) * int(self.search_bar_quantita.text()) - (
+                            float(articolo.prezzo_unitario) * float(articolo.sconto_perc) / 100) * int(
+                    self.search_bar_quantita.text())
                 self.carrello_acquisti.append(articolo_dict)
-
         self.show_table_items()
 
     def show_table_items(self):
@@ -216,14 +223,31 @@ class VistaCreaFatturaCarico(QWidget):
                     self.add_articolo_in_fattura()
 
     def crea_fattura(self):
-        for articolo in self.carrello_acquisti:
-            self.controller_articoli.inserimento_carico(articolo["codice"], articolo["quantita"])
-        self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
-        self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.edit_data_fattura.text(), self.fornitore.__dict__,
+        if not self.is_int(self.edit_giorno_fattura.text()) and not self.is_int(self.edit_giorno_fattura.text()) and not self.is_int(self.edit_giorno_fattura.text()):
+            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci una data valida.',
+                                 QMessageBox.Ok, QMessageBox.Ok)
+        elif not int(self.edit_giorno_fattura.text()) > 0 or not int(self.edit_giorno_fattura.text()) < 32 \
+                or not int(self.edit_mese_fattura.text()) > 0 or not int(self.edit_mese_fattura.text()) < 13 \
+                or not int(self.edit_anno_fattura.text()) > 2020 or not int(self.edit_anno_fattura.text()):
+            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci una data valida',
+                                 QMessageBox.Ok, QMessageBox.Ok)
+        elif self.fornitore == None:
+            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci il fornitore.',
+                                 QMessageBox.Ok, QMessageBox.Ok)
+        elif not self.carrello_acquisti:
+            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci almeno un articolo.',
+                                 QMessageBox.Ok, QMessageBox.Ok)
+        else:
+            self.data = self.edit_giorno_fattura.text() + '-' + self.edit_mese_fattura.text() + '-' + self.edit_anno_fattura.text()
+            for articolo in self.carrello_acquisti:
+                self.controller_articoli.inserimento_carico(articolo["codice"], articolo["quantita"])
+            self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
+            self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.data, self.fornitore.__dict__,
                                          self.carrello_acquisti, self.totale))
-        self.callback_magazzino()
-        self.callback()
-        self.close()
+            self.callback_magazzino()
+            self.callback()
+            self.close()
+
 
     def is_int(self, val):
         try:
