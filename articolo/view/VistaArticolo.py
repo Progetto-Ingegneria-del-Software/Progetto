@@ -7,12 +7,13 @@ from articolo.view.VistaModificaArticolo import VistaModificaArticolo
 
 
 class VistaArticolo(QWidget):
-    def __init__(self, articolo, elimina_articolo, callback):
+    def __init__(self, articolo, elimina_articolo, callback_articoli, callback_magazzino):
         super(VistaArticolo, self).__init__()
 
         self.controller = ControlloreArticolo(articolo)
         self.elimina_articolo = elimina_articolo
-        self.callback = callback
+        self.callback_articoli = callback_articoli
+        self.callback_magazzino = callback_magazzino
 
         v_layout = QVBoxLayout()
 
@@ -85,11 +86,12 @@ class VistaArticolo(QWidget):
                                           QMessageBox.No)
         if delete_view == QMessageBox.Yes:
             self.elimina_articolo(self.controller.get_codice_articolo())
-            self.callback()
+            self.callback_articoli()
+            self.callback_magazzino()
             self.close()
 
     def show_modifica_articolo(self, elemento_modifica):
-        self.vista_modifica_articolo = VistaModificaArticolo(elemento_modifica, self.controller, self.callback)
+        self.vista_modifica_articolo = VistaModificaArticolo(elemento_modifica, self.controller, self.callback_articoli, self.callback_magazzino)
         self.vista_modifica_articolo.show()
 
     def show_descrizione_articolo(self):

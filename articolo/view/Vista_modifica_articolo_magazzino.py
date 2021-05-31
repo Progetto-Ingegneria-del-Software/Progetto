@@ -48,10 +48,6 @@ class Vista_modifica_articolo_magazzino(QWidget):
                     QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico, intero e positivo',
                                          QMessageBox.Ok, QMessageBox.Ok)
 
-
-
-
-
     def is_int(self, val):
         try:
             num = int(val)

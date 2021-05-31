@@ -3,12 +3,13 @@ from PyQt5.QtWidgets import QWidget, QFormLayout, QLabel, QLineEdit, QVBoxLayout
 
 
 class VistaModificaArticolo(QWidget):
-    def __init__(self, elemento_modifica, controller, callback):
+    def __init__(self, elemento_modifica, controller, callback_articoli, callback_magazzino):
         super(VistaModificaArticolo, self).__init__()
 
         self.elemento_modifica = elemento_modifica
         self.controller = controller
-        self.callback= callback
+        self.callback_articoli = callback_articoli
+        self.callback_magazzino = callback_magazzino
 
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
@@ -75,7 +76,8 @@ class VistaModificaArticolo(QWidget):
                                          QMessageBox.Ok, QMessageBox.Ok)
             if self.elemento_modifica == "Modifica Descrizione":
                 self.controller.set_descrizione_articolo(self.info.text())
-            self.callback()
+            self.callback_articoli()
+            self.callback_magazzino()
             self.close()
 
     def is_float(self, val):
