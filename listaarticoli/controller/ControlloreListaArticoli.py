@@ -17,6 +17,9 @@ class ControlloreListaArticoli():
     def get_articolo_by_codice(self, codice):
         return self.model.get_articolo_by_codice(codice)
 
+    def get_stock_by_codice(self, codice):
+        return self.model.get_stock_by_codice(codice)
+
     def elimina_articolo_by_codice(self, codice):
         self.model.rimuovi_articolo_by_codice(codice)
 

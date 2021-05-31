@@ -66,7 +66,7 @@ class VistaScegliFattura(QWidget):
     ###       FATTURA SU "SCARICO"        ###
     #########################################
     def funzione_scarico_btn(self):
-        self.vista_crea_fattura_scarico = VistaCreaFatturaScarico(self.callback)
+        self.vista_crea_fattura_scarico = VistaCreaFatturaScarico(self.controller_articoli, self.controller, self.callback, self.callback_magazzino)
         self.vista_crea_fattura_scarico.show()
         self.close()
     

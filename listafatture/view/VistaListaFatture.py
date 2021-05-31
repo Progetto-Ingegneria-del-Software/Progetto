@@ -137,8 +137,8 @@ class VistaListaFatture(QWidget):
             self.table_view.setItem(i, 2, item)
             if "ragione_sociale" in fattura.soggetto:
                 item = QTableWidgetItem(str(fattura.soggetto["ragione_sociale"]))
-            elif "codice_fiscale" in fattura.soggetto:
-                item = QTableWidgetItem(str(fattura.soggetto["codice_fiscale"]))
+            elif "cf" in fattura.soggetto:
+                item = QTableWidgetItem(str(fattura.soggetto["cf"]))
             self.table_view.setItem(i, 3, item)
             item = QTableWidgetItem("€" + str(fattura.totale))
             self.table_view.setItem(i, 4, item)
