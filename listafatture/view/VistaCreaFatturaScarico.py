@@ -277,6 +277,7 @@ class VistaCreaFatturaScarico(QWidget):
                     QMessageBox.critical(self, 'Errore!', 'Non ci sono abbastanza scorte nel magazzino!',
                                          QMessageBox.Ok, QMessageBox.Ok)
                     self.close()
+                    return
             for articolo in self.carrello_acquisti:
                 self.controller_articoli.scarico(articolo["codice"], articolo["quantita"])
                 self.data = self.edit_giorno_fattura.text() + '-' + self.edit_mese_fattura.text() + '-' + self.edit_anno_fattura.text()
