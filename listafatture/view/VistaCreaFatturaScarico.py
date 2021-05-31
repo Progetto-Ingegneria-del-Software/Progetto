@@ -16,7 +16,7 @@ class VistaCreaFatturaScarico(QWidget):
 
         self.callback = callback
         self.callback_magazzino = callback_magazzino
-        self.tipo_fattura = "Carico"
+        self.tipo_fattura = "Scarico"
         self.controller_articoli = controller_articoli
         self.controller_fattura = controller_fattura
         self.numero_fattura = self.controller_fattura.get_assegnamento_numero_fattura() + 1
