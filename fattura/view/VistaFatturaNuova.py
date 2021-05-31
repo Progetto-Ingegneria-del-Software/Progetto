@@ -41,7 +41,7 @@ class VistaFatturaNuova(QWidget):
 
             self.h_layout2 = QHBoxLayout()
 
-            self.label_riga1_fornitore = QLabel("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}".format(fattura.soggetto["id"], fattura.soggetto["ragione_sociale"], fattura.soggetto["partita_iva"]))
+            self.label_riga1_fornitore = QLabel("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}".format(fattura.soggetto["codice_id"], fattura.soggetto["ragione_sociale"], fattura.soggetto["partita_iva"]))
             self.h_layout2.addWidget(self.label_riga1_fornitore)
             self.v_layout.addLayout(self.h_layout2)
 
@@ -140,7 +140,7 @@ class VistaFatturaNuova(QWidget):
 
         i=0
         for articolo in self.fattura.articoli:
-            item = QTableWidgetItem(str(articolo["codice"]))
+            item = QTableWidgetItem(str(["codice"]))
             self.table_articoli.setItem(i, 0, item)
             item = QTableWidgetItem(str(articolo["descrizione"]))
             self.table_articoli.setItem(i, 1, item)

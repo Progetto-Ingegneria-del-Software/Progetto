@@ -2,20 +2,27 @@ from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QTableWidget, QAbstractItemView, \
     QHeaderView, QPushButton, QTableWidgetItem, QMessageBox
 
+from articolo.model.Articolo import Articolo
+from fattura.model.Fattura import Fattura
 from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 from listafatture.controller.ControlloreListaFatture import ControlloreListaFatture
 from listafornitori.control.ControlloreListaFornitori import ControlloreListaFornitori
 
 
 class VistaCreaFatturaCarico(QWidget):
-    def __init__(self):
+    def __init__(self, controller_articoli, controller_fattura, callback, callback_magazzino):
         super(VistaCreaFatturaCarico, self).__init__()
 
+        self.callback = callback
+        self.callback_magazzino = callback_magazzino
         self.tipo_fattura = "Carico"
-        self.controller = ControlloreListaFatture()
+        self.controller_articoli = controller_articoli
+        self.controller_fattura = controller_fattura
+        self.numero_fattura = self.controller_fattura.get_assegnamento_numero_fattura()+1
+        self.data = "gg-mm-aaaa"
+        self.fornitore = None
         self.carrello_acquisti = []
-        self.quantita_acquisti = {}
-        self.totale_riga_acquisti = {}
+        self.totale = None
 
         bold_font = QtGui.QFont()
         bold_font.setBold(True)
@@ -31,7 +38,7 @@ class VistaCreaFatturaCarico(QWidget):
 
         self.label_data_fattura = QLabel("Data: ")
         self.h_layout.addWidget(self.label_data_fattura)
-        self.edit_data_fattura = QLineEdit("gg/mm/aaaa")
+        self.edit_data_fattura = QLineEdit(self.data)
         self.edit_data_fattura.setFixedWidth(100)
         self.h_layout.addWidget(self.edit_data_fattura)
 
@@ -102,20 +109,20 @@ class VistaCreaFatturaCarico(QWidget):
 
         self.h_layout5 = QHBoxLayout()
 
-        self.label_totale = QLabel("Totale: €0")
+        self.label_totale = QLabel("Totale: €{}".format(self.totale))
         self.label_totale.setFont(bold_font)
         self.h_layout5.addWidget(self.label_totale)
 
         self.crea_fattura_button = QPushButton("Crea Fattura")
-        # self.crea_fattura_button.pressed.connect(self.crea_fattura)
+        self.crea_fattura_button.pressed.connect(self.crea_fattura)
         self.h_layout5.addWidget(self.crea_fattura_button)
 
         self.v_layout.addLayout(self.h_layout5)
 
         self.setLayout(self.v_layout)
-        self.resize(800, 600)
+        self.resize(950, 600)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Fattura Numero {}".format(self.controller.get_assegnamento_numero_fattura()))
+        self.setWindowTitle("Fattura Numero {}".format(self.numero_fattura))
 
     def search_fornitore(self):
         controller_fornitore = ControlloreListaFornitori()
@@ -127,6 +134,7 @@ class VistaCreaFatturaCarico(QWidget):
                 self.mostra_fornitore_cercato(fornitore)
 
     def mostra_fornitore_cercato(self, fornitore):
+        self.fornitore = fornitore
         self.label_riga1_fornitore.setText("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {},".format(fornitore.codice_id, fornitore.ragione_sociale, fornitore.partita_iva))
         self.label_riga2_fornitore.setText("Città: {}, Indirizzo: {}, Telefono: {}, Email: {}.".format(fornitore.citta, fornitore.indirizzo, fornitore.telefono, fornitore.email))
 
@@ -136,9 +144,14 @@ class VistaCreaFatturaCarico(QWidget):
 
         for articolo in lista_articoli:
             if self.search_bar_articolo.text() == articolo.codice:
-                self.quantita_acquisti[articolo.codice] = self.search_bar_quantita.text()
-                self.totale_riga_acquisti[articolo.codice] = articolo.prezzo_unitario*int(self.search_bar_quantita.text())-(articolo.prezzo_unitario*articolo.sconto_perc/100)*int(self.search_bar_quantita.text())
-                self.carrello_acquisti.append(articolo)
+                articolo_dict = articolo.__dict__
+                articolo_dict.pop("stock")
+                articolo_dict.pop("gruppo_merceologico")
+                articolo_dict.pop("categoria")
+                articolo_dict.pop("marca")
+                articolo_dict["quantita"] = self.search_bar_quantita.text()
+                articolo_dict["totale_riga"] = int(articolo_dict["prezzo_unitario"])*int(self.search_bar_quantita.text())-(int(articolo_dict["prezzo_unitario"])*int(articolo["sconto_perc"])/100)*int(self.search_bar_quantita.text())
+                self.carrello_acquisti.append(articolo_dict)
 
         self.show_table_items()
 
@@ -146,17 +159,17 @@ class VistaCreaFatturaCarico(QWidget):
         i = 0
         self.table_articoli.setRowCount(len(self.carrello_acquisti))
         for articolo in self.carrello_acquisti:
-            item = QTableWidgetItem(str(articolo.codice))
+            item = QTableWidgetItem(str(articolo["codice"]))
             self.table_articoli.setItem(i, 0, item)
-            item = QTableWidgetItem(str(articolo.descrizione))
+            item = QTableWidgetItem(str(articolo["descrizione"]))
             self.table_articoli.setItem(i, 1, item)
-            item = QTableWidgetItem("€" + str(articolo.prezzo_unitario))
+            item = QTableWidgetItem("€" + str(articolo["prezzo_unitario"]))
             self.table_articoli.setItem(i, 2, item)
-            item = QTableWidgetItem(str(articolo.sconto_perc) + "%")
+            item = QTableWidgetItem(str(articolo["sconto_perc"]) + "%")
             self.table_articoli.setItem(i, 3, item)
-            item = QTableWidgetItem(self.quantita_acquisti[articolo.codice], 2)
+            item = QTableWidgetItem(str(articolo["quantita"]))
             self.table_articoli.setItem(i, 4, item)
-            item = QTableWidgetItem("€" + str(self.truncate(self.totale_riga_acquisti[articolo.codice], 2)))
+            item = QTableWidgetItem("€" + str(articolo["totale_riga"]))
             self.table_articoli.setItem(i, 5, item)
             remove_button = QPushButton("Rimuovi")
             remove_button = remove_button
@@ -166,8 +179,8 @@ class VistaCreaFatturaCarico(QWidget):
 
         self.totale = 0
 
-        for totale_riga in self.totale_riga_acquisti:
-            self.totale += self.totale_riga_acquisti[totale_riga]
+        for articolo in self.carrello_acquisti:
+            self.totale += articolo["totale_riga"]
         self.label_totale.setText("Totale: {}".format(self.truncate(self.totale, 2)))
 
     @QtCore.pyqtSlot()
@@ -176,9 +189,7 @@ class VistaCreaFatturaCarico(QWidget):
         if button:
             row = self.table_articoli.indexAt(button.pos()).row()
             self.table_articoli.removeRow(row)
-            articolo_rimosso = self.carrello_acquisti.pop(row)
-            self.quantita_acquisti[articolo_rimosso.codice] = 0
-            self.totale_riga_acquisti[articolo_rimosso.codice] = 0
+            self.carrello_acquisti.pop(row)
             self.show_table_items()
 
     def controllo_inserimento(self):
@@ -196,13 +207,23 @@ class VistaCreaFatturaCarico(QWidget):
             else:
                 self.codici = []
                 for articolo in self.carrello_acquisti:
-                    self.codici.append(articolo.codice)
+                    self.codici.append(articolo["codice"])
                 if self.search_bar_articolo.text() in self.codici:
                     QMessageBox.critical(self, 'Errore',
                                          "L'articolo {} è già presente in lista!".format(self.search_bar_articolo.text()),
                                          QMessageBox.Ok, QMessageBox.Ok)
                 else:
                     self.add_articolo_in_fattura()
+
+    def crea_fattura(self):
+        for articolo in self.carrello_acquisti:
+            self.controller_articoli.inserimento_carico(articolo["codice"], articolo["quantita"])
+        self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
+        self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.edit_data_fattura.text(), self.fornitore.__dict__,
+                                         self.carrello_acquisti, self.totale))
+        self.callback_magazzino()
+        self.callback()
+        self.close()
 
     def is_int(self, val):
         try:

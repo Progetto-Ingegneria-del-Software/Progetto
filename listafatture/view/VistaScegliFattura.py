@@ -8,10 +8,13 @@ from listafatture.view.VistaCreaFatturaScarico import VistaCreaFatturaScarico
 
 
 class VistaScegliFattura(QWidget):
-    def __init__(self, callback):
+    def __init__(self, controller_articoli, controller, callback, callback_magazzino):
         super(VistaScegliFattura, self).__init__()
 
+        self.callback_magazzino = callback_magazzino
         self.callback = callback
+        self.controller_articoli = controller_articoli
+        self.controller = controller
 
         self.v_layout = QVBoxLayout()
 
@@ -53,7 +56,7 @@ class VistaScegliFattura(QWidget):
     ###        FATTURA SU "CARICO"        ###
     #########################################
     def funzione_carico_btn(self):
-        self.vista_crea_fattura_carico = VistaCreaFatturaCarico()
+        self.vista_crea_fattura_carico = VistaCreaFatturaCarico(self.controller_articoli, self.controller, self.callback, self.callback_magazzino)
         self.vista_crea_fattura_carico.show()
         self.close()
     
@@ -63,7 +66,7 @@ class VistaScegliFattura(QWidget):
     ###       FATTURA SU "SCARICO"        ###
     #########################################
     def funzione_scarico_btn(self):
-        self.vista_crea_fattura_scarico = VistaCreaFatturaScarico()
+        self.vista_crea_fattura_scarico = VistaCreaFatturaScarico(self.callback)
         self.vista_crea_fattura_scarico.show()
         self.close()
     

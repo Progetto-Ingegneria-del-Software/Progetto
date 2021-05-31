@@ -95,7 +95,7 @@ class VistaArticolo(QWidget):
         self.vista_modifica_articolo.show()
 
     def show_descrizione_articolo(self):
-        self.vista_descrizione_articolo = VistaDescrizioneArticolo(self.controller, self.callback)
+        self.vista_descrizione_articolo = VistaDescrizioneArticolo(self.controller)
         self.vista_descrizione_articolo.show()
 
 

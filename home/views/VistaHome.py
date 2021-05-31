@@ -212,7 +212,7 @@ class VistaHome(QWidget):
             generalTab = QWidget()
             layout = QVBoxLayout()
 
-            layout.addWidget(VistaListaFatture())
+            layout.addWidget(VistaListaFatture(self.controller_lista_articoli, self.vista_magazzino.update_table_view))
 
             generalTab.setLayout(layout)
             return generalTab

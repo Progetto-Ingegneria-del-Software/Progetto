@@ -9,10 +9,12 @@ from listafatture.view.VistaScegliFattura import VistaScegliFattura
 
 
 class VistaListaFatture(QWidget):
-    def __init__(self, parent=None):
-        super(VistaListaFatture, self).__init__(parent)
+    def __init__(self, controller_articoli, callback_magazzino):
+        super(VistaListaFatture, self).__init__()
 
         self.controller = ControlloreListaFatture()
+        self.controller_articoli = controller_articoli
+        self.callback_magazzino = callback_magazzino
         self.name_colonne = ['Numero Fattura', 'Tipo', 'Data', 'Cliente/Fornitore', 'Totale Prezzo']  # Nomi delle colonne della tabella delle fatture
 
         self.v_layout = QVBoxLayout()
@@ -106,7 +108,7 @@ class VistaListaFatture(QWidget):
     ###             DEL TIPO DI FATTURA               ###
     #####################################################
     def show_crea_fattura(self):
-        self.vista_scegli_fattura = VistaScegliFattura(self.update_table_view)  ## CONTROLLARE GLI ARGOMENTI DA PASSARE A Vista_Scegli_Fattura
+        self.vista_scegli_fattura = VistaScegliFattura(self.controller_articoli, self.controller, self.update_table_view, self.callback_magazzino)  ## CONTROLLARE GLI ARGOMENTI DA PASSARE A Vista_Scegli_Fattura
         self.vista_scegli_fattura.show()
 
 
