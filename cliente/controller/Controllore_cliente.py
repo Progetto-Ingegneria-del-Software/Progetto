@@ -22,11 +22,11 @@ class Controllore_cliente():
     def get_telefono_cliente(self):
         return self.model.telefono
 
+    def get_citta_cliente(self):
+        return self.model.citta
+
     def get_indirizzo_cliente(self):
         return self.model.indirizzo
-
-
-
 
     def set_nome_cliente(self, nome):
         self.model.nome = nome
@@ -42,6 +42,9 @@ class Controllore_cliente():
 
     def set_telefono_cliente(self, telefono):
         self.model.telefono = telefono
+
+    def set_citta_cliente(self, citta):
+        self.model.citta = citta
 
     def set_indirizzo_cliente(self, indirizzo):
         self.model.indirizzo = indirizzo

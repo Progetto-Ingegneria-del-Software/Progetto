@@ -23,6 +23,8 @@ class Vista_modifica_cliente(QWidget):
             self.info = QLineEdit(self.controller.get_email_cliente())
         if self.elemento_modifica == "Modifica Telefono":
             self.info = QLineEdit(self.controller.get_telefono_cliente())
+        if self.elemento_modifica == "Modifica Città":
+            self.info = QLineEdit(self.controller.get_citta_cliente())
         if self.elemento_modifica == "Modifica Indirizzo":
             self.info = QLineEdit(self.controller.get_indirizzo_cliente())
 
@@ -57,6 +59,8 @@ class Vista_modifica_cliente(QWidget):
                 self.controller.set_email_cliente(self.info.text())
             if self.elemento_modifica == "Modifica Telefono":
                 self.controller.set_telefono_cliente(self.info.text())
+            if self.elemento_modifica == "Modifica Città":
+                self.controller.set_citta_cliente(self.info.text())
             if self.elemento_modifica == "Modifica Indirizzo":
                 self.controller.set_indirizzo_cliente(self.info.text())
 

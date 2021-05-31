@@ -127,8 +127,8 @@ class VistaCreaFatturaCarico(QWidget):
                 self.mostra_fornitore_cercato(fornitore)
 
     def mostra_fornitore_cercato(self, fornitore):
-        self.label_riga1_fornitore.setText("Codice ID: {} Ragione Sociale: {} Partita IVA: {}".format(fornitore.codice_id, fornitore.ragione_sociale, fornitore.partita_iva))
-        self.label_riga2_fornitore.setText("Città: {} Indirizzo: {} Telefono: {} Email: {}".format(fornitore.citta, fornitore.indirizzo, fornitore.telefono, fornitore.email))
+        self.label_riga1_fornitore.setText("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {},".format(fornitore.codice_id, fornitore.ragione_sociale, fornitore.partita_iva))
+        self.label_riga2_fornitore.setText("Città: {}, Indirizzo: {}, Telefono: {}, Email: {}.".format(fornitore.citta, fornitore.indirizzo, fornitore.telefono, fornitore.email))
 
     def add_articolo_in_fattura(self):
         controllore_articoli = ControlloreListaArticoli()

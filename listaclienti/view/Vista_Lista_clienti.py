@@ -11,7 +11,7 @@ class Vista_Lista_clienti(QWidget):
         super(Vista_Lista_clienti, self).__init__()
 
         self.controller = Controllore_Lista_clienti()
-        self.name_colonne = ['Codice ID', 'Nome', 'Cognome', 'Codice Fiscale', 'Email', 'Telefono' ,'Indirizzo']
+        self.name_colonne = ['Codice ID', 'Nome', 'Cognome', 'Codice Fiscale', 'Email', 'Telefono', 'Città', 'Indirizzo']
 
         self.v_layout = QVBoxLayout()
         self.table_view = QTableWidget()
@@ -87,7 +87,7 @@ class Vista_Lista_clienti(QWidget):
                 filter_list.append(cliente)
 
         self.table_view.setRowCount(len(filter_list))
-        self.table_view.setColumnCount(7)
+        self.table_view.setColumnCount(8)
         self.show_table_view_items(filter_list)
 
     def show_selected_info(self):
@@ -118,7 +118,7 @@ class Vista_Lista_clienti(QWidget):
     def update_ui(self):
         self.controller.save_data()
         self.table_view.setRowCount(len(self.controller.model.lista_clienti))
-        self.table_view.setColumnCount(7)
+        self.table_view.setColumnCount(8)
         self.show_table_view_items(self.controller.get_lista_clienti())
        # self.controller.save_data()
         #self.table_view.setRowCount(len(self.controller.model.lista_clienti))
@@ -139,8 +139,10 @@ class Vista_Lista_clienti(QWidget):
             self.table_view.setItem(i, 4, item)
             item = QTableWidgetItem(str(cliente.telefono))
             self.table_view.setItem(i, 5, item)
-            item = QTableWidgetItem(str(cliente.indirizzo))
+            item = QTableWidgetItem(str(cliente.citta))
             self.table_view.setItem(i, 6, item)
+            item = QTableWidgetItem(str(cliente.indirizzo))
+            self.table_view.setItem(i, 7, item)
             i = i + 1
 
 

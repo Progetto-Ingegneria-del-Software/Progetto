@@ -12,7 +12,7 @@ class Vista_Inserisci_cliente(QWidget):
         self.controller = controller
         self.callback = callback
         self.info = {}
-        self.labels = ["Nome:", "Cognome:", "Codice Fiscale:", "Email:", "Telefono:", "Indirizzo:"]
+        self.labels = ["Nome:", "Cognome:", "Codice Fiscale:", "Email:", "Telefono:", "Città:", "Indirizzo:"]
 
         self.v_layout = QVBoxLayout()
         self.grid_layout = QGridLayout()
@@ -51,6 +51,7 @@ class Vista_Inserisci_cliente(QWidget):
         cf = self.info["Codice Fiscale:"].text()
         email = self.info["Email:"].text()
         telefono = self.info["Telefono:"].text()
+        citta = self.info["Città:"].text()
         indirizzo = self.info["Indirizzo:"].text()
 
 
@@ -67,8 +68,7 @@ class Vista_Inserisci_cliente(QWidget):
 
 
               self.controller.model.codice_id = self.controller.model.codice_id + 1
-
-              self.controller.aggiungi_cliente(Cliente(self.controller.model.codice_id, nome, cognome, cf, email, telefono, indirizzo))
+              self.controller.aggiungi_cliente(Cliente(self.controller.model.codice_id, nome, cognome, cf, email, telefono, citta,indirizzo))
               self.callback()
               self.close()
 

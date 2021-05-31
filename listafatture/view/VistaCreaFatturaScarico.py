@@ -148,8 +148,8 @@ class VistaCreaFatturaScarico(QWidget):
             for cliente in lista_clienti:
                 if self.search_bar_cliente.text().upper() in cliente.cf.upper() \
                         or cliente.cf.upper() in self.search_bar_cliente.text().upper():
-                    self.label_dati1_cliente.setText("Codice ID: {} Nome: {} Cognome: {} CF: {}".format(cliente.codice_id, cliente.nome, cliente.cognome, cliente.cf))
-                    self.label_dati2_cliente.setText("Email: {} Telefono: {} Indirizzo: {}".format(cliente.email, cliente.telefono, cliente.indirizzo))
+                    self.label_dati1_cliente.setText("Codice ID: {}, Nome: {}, Cognome: {}, CF: {},".format(cliente.codice_id, cliente.nome, cliente.cognome, cliente.cf))
+                    self.label_dati2_cliente.setText("Email: {}, Telefono: {}, Città: {}, Indirizzo: {}.".format(cliente.email, cliente.telefono, cliente.citta, cliente.indirizzo))
 
 
         elif tipologia_cliente == "ClientePIVA":
@@ -159,8 +159,8 @@ class VistaCreaFatturaScarico(QWidget):
             for cliente in lista_clienti_piva:
                 if self.search_bar_cliente.text().upper() in cliente.partita_iva.upper() \
                         or cliente.partita_iva.upper() in self.search_bar_cliente.text().upper():
-                    self.label_dati1_cliente.setText("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}, Città: {}".format(cliente.codice_id, cliente.ragione_sociale, cliente.partita_iva, cliente.citta, cliente.indirizzo, cliente.telefono, cliente.email))
-                    self.label_dati2_cliente.setText("Indirizzo: {}, Telefono: {}, Email: {}".format(cliente.indirizzo, cliente.telefono, cliente.email))
+                    self.label_dati1_cliente.setText("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}, Città: {},".format(cliente.codice_id, cliente.ragione_sociale, cliente.partita_iva, cliente.citta, cliente.indirizzo, cliente.telefono, cliente.email))
+                    self.label_dati2_cliente.setText("Indirizzo: {}, Telefono: {}, Email: {}.".format(cliente.indirizzo, cliente.telefono, cliente.email))
 
     def add_articolo_in_fattura(self):
         controllore_articoli = ControlloreListaArticoli()

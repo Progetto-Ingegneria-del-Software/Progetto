@@ -54,12 +54,19 @@ class Vista_cliente(QWidget):
         button_modifica_telefono.clicked.connect(lambda: self.show_modifica_cliente("Modifica Telefono"))
         grid_layout.addWidget(button_modifica_telefono, 5, 1)
 
+        label_citta = QLabel("Città: " + str(self.controller.get_citta_cliente()))
+        grid_layout.addWidget(label_citta, 6, 0)
+
+        button_modifica_citta = QPushButton("Modifica Città")
+        button_modifica_citta.clicked.connect(lambda: self.show_modifica_cliente("Modifica Città"))
+        grid_layout.addWidget(button_modifica_citta, 6, 1)
+
         label_indirizzo = QLabel("Indirizzo: " + str(self.controller.get_indirizzo_cliente()))
-        grid_layout.addWidget(label_indirizzo, 6, 0)
+        grid_layout.addWidget(label_indirizzo, 7, 0)
 
         button_modifica_indirizzo = QPushButton("Modifica Indirizzo")
         button_modifica_indirizzo.clicked.connect(lambda: self.show_modifica_cliente("Modifica Indirizzo"))
-        grid_layout.addWidget(button_modifica_indirizzo, 6, 1)
+        grid_layout.addWidget(button_modifica_indirizzo, 7, 1)
 
 
 
