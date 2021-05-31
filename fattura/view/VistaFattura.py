@@ -7,9 +7,9 @@ from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaAr
 from listafornitori.control.ControlloreListaFornitori import ControlloreListaFornitori
 
 
-class VistaFatturaNuova(QWidget):
+class VistaFattura(QWidget):
     def __init__(self, fattura, callback):
-        super(VistaFatturaNuova, self).__init__()
+        super(VistaFattura, self).__init__()
 
         self.fattura = fattura
         self.controller = ControlloreFattura(self.fattura)
@@ -52,7 +52,7 @@ class VistaFatturaNuova(QWidget):
             self.v_layout.addLayout(self.h_layout3)
 
         elif self.controller.get_tipo_fattura() == "Scarico":
-            if "codice_fiscale" in self.fattura.soggetto:
+            if "cf" in self.fattura.soggetto:
                 self.label_cliente = QLabel("Dati Cliente:")
                 self.label_cliente.setFont(bold_font)
                 self.v_layout.addWidget(self.label_cliente)
@@ -109,9 +109,8 @@ class VistaFatturaNuova(QWidget):
         self.table_articoli.setHorizontalHeaderLabels(["Codice", "Descrizione", "Prezzo Unitario", "Sconto", "Quantità", "Totale Riga"])
         self.table_articoli.verticalHeader().setVisible(False)
         self.table_articoli.setAlternatingRowColors(True)
-        self.table_articoli.setSelectionBehavior(QAbstractItemView.SelectRows)
-        self.table_articoli.setSelectionMode(QAbstractItemView.SingleSelection)
         self.table_articoli.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table_articoli.setSelectionMode(QAbstractItemView.NoSelection)
 
         self.table_articoli.resizeColumnsToContents()
         self.table_articoli.resizeRowsToContents()
@@ -131,7 +130,7 @@ class VistaFatturaNuova(QWidget):
         self.v_layout.addLayout(self.h_layout5)
 
         self.setLayout(self.v_layout)
-        self.resize(800, 600)
+        self.resize(900, 600)
         self.setFixedSize(self.size())
         self.setWindowTitle("Fattura Numero {}".format(self.controller.get_numero_fattura()))
 
@@ -140,7 +139,7 @@ class VistaFatturaNuova(QWidget):
 
         i=0
         for articolo in self.fattura.articoli:
-            item = QTableWidgetItem(str(["codice"]))
+            item = QTableWidgetItem(str(articolo["codice"]))
             self.table_articoli.setItem(i, 0, item)
             item = QTableWidgetItem(str(articolo["descrizione"]))
             self.table_articoli.setItem(i, 1, item)

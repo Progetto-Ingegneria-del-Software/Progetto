@@ -277,14 +277,15 @@ class VistaCreaFatturaScarico(QWidget):
                     QMessageBox.critical(self, 'Errore!', 'Non ci sono abbastanza scorte nel magazzino!',
                                          QMessageBox.Ok, QMessageBox.Ok)
                     self.close()
-            self.controller_articoli.scarico(articolo["codice"], articolo["quantita"])
-            self.data = self.edit_giorno_fattura.text() + '-' + self.edit_mese_fattura.text() + '-' + self.edit_anno_fattura.text()
-            self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
-            self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.data, self.cliente.__dict__,
+            for articolo in self.carrello_acquisti:
+                self.controller_articoli.scarico(articolo["codice"], articolo["quantita"])
+                self.data = self.edit_giorno_fattura.text() + '-' + self.edit_mese_fattura.text() + '-' + self.edit_anno_fattura.text()
+                self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
+                self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.data, self.cliente.__dict__,
                                          self.carrello_acquisti, self.totale))
-            self.callback_magazzino()
-            self.callback()
-            self.close()
+                self.callback_magazzino()
+                self.callback()
+                self.close()
 
     def is_int(self, val):
         try:
