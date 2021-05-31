@@ -11,7 +11,6 @@ class VistaFatturaNuova(QWidget):
     def __init__(self, fattura, callback):
         super(VistaFatturaNuova, self).__init__()
 
-'''
         self.fattura = fattura
         self.controller = ControlloreFattura(self.fattura)
         self.callback = callback
@@ -39,26 +38,61 @@ class VistaFatturaNuova(QWidget):
             self.label_fornitore = QLabel("Dati Fornitore:")
             self.label_fornitore.setFont(bold_font)
             self.v_layout.addWidget(self.label_fornitore)
-            fornitore = self.cerca_fornitore(self.controller.get_soggetto_fattura())
 
             self.h_layout2 = QHBoxLayout()
 
-            self.label_riga1_fornitore = QLabel("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}".format(fornitore.codice_id, fornitore.ragione_sociale, fornitore.partita_iva))
+            self.label_riga1_fornitore = QLabel("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}".format(fattura.soggetto["id"], fattura.soggetto["ragione_sociale"], fattura.soggetto["partita_iva"]))
             self.h_layout2.addWidget(self.label_riga1_fornitore)
             self.v_layout.addLayout(self.h_layout2)
 
             self.h_layout3 = QHBoxLayout()
 
-            self.label_riga2_fornitore = QLabel("Città: {}, Indirizzo: {}, Telefono: {}, Email: {}".format(fornitore.citta, fornitore.indirizzo, fornitore.telefono, fornitore.email))
+            self.label_riga2_fornitore = QLabel("Città: {}, Indirizzo: {}, Telefono: {}, Email: {}".format(fattura.soggetto["citta"], fattura.soggetto["indirizzo"], fattura.soggetto["telefono"], fattura.soggetto["email"]))
             self.h_layout3.addWidget(self.label_riga2_fornitore)
             self.v_layout.addLayout(self.h_layout3)
 
         elif self.controller.get_tipo_fattura() == "Scarico":
-            self.h_layout_3 = QHBoxLayout()
+            if "codice_fiscale" in self.fattura.soggetto:
+                self.label_cliente = QLabel("Dati Cliente:")
+                self.label_cliente.setFont(bold_font)
+                self.v_layout.addWidget(self.label_cliente)
 
-            self.label_cliente = QLabel("Cliente: {}".format(self.fattura.soggetto))
-            self.h_layout_3.addWidget(self.label_cliente)
-            self.v_layout.addLayout(self.h_layout_3)
+                self.h_layout2 = QHBoxLayout()
+
+                self.label_riga1_fornitore = QLabel(
+                    "Codice ID: {}, Nome: {}, Cognome: {}, CF: {}".format(fattura.soggetto["id"], fattura.soggetto["nome"], fattura.soggetto["cognome"], fattura.soggetto["codice_fiscale"]))
+                self.h_layout2.addWidget(self.label_riga1_fornitore)
+                self.v_layout.addLayout(self.h_layout2)
+
+                self.h_layout3 = QHBoxLayout()
+
+                self.label_riga2_fornitore = QLabel(
+                    "Email: {}, Telefono: {}, Città: {}, Indirizzo: {}".format(fattura.soggetto["email"], fattura.soggetto["telefono"], fattura.soggetto["citta"], fattura.soggetto["indirizzo"]))
+                self.h_layout3.addWidget(self.label_riga2_fornitore)
+                self.v_layout.addLayout(self.h_layout3)
+            else:
+                self.label_cliente = QLabel("Dati ClientePIVA:")
+                self.label_cliente.setFont(bold_font)
+                self.v_layout.addWidget(self.label_cliente)
+
+                self.h_layout2 = QHBoxLayout()
+
+                self.label_riga1_fornitore = QLabel(
+                    "Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}, Città: {}".format(fattura.soggetto["id"],
+                                                                          fattura.soggetto["ragione_sociale"],
+                                                                          fattura.soggetto["partita_iva"],
+                                                                          fattura.soggetto["citta"]))
+                self.h_layout2.addWidget(self.label_riga1_fornitore)
+                self.v_layout.addLayout(self.h_layout2)
+
+                self.h_layout3 = QHBoxLayout()
+
+                self.label_riga2_fornitore = QLabel(
+                    "Indirizzo: {}, Telefono: {}, Email: {}".format(fattura.soggetto["indirizzo"],
+                                                                               fattura.soggetto["telefono"],
+                                                                               fattura.soggetto["email"]))
+                self.h_layout3.addWidget(self.label_riga2_fornitore)
+                self.v_layout.addLayout(self.h_layout3)
 
         self.h_layout4 = QHBoxLayout()
 
@@ -101,27 +135,21 @@ class VistaFatturaNuova(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Fattura Numero {}".format(self.controller.get_numero_fattura()))
 
-    def cerca_fornitore(self, ragione_sociale):
-        controller_fornitore = ControlloreListaFornitori()
-        lista_fornitori = controller_fornitore.get_lista_fornitori()
-        for fornitore in lista_fornitori:
-            if fornitore.ragione_sociale == ragione_sociale:
-                return fornitore
-
     def show_articoli_in_table(self):
         self.table_articoli.setRowCount(len(self.controller.get_articoli_fattura()))
-        controller_articoli = ControlloreListaArticoli()
-        lista_articoli = self.fattura.articoli
 
         i=0
-        for articolo in controller_articoli.get_lista_articoli():
-            if int(articolo.codice) in lista_articoli:
-                item = QTableWidgetItem(str(articolo.codice))
-                self.table_articoli.setItem(i, 0, item)
-                item = QTableWidgetItem(str(articolo.descrizione))
-                self.table_articoli.setItem(i, 1, item)
-                item = QTableWidgetItem("€" + str(articolo.prezzo_unitario))
-                self.table_articoli.setItem(i, 2, item)
-                item = QTableWidgetItem(str(articolo.sconto_perc) + "%")
-                i = i+1
-                '''
+        for articolo in self.fattura.articoli:
+            item = QTableWidgetItem(str(articolo["codice"]))
+            self.table_articoli.setItem(i, 0, item)
+            item = QTableWidgetItem(str(articolo["descrizione"]))
+            self.table_articoli.setItem(i, 1, item)
+            item = QTableWidgetItem("€" + str(articolo["prezzo_unitario"]))
+            self.table_articoli.setItem(i, 2, item)
+            item = QTableWidgetItem(str(articolo["sconto_perc"]) + "%")
+            self.table_articoli.setItem(i, 3, item)
+            item = QTableWidgetItem(str(articolo["quantita"]))
+            self.table_articoli.setItem(i, 4, item)
+            item = QTableWidgetItem(str(articolo["totale_riga"]))
+            self.table_articoli.setItem(i, 5, item)
+            i = i+1

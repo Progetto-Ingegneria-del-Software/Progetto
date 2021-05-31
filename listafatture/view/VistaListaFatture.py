@@ -2,7 +2,6 @@ from fattura.model.Fattura import Fattura
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
     QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
 
-from fattura.view.VistaFattura import VistaFattura
 from fattura.view.VistaFatturaNuova import VistaFatturaNuova
 from listafatture.controller.ControlloreListaFatture import ControlloreListaFatture
 from fattura.controller.ControlloreFattura import ControlloreFattura
@@ -134,7 +133,10 @@ class VistaListaFatture(QWidget):
             self.table_view.setItem(i, 1, item)
             item = QTableWidgetItem(str(fattura.data))
             self.table_view.setItem(i, 2, item)
-            item = QTableWidgetItem(str(fattura.soggetto))
+            if "ragione_sociale" in fattura.soggetto:
+                item = QTableWidgetItem(str(fattura.soggetto["ragione_sociale"]))
+            elif "codice_fiscale" in fattura.soggetto:
+                item = QTableWidgetItem(str(fattura.soggetto["codice_fiscale"]))
             self.table_view.setItem(i, 3, item)
             item = QTableWidgetItem("€" + str(fattura.totale))
             self.table_view.setItem(i, 4, item)

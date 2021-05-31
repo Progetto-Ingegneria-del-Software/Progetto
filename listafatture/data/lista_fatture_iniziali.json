@@ -3,16 +3,62 @@
       "num_fatt": 1,
       "tipo": "Carico",
       "data": "05-01-2021",
-      "soggetto": "carta srl",
-      "lista_articoli": [{"codice": 1, "quantita": 4},{"codice": 2, "quantita": 2}],
+      "soggetto": {
+        "id": 2,
+        "ragione_sociale": "carta srl",
+        "partita_iva": "08642151195",
+        "citta": "Macerata",
+        "indirizzo": "Via Celesti 3",
+        "telefono": "3778922646",
+        "email": "cartasrlufficio@cartasrl.com"
+      },
+      "lista_articoli": [{
+        "codice": "9005235068131",
+        "descrizione": "penne nere",
+        "prezzo_unitario": 0.25,
+        "sconto_perc": 0,
+        "quantita": 4,
+        "totale_riga": 1
+      },
+        {
+        "codice": "4856235112831",
+        "descrizione": "classiche gomme per cancellare",
+        "prezzo_unitario": 0.72,
+        "sconto_perc": 0,
+        "quantita": 2,
+        "totale_riga": 1.44
+      }],
       "totale": 2.44
     },
     {
         "num_fatt": 2,
         "tipo": "Carico",
         "data": "10-02-2021",
-        "soggetto": "Luigi Bruni",
-        "lista_articoli": [{"codice": 2, "quantita": 1},{"codice": 3, "quantita": 1}],
+        "soggetto":  {
+        "id": 1,
+        "ragione_sociale": "Luigi Bruni",
+        "partita_iva": "04917150155",
+        "citta": "Ancona",
+        "indirizzo": "Via Gialli 76",
+        "telefono": 3437588962,
+        "email": "bruniluigi62@gmail.com"
+      },
+      "lista_articoli": [{
+        "codice": "4856235112831",
+        "descrizione": "classiche gomme per cancellare",
+        "prezzo_unitario": 0.72,
+        "sconto_perc": 0,
+        "quantita": 1,
+        "totale_riga": 0.72
+      },
+        {
+        "codice": "7898545117785",
+        "descrizione": "penne di alta fattura",
+        "prezzo_unitario": 60,
+        "sconto_perc": 10,
+        "quantita": 1,
+        "totale_riga": 54
+      }],
         "totale": 54.72
     }
   ]
