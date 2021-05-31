@@ -17,7 +17,7 @@ class Vista_modifica_cliente(QWidget):
             self.info = QLineEdit(self.controller.get_nome_cliente())
         if self.elemento_modifica == "Modifica Cognome":
             self.info = QLineEdit(self.controller.get_cognome_cliente())
-        if self.elemento_modifica == "Modifica CF":
+        if self.elemento_modifica == "Modifica C.F.":
             self.info = QLineEdit(self.controller.get_cf_cliente())
         if self.elemento_modifica == "Modifica Email":
             self.info = QLineEdit(self.controller.get_email_cliente())
@@ -42,7 +42,7 @@ class Vista_modifica_cliente(QWidget):
 
         self.resize(500, 100)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Modifica " + self.elemento_modifica)
+        self.setWindowTitle(self.elemento_modifica)
 
     def completa_modifica(self):
         if self.info.text() == "":
