@@ -60,7 +60,7 @@ class VistaFattura(QWidget):
                 self.h_layout2 = QHBoxLayout()
 
                 self.label_riga1_fornitore = QLabel(
-                    "Codice ID: {}, Nome: {}, Cognome: {}, CF: {}".format(fattura.soggetto["id"], fattura.soggetto["nome"], fattura.soggetto["cognome"], fattura.soggetto["codice_fiscale"]))
+                    "Codice ID: {}, Nome: {}, Cognome: {}, CF: {}".format(fattura.soggetto["codice_id"], fattura.soggetto["nome"], fattura.soggetto["cognome"], fattura.soggetto["cf"]))
                 self.h_layout2.addWidget(self.label_riga1_fornitore)
                 self.v_layout.addLayout(self.h_layout2)
 
@@ -78,7 +78,7 @@ class VistaFattura(QWidget):
                 self.h_layout2 = QHBoxLayout()
 
                 self.label_riga1_fornitore = QLabel(
-                    "Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}, Città: {}".format(fattura.soggetto["id"],
+                    "Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}, Città: {}".format(fattura.soggetto["codice_id"],
                                                                           fattura.soggetto["ragione_sociale"],
                                                                           fattura.soggetto["partita_iva"],
                                                                           fattura.soggetto["citta"]))

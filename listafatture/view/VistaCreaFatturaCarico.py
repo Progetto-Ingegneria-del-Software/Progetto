@@ -22,7 +22,7 @@ class VistaCreaFatturaCarico(QWidget):
         self.data = None
         self.fornitore = None
         self.carrello_acquisti = []
-        self.totale = None
+        self.totale = 0
 
         bold_font = QtGui.QFont()
         bold_font.setBold(True)

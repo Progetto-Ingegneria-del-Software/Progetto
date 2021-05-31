@@ -23,7 +23,7 @@ class VistaCreaFatturaScarico(QWidget):
         self.data = None
         self.cliente = None
         self.carrello_acquisti = []
-        self.totale = None
+        self.totale = 0
 
         self.bold_font = QtGui.QFont()
         self.bold_font.setBold(True)
@@ -125,7 +125,7 @@ class VistaCreaFatturaScarico(QWidget):
 
         self.h_layout5 = QHBoxLayout()
 
-        self.label_totale = QLabel("Totale: €0")
+        self.label_totale = QLabel("Totale: €{}".format(self.totale))
         self.label_totale.setFont(self.bold_font)
         self.h_layout5.addWidget(self.label_totale)
 
@@ -136,7 +136,7 @@ class VistaCreaFatturaScarico(QWidget):
         self.v_layout.addLayout(self.h_layout5)
 
         self.setLayout(self.v_layout)
-        self.resize(800, 600)
+        self.resize(950, 600)
         self.setFixedSize(self.size())
         self.setWindowTitle("Fattura Numero {}".format(self.numero_fattura))
 
