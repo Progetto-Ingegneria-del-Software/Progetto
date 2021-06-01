@@ -16,14 +16,14 @@ class Vista_scarico_articolo(QWidget):
         self.v_layout = QVBoxLayout()
         self.grid_layout = QGridLayout()
 
-        self.add_item_view()
+        self.unload_item_view()
 
         self.v_layout.addLayout(self.grid_layout)
 
         self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
         btn_ok = QPushButton("Scarica articolo")
-        btn_ok.clicked.connect(self.add_articolo)
+        btn_ok.clicked.connect(self.unload_articolo)
 
         self.v_layout.addWidget(btn_ok)
 
@@ -32,17 +32,17 @@ class Vista_scarico_articolo(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Scarico articolo in magazzino")
 
-    def add_item_view(self):
+    def unload_item_view(self):
         i=0
         for name in self.labels:
             self.grid_layout.addWidget(QLabel(name), i, 0)
             self.current_text_edit = QLineEdit(self)
-            self.current_text_edit.returnPressed.connect(self.add_articolo)
+            self.current_text_edit.returnPressed.connect(self.unload_articolo)
             self.grid_layout.addWidget(self.current_text_edit, i, 1)
             self.info[name] = self.current_text_edit
             i = i+1
 
-    def add_articolo(self):
+    def unload_articolo(self):
         codice_immesso = self.info["Codice a barre:"].text()
         stock = self.info["Quantità da decrementare:"].text()
 
