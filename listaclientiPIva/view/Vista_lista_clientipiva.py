@@ -110,8 +110,8 @@ class Vista_lista_clientipiva(QWidget):
                 self.table_view.selectedIndexes()[0].row())
             delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare il cliente PIva ' + str(
                  clientepiva_selezionato.codice_id) + '?',
-                                              'Cliente PIva ' + str(
-                                                  clientepiva_selezionato.codice_id) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
+                                              'Il cliente ' + str(
+                                                  clientepiva_selezionato.codice_id) + ' con P.ta IVA sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
                                               QMessageBox.Yes,
                                               QMessageBox.No)
             if delete_view == QMessageBox.Yes:
