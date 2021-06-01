@@ -41,7 +41,7 @@ class Vista_modifica_clientepiva(QWidget):
 
         self.resize(500, 100)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Modifica " + self.elemento_modifica)
+        self.setWindowTitle(self.elemento_modifica)
 
     def completa_modifica(self):
         if self.info.text() == "":
