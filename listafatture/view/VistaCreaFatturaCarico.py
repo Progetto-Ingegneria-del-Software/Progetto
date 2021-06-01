@@ -145,16 +145,15 @@ class VistaCreaFatturaCarico(QWidget):
         self.label_riga2_fornitore.setText("Città: {}, Indirizzo: {}, Telefono: {}, Email: {}.".format(fornitore.citta, fornitore.indirizzo, fornitore.telefono, fornitore.email))
 
     def add_articolo_in_fattura(self):
-        controllore_articoli = ControlloreListaArticoli()
-        lista_articoli = controllore_articoli.get_lista_articoli()
+        controller_lista_articoli = ControlloreListaArticoli()
+        lista_articoli = controller_lista_articoli.get_lista_articoli()
 
         for articolo in lista_articoli:
             if self.search_bar_articolo.text() == articolo.codice:
                 articolo_dict = articolo.__dict__
-                articolo_dict.pop("stock")
-                articolo_dict.pop("gruppo_merceologico")
-                articolo_dict.pop("categoria")
-                articolo_dict.pop("marca")
+                articolo_dict.pop("gruppo_merceologico", None)
+                articolo_dict.pop("categoria", None)
+                articolo_dict.pop("marca", None)
                 articolo_dict["quantita"] = self.search_bar_quantita.text()
                 articolo_dict["totale_riga"] = float(articolo.prezzo_unitario) * int(self.search_bar_quantita.text()) - (
                             float(articolo.prezzo_unitario) * float(articolo.sconto_perc) / 100) * int(
@@ -223,8 +222,7 @@ class VistaCreaFatturaCarico(QWidget):
                     self.add_articolo_in_fattura()
 
     def crea_fattura(self):
-        if not self.is_int(self.edit_giorno_fattura.text()) and not self.is_int(self.edit_giorno_fattura.text()) and not self.is_int(self.edit_giorno_fattura.text()):
-            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci una data valida.',
+        if not self.is_int(self.edit_giorno_fattura.text()) or not self.is_int(self.edit_mese_fattura.text()) or not self.is_int(self.edit_anno_fattura.text()):            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci una data valida.',
                                  QMessageBox.Ok, QMessageBox.Ok)
         elif not int(self.edit_giorno_fattura.text()) > 0 or not int(self.edit_giorno_fattura.text()) < 32 \
                 or not int(self.edit_mese_fattura.text()) > 0 or not int(self.edit_mese_fattura.text()) < 13 \

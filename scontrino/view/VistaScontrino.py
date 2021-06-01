@@ -1,5 +1,7 @@
-from PyQt5.QtWidgets import QAbstractItemView, QTableWidget, QTableWidgetItem, QTextBrowser, QWidget, QVBoxLayout, QLabel, QPushButton, QGridLayout, \
-    QMessageBox
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QAbstractItemView, QTableWidget, QTableWidgetItem, QTextBrowser, QWidget, QVBoxLayout, \
+    QLabel, QPushButton, QGridLayout, \
+    QMessageBox, QHBoxLayout, QHeaderView
 
 from scontrino.controller.ControlloreScontrino import ControlloreScontrino
 from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
@@ -9,41 +11,66 @@ class VistaScontrino(QWidget):
     def __init__(self, scontrino, callback):
         super(VistaScontrino, self).__init__()
 
-        self.controller = ControlloreScontrino(scontrino)
+
+        self.scontrino = scontrino
+        self.controller = ControlloreScontrino(self.scontrino)
         self.callback = callback
 
-        v_layout = QVBoxLayout()
+        bold_font = QtGui.QFont()
+        bold_font.setBold(True)
 
-        grid_layout = QGridLayout()
+        italic_font = QtGui.QFont()
+        italic_font.setItalic(True)
 
-        ## NUMERO SCONTRINO ##
-        label_num_scontrino = QLabel("Numero Fattura: " + str(self.controller.get_numero_scontrino()))
-        grid_layout.addWidget(label_num_scontrino, 0, 0)
+        self.v_layout = QVBoxLayout()
+        self.h_layout = QHBoxLayout()
 
-        ## DATA SCONTRINO ##
-        label_data_scontrino = QLabel("Data: " + str(self.controller.get_data_scontrino()))
-        grid_layout.addWidget(label_data_scontrino, 2, 0)
+        self.label_data_scontrino = QLabel("Data: {}".format(self.controller.get_data_scontrino()))
+        self.h_layout.addWidget(self.label_data_scontrino)
 
-        ## LISTA DEGLI ARTICOLI COMPRATI ##
-        self.tableWidget = QTableWidget() 
-        self.tableWidget.setColumnCount(7) #Numero prefissato di colonne
-        self.name_colonne = ['Codice ID', 'Descrizione', 'Marca', 'Prezzo Unitario',
-                             'Quantità', 'Totale']
-        
-        self.update_table_view()  #Viene mostrata la tabella degli articoli inclusi nella fattura
+        self.h_layout.addStretch()
 
-        self.table_view.setHorizontalHeaderLabels(self.name_colonne)
-        self.table_view.verticalHeader().setVisible(False)
-        self.table_view.setAlternatingRowColors(True)
-        self.table_view.setSelectionBehavior(QAbstractItemView.SelectRows)
-        self.table_view.setSelectionMode(QAbstractItemView.SingleSelection)
-        self.table_view.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        
+        self.v_layout.addLayout(self.h_layout)
 
-        self.setLayout(v_layout)
-        self.resize(500, 300)
+        self.h_layout2 = QHBoxLayout()
+
+        self.label_articolo = QLabel("Dati Articolo/i:")
+        self.label_articolo.setFont(bold_font)
+        self.h_layout2.addWidget(self.label_articolo)
+        self.h_layout2.addStretch()
+
+        self.v_layout.addLayout(self.h_layout2)
+
+        self.table_articoli = QTableWidget()
+        self.table_articoli.setColumnCount(6)
+        self.table_articoli.setRowCount(0)
+        self.table_articoli.setHorizontalHeaderLabels(["Codice", "Descrizione", "Prezzo Unitario", "Sconto", "Quantità", "Totale Riga"])
+        self.table_articoli.verticalHeader().setVisible(False)
+        self.table_articoli.setAlternatingRowColors(True)
+        self.table_articoli.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.table_articoli.setSelectionMode(QAbstractItemView.NoSelection)
+
+        self.table_articoli.resizeColumnsToContents()
+        self.table_articoli.resizeRowsToContents()
+
+        self.table_articoli.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+        self.show_articoli_in_table()
+
+        self.v_layout.addWidget(self.table_articoli)
+
+        self.h_layout3 = QHBoxLayout()
+
+        self.label_totale = QLabel("Totale: {}".format(self.controller.get_totale_scontrino()))
+        self.label_totale.setFont(bold_font)
+        self.h_layout3.addWidget(self.label_totale)
+
+        self.v_layout.addLayout(self.h_layout3)
+
+        self.setLayout(self.v_layout)
+        self.resize(800, 500)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Scontrino n: " + str(self.controller.get_numero_scontrino))
+        self.setWindowTitle("Scontrino Numero {}".format(self.controller.get_numero_scontrino()))
 
 
     ##############################################

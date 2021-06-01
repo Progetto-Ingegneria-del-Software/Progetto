@@ -8,7 +8,10 @@ class ControlloreListaScontrini():
         self.model = ListaScontrini()
 
     def aggiungi_scontrino(self, scontrino):
-        self.model.aggiungi_fattura(scontrino)
+        self.model.aggiungi_scontrino(scontrino)
+
+    def get_assegnamento_numero_scontrino(self):
+        return self.model.numero_scontrino
 
     def get_lista_scontrini(self):
         return self.model.lista_scontrini

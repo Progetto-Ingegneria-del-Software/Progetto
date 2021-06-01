@@ -7,10 +7,12 @@ from listascontrini.controller.ControlloreListaScontrini import ControlloreLista
 from listascontrini.view.VistaCreaScontrino import VistaCreaScontrino
 
 class VistaListaScontrini(QWidget):
-    def __init__(self, parent=None):
-        super(VistaListaScontrini, self).__init__(parent)
+    def __init__(self, controller_articoli, callback_magazzino):
+        super(VistaListaScontrini, self).__init__()
 
         self.controller = ControlloreListaScontrini()
+        self.controller_articoli = controller_articoli
+        self.callback_magazzino = callback_magazzino
         self.name_colonne = ['Numero Scontrino', 'Data', 'Totale Prezzo']  # Nomi delle colonne della tabella degli scontrini
 
         self.v_layout = QVBoxLayout()
@@ -103,12 +105,11 @@ class VistaListaScontrini(QWidget):
     ###             DEL TIPO DI FATTURA               ###
     #####################################################
     def show_crea_scontrino(self):
-        numero_scontrino = self.table_view.rowCount() + 1
         self.registratore_cassa = QMessageBox.information(self, "Collegamento...", 
                                     "Collegamento al registratore di cassa in corso..." + '\n \n' + "Cliccare su OK per avanzare alla creazione dello scontrino!") # Avviso di collegamento al registratore di cassa.
                                                                                                                                                                    # Non avviene nessun collegamento reale, questo è un esempio.
                                                                                                                                                                    # Visionare il Diagramma dei sistemi
-        self.vista_crea_scontrino = VistaCreaScontrino(numero_scontrino) # Viene aperta l'interfaccia di creazione dello scontrino
+        self.vista_crea_scontrino = VistaCreaScontrino(self.controller, self.controller_articoli, self.update_table_view, self.callback_magazzino) # Viene aperta l'interfaccia di creazione dello scontrino
         self.vista_crea_scontrino.show()
 
 

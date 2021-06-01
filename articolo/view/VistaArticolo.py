@@ -19,6 +19,7 @@ class VistaArticolo(QWidget):
 
         grid_layout = QGridLayout()
 
+        v = str(self.controller.get_codice_articolo())
         label_codice = QLabel("Codice: " + str(self.controller.get_codice_articolo()))
         grid_layout.addWidget(label_codice, 0, 0)
 

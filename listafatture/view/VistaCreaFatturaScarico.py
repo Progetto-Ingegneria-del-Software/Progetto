@@ -138,7 +138,7 @@ class VistaCreaFatturaScarico(QWidget):
         self.setLayout(self.v_layout)
         self.resize(950, 600)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Fattura Numero {}".format(self.numero_fattura))
+        self.setWindowTitle("Creazione Fattura Numero {}".format(self.numero_fattura))
 
     def combobox_change(self):
         self.cliente = None
@@ -178,16 +178,15 @@ class VistaCreaFatturaScarico(QWidget):
                     self.label_dati2_cliente.setText("Indirizzo: {}, Telefono: {}, Email: {}.".format(cliente.indirizzo, cliente.telefono, cliente.email))
 
     def add_articolo_in_fattura(self):
-        controllore_articoli = ControlloreListaArticoli()
-        lista_articoli = controllore_articoli.get_lista_articoli()
+        controller_lista_articoli = ControlloreListaArticoli()
+        lista_articoli = controller_lista_articoli.get_lista_articoli()
 
         for articolo in lista_articoli:
             if self.search_bar_articolo.text() == articolo.codice:
                 articolo_dict = articolo.__dict__
-                articolo_dict.pop("stock")
-                articolo_dict.pop("gruppo_merceologico")
-                articolo_dict.pop("categoria")
-                articolo_dict.pop("marca")
+                articolo_dict.pop("gruppo_merceologico", None)
+                articolo_dict.pop("categoria", None)
+                articolo_dict.pop("marca", None)
                 articolo_dict["quantita"] = self.search_bar_quantita.text()
                 articolo_dict["totale_riga"] = float(articolo.prezzo_unitario) * int(self.search_bar_quantita.text()) - (
                             float(articolo.prezzo_unitario) * float(articolo.sconto_perc) / 100) * int(
@@ -256,7 +255,7 @@ class VistaCreaFatturaScarico(QWidget):
                     self.add_articolo_in_fattura()
 
     def crea_fattura(self):
-        if not self.is_int(self.edit_giorno_fattura.text()) and not self.is_int(self.edit_giorno_fattura.text()) and not self.is_int(self.edit_giorno_fattura.text()):
+        if not self.is_int(self.edit_giorno_fattura.text()) or not self.is_int(self.edit_mese_fattura.text()) or not self.is_int(self.edit_anno_fattura.text()):
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci una data valida.',
                                  QMessageBox.Ok, QMessageBox.Ok)
         elif not int(self.edit_giorno_fattura.text()) > 0 or not int(self.edit_giorno_fattura.text()) < 32 \
