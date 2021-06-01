@@ -25,7 +25,7 @@ class VistaModificaDipendente(QWidget):
         if self.elemento_modifica == "Modifica Mansione":
             self.info = QLineEdit(self.controller.get_mansione_dipendente())
         if self.elemento_modifica == "Modifica Stipendio":
-            self.info = QLineEdit(self.controller.get_stipendio_dipendente())
+            self.info = QLineEdit(str(self.controller.get_stipendio_dipendente()))
 
         self.layout.addRow(self.elemento_modifica + ':', self.info)
 
