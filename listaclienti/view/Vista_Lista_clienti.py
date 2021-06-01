@@ -104,11 +104,9 @@ class Vista_Lista_clienti(QWidget):
         if self.table_view.selectedIndexes():
             cliente_selezionato = self.controller.get_cliente_by_index(
                 self.table_view.selectedIndexes()[0].row())
-            delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare il fornitore ' + str(
+            delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare il cliente ' + str(
                  cliente_selezionato.codice_id) + '?',
-                                              'Il f'
-                                              'ornitore ' + str(
-                                                  cliente_selezionato.codice_id) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
+                                              'Il cliente ' + str(cliente_selezionato.codice_id) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
                                               QMessageBox.Yes,
                                               QMessageBox.No)
             if delete_view == QMessageBox.Yes:
