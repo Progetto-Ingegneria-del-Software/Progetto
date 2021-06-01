@@ -76,44 +76,21 @@ class VistaScontrino(QWidget):
     ##############################################
     ###     FUNZIONE CHE MOSTRA LA TABELLA     ###
     ##############################################
-    def update_table_view(self):
-        self.controller.save_data()
-        self.tableWidget.setRowCount(len(self.controller.model.lista_articoli))   ## CONTROLLARE QUESTA PARTE
-        self.show_table_items(self.controller.get_lista_articoli())
+    def show_articoli_in_table(self):
+        self.table_articoli.setRowCount(len(self.controller.get_articoli_scontrino()))
 
-
-    ##############################################
-    ###     FUNZIONE CHE MOSTRA LA TABELLA     ###
-    ##############################################
-    def show_table_items(self, item_list):
-        i = 0
-        for articolo in item_list:
-            item = QTableWidgetItem(str(articolo.codice_id))
-            self.table_view.setItem(i, 0, item)
-            item = QTableWidgetItem(str(articolo.descrizione))
-            self.table_view.setItem(i, 1, item)
-            item = QTableWidgetItem(str(articolo.marca))
-            self.table_view.setItem(i, 2, item)
-            item = QTableWidgetItem("€" + str(articolo.prezzo_unitario))
-            self.table_view.setItem(i, 3, item)
-            item = QTableWidgetItem(str(articolo.quantita))
-            self.table_view.setItem(i, 4, item)
-            item = QTableWidgetItem(str(articolo.prezzo_unitario * articolo.quantita))
-            self.table_view.setItem(i, 5, item)
-            
-            i = i + 1
-
-
-    ##############################################
-    ###   FUNZIONE PER ELIMINARE UNA FATTURA   ###
-    ##############################################
-    #def delete_fattura(self):
-   #     delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare la fattura numero:' + str(self.controller.get_numero_fattura()) + '?',
-   #                                       'La fattura numero: ' + str(self.controller.get_numero_fattura()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
-   #                                       QMessageBox.Yes,
-    #                                      QMessageBox.No)
-        
-    #    if delete_view == QMessageBox.Yes:
-    #        self.elimina_fattura(self.controller.get_numero_fattura())
-    #        self.callback()
-     #       self.close()
+        i=0
+        for articolo in self.scontrino.articoli:
+            item = QTableWidgetItem(str(articolo["codice"]))
+            self.table_articoli.setItem(i, 0, item)
+            item = QTableWidgetItem(str(articolo["descrizione"]))
+            self.table_articoli.setItem(i, 1, item)
+            item = QTableWidgetItem("€" + str(articolo["prezzo_unitario"]))
+            self.table_articoli.setItem(i, 2, item)
+            item = QTableWidgetItem(str(articolo["sconto_perc"]) + "%")
+            self.table_articoli.setItem(i, 3, item)
+            item = QTableWidgetItem(str(articolo["quantita"]))
+            self.table_articoli.setItem(i, 4, item)
+            item = QTableWidgetItem(str(articolo["totale_riga"]))
+            self.table_articoli.setItem(i, 5, item)
+            i = i+1

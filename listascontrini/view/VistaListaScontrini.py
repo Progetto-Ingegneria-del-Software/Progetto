@@ -96,8 +96,9 @@ class VistaListaScontrini(QWidget):
     ####################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
-            self.vista_scontrino = VistaScontrino(self.controller.get_scontrino_by_index(int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.update_table_view)
-            self.vista_scontrino.show()
+            self.vista_fattura = VistaScontrino(self.controller.get_scontrino_by_index(
+                int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())-1), self.update_table_view)
+            self.vista_fattura.show()
 
 
     #####################################################
