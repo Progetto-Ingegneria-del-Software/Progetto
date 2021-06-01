@@ -152,7 +152,7 @@ class VistaCreaScontrino(QWidget):
 
         for articolo in self.carrello_acquisti:
             self.totale += articolo["totale_riga"]
-        self.label_totale.setText("Totale: {}".format(self.truncate(self.totale, 2)))
+        self.label_totale.setText("Totale: €{}".format(self.truncate(self.totale, 2)))
 
     @QtCore.pyqtSlot()
     def deleteClicked(self):
@@ -207,13 +207,14 @@ class VistaCreaScontrino(QWidget):
                     return
             for articolo in self.carrello_acquisti:
                 self.controller_articoli.scarico(articolo["codice"], articolo["quantita"])
-                self.data = self.edit_giorno_scontrino.text() + '-' + self.edit_mese_scontrino.text() + '-' + self.edit_anno_scontrino.text()
-                self.controller_scontrini.model.numero_scontrino = self.controller_scontrini.model.numero_scontrino+1
-                self.controller_scontrini.aggiungi_scontrino(Scontrino(self.numero_scontrino, self.data,
-                                         self.carrello_acquisti, self.totale))
-                self.callback_magazzino()
-                self.callback_scontrini()
-                self.close()
+
+            self.data = self.edit_giorno_scontrino.text() + '-' + self.edit_mese_scontrino.text() + '-' + self.edit_anno_scontrino.text()
+            self.controller_scontrini.model.numero_scontrino = self.controller_scontrini.model.numero_scontrino+1
+            self.controller_scontrini.aggiungi_scontrino(Scontrino(self.numero_scontrino, self.data,
+                                                                   self.carrello_acquisti, self.totale))
+            self.callback_magazzino()
+            self.callback_scontrini()
+            self.close()
 
     def is_int(self, val):
         try:

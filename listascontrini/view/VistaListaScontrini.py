@@ -59,6 +59,12 @@ class VistaListaScontrini(QWidget):
         self.buttons_layout.addWidget(self.open_button)
         self.v_layout.addLayout(self.buttons_layout)
 
+        ## BOTTONE CHE RICHIAMA LA FUNZIONE delete_scontrino PER LA ELIMINAZIONE DI UNO SCONTRINO
+        self.delete_button = QPushButton("Elimina scotrino")
+        self.delete_button.clicked.connect(self.delete_scontrino)
+        self.buttons_layout.addWidget(self.delete_button)
+        self.v_layout.addLayout(self.buttons_layout)
+
         ## BOTTONE CHE RICHIAMA LA FUNZIONE show_crea_scontrino PER LA CREAZIONE DI UNO NUOVO SCONTRINO
         self.insert_button = QPushButton("Crea scotrino")
         self.insert_button.clicked.connect(self.show_crea_scontrino)
@@ -96,8 +102,8 @@ class VistaListaScontrini(QWidget):
     ####################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
-            self.vista_fattura = VistaScontrino(self.controller.get_scontrino_by_index(
-                int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())-1), self.update_table_view)
+            self.vista_fattura = VistaScontrino(self.controller.get_scontrino_by_numero(
+                int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.update_table_view, self.callback_magazzino, self.controller, self.controller_articoli)
             self.vista_fattura.show()
 
 
@@ -112,6 +118,26 @@ class VistaListaScontrini(QWidget):
                                                                                                                                                                    # Visionare il Diagramma dei sistemi
         self.vista_crea_scontrino = VistaCreaScontrino(self.controller, self.controller_articoli, self.update_table_view, self.callback_magazzino) # Viene aperta l'interfaccia di creazione dello scontrino
         self.vista_crea_scontrino.show()
+
+    def delete_scontrino(self):
+        if self.table_view.selectedIndexes():
+            scontrino_selezionato = self.controller.get_scontrino_by_numero(
+                int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()))
+            delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare lo scontrino '  + str(scontrino_selezionato.num_scontrino) + '?',
+                                          'Lo scontrino numero ' + str(scontrino_selezionato.num_scontrino) +' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
+                                          QMessageBox.Yes,
+                             QMessageBox.No)
+            if delete_view == QMessageBox.Yes:
+                self.riassegna_articoli_in_magazzino(scontrino_selezionato)
+                self.callback_magazzino()
+                self.controller.elimina_scontrino_by_numero(scontrino_selezionato.num_scontrino)
+                self.update_table_view()
+
+    def riassegna_articoli_in_magazzino(self, scontrino):
+        for articolo_da_riassegnare in scontrino.articoli:
+            for articolo in self.controller_articoli.get_lista_articoli():
+                if articolo.codice == articolo_da_riassegnare["codice"]:
+                    self.controller_articoli.inserimento_carico(articolo.codice, articolo_da_riassegnare["quantita"])
 
 
     ##########################################

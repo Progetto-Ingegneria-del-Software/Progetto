@@ -40,8 +40,15 @@ class ListaScontrini():
     def aggiungi_scontrino(self, scontrino):
         self.lista_scontrini.append(scontrino)
 
-    def get_scontrino_by_index(self, index):
-        return self.lista_scontrini[index]
+    def get_scontrino_by_numero(self, numero):
+        for scontrino in self.lista_scontrini:
+            if scontrino.num_scontrino == numero:
+                return scontrino
+
+    def elimina_scontrino_by_numero(self, numero):
+        for scontrino in self.lista_scontrini:
+            if scontrino.num_scontrino == numero:
+                self.lista_scontrini.remove(scontrino)
   
     ####################################################
     ###    FUNZIONE CHE SALVA I DATI ALL'INTERNO     ### 

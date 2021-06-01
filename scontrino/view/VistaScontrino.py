@@ -8,13 +8,15 @@ from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaAr
 
 
 class VistaScontrino(QWidget):
-    def __init__(self, scontrino, callback):
+    def __init__(self, scontrino, callback, callback_magazzino, controller_scontrini, controller_articoli):
         super(VistaScontrino, self).__init__()
-
 
         self.scontrino = scontrino
         self.controller = ControlloreScontrino(self.scontrino)
         self.callback = callback
+        self.callback_magazzino = callback_magazzino
+        self.controller_scontrini = controller_scontrini
+        self.controller_articoli = controller_articoli
 
         bold_font = QtGui.QFont()
         bold_font.setBold(True)
@@ -65,6 +67,11 @@ class VistaScontrino(QWidget):
         self.label_totale.setFont(bold_font)
         self.h_layout3.addWidget(self.label_totale)
 
+        remove_button = QPushButton("Elimina Scontrino")
+        remove_button.clicked.connect(self.elimina_scontrino)
+        self.h_layout3.addWidget(remove_button)
+
+
         self.v_layout.addLayout(self.h_layout3)
 
         self.setLayout(self.v_layout)
@@ -94,3 +101,23 @@ class VistaScontrino(QWidget):
             item = QTableWidgetItem(str(articolo["totale_riga"]))
             self.table_articoli.setItem(i, 5, item)
             i = i+1
+
+    def elimina_scontrino(self):
+        delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare lo scontrino ' + str(
+            self.scontrino.num_scontrino) + '?',
+                                          'Lo scontrino numero ' + str(
+                                              self.scontrino.num_scontrino) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
+                                          QMessageBox.Yes,
+                                          QMessageBox.No)
+        if delete_view == QMessageBox.Yes:
+            self.riassegna_articoli_in_magazzino(self.scontrino)
+            self.callback_magazzino()
+            self.controller_scontrini.elimina_scontrino_by_numero(self.scontrino.num_scontrino)
+            self.callback()
+            self.close()
+
+    def riassegna_articoli_in_magazzino(self, scontrino):
+        for articolo_da_riassegnare in scontrino.articoli:
+            for articolo in self.controller_articoli.get_lista_articoli():
+                if articolo.codice == articolo_da_riassegnare["codice"]:
+                    self.controller_articoli.inserimento_carico(articolo.codice, articolo_da_riassegnare["quantita"])
