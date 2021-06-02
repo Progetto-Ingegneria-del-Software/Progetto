@@ -7,11 +7,11 @@ from articolo.view.VistaModificaArticolo import VistaModificaArticolo
 
 
 class VistaArticolo(QWidget):
-    def __init__(self, articolo, elimina_articolo, callback_articoli, callback_magazzino):
+    def __init__(self, articolo, controller_articoli, callback_articoli, callback_magazzino):
         super(VistaArticolo, self).__init__()
 
         self.controller = ControlloreArticolo(articolo)
-        self.elimina_articolo = elimina_articolo
+        self.controller_articoli = controller_articoli
         self.callback_articoli = callback_articoli
         self.callback_magazzino = callback_magazzino
 
@@ -19,44 +19,43 @@ class VistaArticolo(QWidget):
 
         grid_layout = QGridLayout()
 
-        v = str(self.controller.get_codice_articolo())
-        label_codice = QLabel("Codice: " + str(self.controller.get_codice_articolo()))
-        grid_layout.addWidget(label_codice, 0, 0)
+        self.label_codice = QLabel("Codice: " + str(self.controller.get_codice_articolo()))
+        grid_layout.addWidget(self.label_codice, 0, 0)
 
         button_gruppo_merceologico = QPushButton("Modifica Codice")
         button_gruppo_merceologico.clicked.connect(lambda: self.show_modifica_articolo("Modifica Codice"))
         grid_layout.addWidget(button_gruppo_merceologico, 0, 1)
 
-        label_gruppo_merceologico = QLabel("Gruppo Merceologico: " + str(self.controller.get_gruppo_merceologico_articolo()))
-        grid_layout.addWidget(label_gruppo_merceologico, 1, 0)
+        self.label_gruppo_merceologico = QLabel("Gruppo Merceologico: " + str(self.controller.get_gruppo_merceologico_articolo()))
+        grid_layout.addWidget(self.label_gruppo_merceologico, 1, 0)
 
         button_gruppo_merceologico = QPushButton("Modifica Gruppo Merceologico")
         button_gruppo_merceologico.clicked.connect(lambda: self.show_modifica_articolo("Modifica Gruppo Merceologico"))
         grid_layout.addWidget(button_gruppo_merceologico, 1, 1)
 
-        label_categoria = QLabel("Categoria: " + str(self.controller.get_categoria_articolo()))
-        grid_layout.addWidget(label_categoria, 2, 0)
+        self.label_categoria = QLabel("Categoria: " + str(self.controller.get_categoria_articolo()))
+        grid_layout.addWidget(self.label_categoria, 2, 0)
 
         button_categoria = QPushButton("Modifica Categoria")
         button_categoria.clicked.connect(lambda: self.show_modifica_articolo("Modifica Categoria"))
         grid_layout.addWidget(button_categoria, 2, 1)
 
-        label_marca = QLabel("Marca: " + str(self.controller.get_marca_articolo()))
-        grid_layout.addWidget(label_marca, 3, 0)
+        self.label_marca = QLabel("Marca: " + str(self.controller.get_marca_articolo()))
+        grid_layout.addWidget(self.label_marca, 3, 0)
 
         button_marca = QPushButton("Modifica Marca")
         button_marca.clicked.connect(lambda: self.show_modifica_articolo("Modifica Marca"))
         grid_layout.addWidget(button_marca, 3, 1)
 
-        label_prezzo_unitario = QLabel("Prezzo: €" + str(self.controller.get_prezzo_unitario_articolo()))
-        grid_layout.addWidget(label_prezzo_unitario, 4, 0)
+        self.label_prezzo_unitario = QLabel("Prezzo: €" + str(self.controller.get_prezzo_unitario_articolo()))
+        grid_layout.addWidget(self.label_prezzo_unitario, 4, 0)
 
         button_prezzo_unitario = QPushButton("Modifica Prezzo Unitario")
         button_prezzo_unitario.clicked.connect(lambda: self.show_modifica_articolo("Modifica Prezzo Unitario"))
         grid_layout.addWidget(button_prezzo_unitario, 4, 1)
 
-        label_sconto_perc = QLabel("Sconto: " + str(self.controller.get_sconto_perc_articolo()) + "%")
-        grid_layout.addWidget(label_sconto_perc, 5, 0)
+        self.label_sconto_perc = QLabel("Sconto: " + str(self.controller.get_sconto_perc_articolo()) + "%")
+        grid_layout.addWidget(self.label_sconto_perc, 5, 0)
 
         button_sconto_perc = QPushButton("Modifica Sconto")
         button_sconto_perc.clicked.connect(lambda: self.show_modifica_articolo("Modifica Sconto"))
@@ -80,19 +79,29 @@ class VistaArticolo(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Articolo " + str(self.controller.get_codice_articolo()))
 
+    def update_info_view(self):
+        self.label_codice.setText("Codice: " + str(self.controller.get_codice_articolo()))
+        self.label_marca.setText("Marca: " + str(self.controller.get_marca_articolo()))
+        self.label_gruppo_merceologico.setText("Gruppo Merceologico: " + str(self.controller.get_gruppo_merceologico_articolo()))
+        self.label_categoria.setText("Categoria: " + str(self.controller.get_categoria_articolo()))
+        self.label_prezzo_unitario.setText("Prezzo: €" + str(self.controller.get_prezzo_unitario_articolo()))
+        self.label_sconto_perc.setText("Sconto: " + str(self.controller.get_sconto_perc_articolo()) + "%")
+        self.setWindowTitle("Articolo " + str(self.controller.get_codice_articolo()))
+
+
     def delete_articolo(self):
         delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare l\'articolo ' + str(self.controller.get_codice_articolo()) + '?',
                                           'L\'articolo ' + str(self.controller.get_codice_articolo()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
                                           QMessageBox.Yes,
                                           QMessageBox.No)
         if delete_view == QMessageBox.Yes:
-            self.elimina_articolo(self.controller.get_codice_articolo())
+            self.controller_articoli.elimina_articolo_by_codice(self.controller.get_codice_articolo())
             self.callback_articoli()
             self.callback_magazzino()
             self.close()
 
     def show_modifica_articolo(self, elemento_modifica):
-        self.vista_modifica_articolo = VistaModificaArticolo(elemento_modifica, self.controller, self.callback_articoli, self.callback_magazzino)
+        self.vista_modifica_articolo = VistaModificaArticolo(elemento_modifica, self.controller, self.controller_articoli, self.callback_articoli, self.callback_magazzino, self.update_info_view)
         self.vista_modifica_articolo.show()
 
     def show_descrizione_articolo(self):

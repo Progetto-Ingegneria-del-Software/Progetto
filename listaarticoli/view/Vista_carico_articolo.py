@@ -28,9 +28,9 @@ class Vista_carico_articolo(QWidget):
         self.v_layout.addWidget(btn_ok)
 
         self.setLayout(self.v_layout)
-        self.resize(400, 250)
+        self.resize(400, 150)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Carico articolo in magazzino")
+        self.setWindowTitle("Carico articolo")
 
     def load_item_view(self):
         i=0

@@ -220,7 +220,7 @@ class VistaCreaFatturaScarico(QWidget):
 
         for articolo in self.carrello_acquisti:
             self.totale += articolo["totale_riga"]
-        self.label_totale.setText("Totale: {}".format(self.truncate(self.totale, 2)))
+        self.label_totale.setText("Totale: €{}".format(self.truncate(self.totale, 2)))
 
     @QtCore.pyqtSlot()
     def deleteClicked(self):
@@ -258,34 +258,37 @@ class VistaCreaFatturaScarico(QWidget):
         if not self.is_int(self.edit_giorno_fattura.text()) or not self.is_int(self.edit_mese_fattura.text()) or not self.is_int(self.edit_anno_fattura.text()):
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci una data valida.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         elif not int(self.edit_giorno_fattura.text()) > 0 or not int(self.edit_giorno_fattura.text()) < 32 \
                 or not int(self.edit_mese_fattura.text()) > 0 or not int(self.edit_mese_fattura.text()) < 13 \
                 or not int(self.edit_anno_fattura.text()) > 2020 or not int(self.edit_anno_fattura.text()):
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci una data valida',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         elif self.cliente == None:
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci il cliente.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         elif not self.carrello_acquisti:
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci almeno un articolo.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         else:
             for articolo in self.carrello_acquisti:
                 stock_massimo = self.controller_articoli.get_stock_by_codice(articolo["codice"])
                 if int(articolo["quantita"]) > stock_massimo:
-                    QMessageBox.critical(self, 'Errore!', 'Non ci sono abbastanza scorte nel magazzino!',
+                    QMessageBox.critical(self, 'Errore!', 'Non ci sono abbastanza scorte per l\'articolo {} nel magazzino!'.format(self.controller_articoli.get_articolo_by_codice(articolo["codice"]).codice),
                                          QMessageBox.Ok, QMessageBox.Ok)
-                    self.close()
                     return
-            for articolo in self.carrello_acquisti:
-                self.controller_articoli.scarico(articolo["codice"], articolo["quantita"])
-                self.data = self.edit_giorno_fattura.text() + '-' + self.edit_mese_fattura.text() + '-' + self.edit_anno_fattura.text()
-                self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
-                self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.data, self.cliente.__dict__,
-                                         self.carrello_acquisti, self.totale))
-                self.callback_magazzino()
-                self.callback()
-                self.close()
+        for articolo in self.carrello_acquisti:
+            self.controller_articoli.scarico(articolo["codice"], articolo["quantita"])
+        self.data = self.edit_giorno_fattura.text() + '-' + self.edit_mese_fattura.text() + '-' + self.edit_anno_fattura.text()
+        self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
+        self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.data, self.cliente.__dict__,
+                                                         self.carrello_acquisti, self.totale))
+        self.callback_magazzino()
+        self.callback()
+        self.close()
 
     def is_int(self, val):
         try:

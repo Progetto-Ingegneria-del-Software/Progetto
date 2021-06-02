@@ -2,13 +2,14 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFormLayout, QLineEdit, QHBoxL
 
 
 class VistaModificaFornitore(QWidget):
-    def __init__(self, elemento_modifica, controller, callback):
+    def __init__(self, elemento_modifica, controller, controller_fornitore, callback, callback_fornitore):
         super(VistaModificaFornitore, self).__init__()
 
         self.elemento_modifica = elemento_modifica
         self.controller = controller
         self.callback = callback
-
+        self.callback_fornitore = callback_fornitore
+        self.controller_fornitore = controller_fornitore
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
 
@@ -49,6 +50,12 @@ class VistaModificaFornitore(QWidget):
             if self.elemento_modifica == "Modifica Ragione Sociale":
                 self.controller.set_ragione_sociale_fornitore(self.info.text())
             if self.elemento_modifica == "Modifica Partita IVA":
+                for fornitore in self.controller_fornitore.get_lista_fornitori():
+                    if fornitore.partita_iva == self.info.text():
+                        QMessageBox.critical(self, 'Errore di compilazione!',
+                                             'La partita iva digitata è già presente nel sistema.',
+                                             QMessageBox.Ok, QMessageBox.Ok)
+                        return
                 self.controller.set_partita_iva_fornitore(self.info.text())
             if self.elemento_modifica == "Modifica Città":
                 self.controller.set_citta_fornitore(self.info.text())
@@ -58,5 +65,6 @@ class VistaModificaFornitore(QWidget):
                 self.controller.set_telefono_fornitore(self.info.text())
             if self.elemento_modifica == "Modifica Email":
                 self.controller.set_email_fornitore(self.info.text())
+            self.callback_fornitore()
             self.callback()
             self.close()

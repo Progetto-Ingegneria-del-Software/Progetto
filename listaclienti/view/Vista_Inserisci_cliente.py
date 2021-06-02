@@ -54,24 +54,18 @@ class Vista_Inserisci_cliente(QWidget):
         citta = self.info["Città:"].text()
         indirizzo = self.info["Indirizzo:"].text()
 
-
-
-
-
-
         if nome == "" or cognome == "" or cf == "" or email == "" or telefono == "":  #or #indirizzo == "":
             QMessageBox.critical(self, 'Errore di compilazione!',
                                  'Per favore, inserisci tutte le informazioni richieste.',
                                  QMessageBox.Ok, QMessageBox.Ok)
-
-        else:
-
-
-              self.controller.model.codice_id = self.controller.model.codice_id + 1
-              self.controller.aggiungi_cliente(Cliente(self.controller.model.codice_id, nome, cognome, cf, email, telefono, citta,indirizzo))
-              self.callback()
-              self.close()
-
-
-
-
+            return
+        for cliente in self.controller.get_lista_clienti():
+            if cliente.cf.upper() == cf.upper():
+                QMessageBox.critical(self, 'Errore di compilazione!',
+                                     'Il codice fiscale inserito è già presente nel sistema.',
+                                     QMessageBox.Ok, QMessageBox.Ok)
+                return
+        self.controller.model.codice_id = self.controller.model.codice_id + 1
+        self.controller.aggiungi_cliente(Cliente(self.controller.model.codice_id, nome, cognome, cf, email, telefono, citta,indirizzo))
+        self.callback()
+        self.close()

@@ -50,7 +50,7 @@ class VistaListaDipendenti(QWidget):
         self.v_layout.addWidget(self.table_view)
 
         self.buttons_layout = QHBoxLayout()
-        self.open_button = QPushButton("Apri Dipendente")
+        self.open_button = QPushButton("Visualizza Dipendente")
 
         self.open_button.clicked.connect(self.show_selected_info)
 

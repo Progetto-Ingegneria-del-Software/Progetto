@@ -54,12 +54,18 @@ class VistaInserisciFornitore(QWidget):
         if ragione_sociale == "" or partita_iva == "" or citta == "" or indirizzo == "" or telefono == "" or email == "":
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
+        for fornitore in self.controller.get_lista_fornitori():
+            if fornitore.partita_iva == partita_iva:
+                QMessageBox.critical(self, 'Errore di compilazione!',
+                                 'La partita iva digitata è già presente nel sistema.',
+                                 QMessageBox.Ok, QMessageBox.Ok)
+                return
 
-        else:
-            self.controller.model.codice_id = self.controller.model.codice_id + 1
-            self.controller.aggiungi_fornitore(
-                Fornitore(self.controller.model.codice_id, ragione_sociale, partita_iva, citta, indirizzo, telefono, email))
-            self.callback()
-            self.close()
+        self.controller.model.codice_id = self.controller.model.codice_id + 1
+        self.controller.aggiungi_fornitore(
+            Fornitore(self.controller.model.codice_id, ragione_sociale, partita_iva, citta, indirizzo, telefono, email))
+        self.callback()
+        self.close()
 
 

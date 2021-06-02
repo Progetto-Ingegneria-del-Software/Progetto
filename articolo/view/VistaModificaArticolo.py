@@ -3,12 +3,14 @@ from PyQt5.QtWidgets import QWidget, QFormLayout, QLabel, QLineEdit, QVBoxLayout
 
 
 class VistaModificaArticolo(QWidget):
-    def __init__(self, elemento_modifica, controller, callback_articoli, callback_magazzino):
+    def __init__(self, elemento_modifica, controller, controller_articoli, callback_articoli, callback_magazzino, callback_articolo):
         super(VistaModificaArticolo, self).__init__()
 
         self.elemento_modifica = elemento_modifica
         self.controller = controller
+        self.controller_articoli = controller_articoli
         self.callback_articoli = callback_articoli
+        self.callback_articolo = callback_articolo
         self.callback_magazzino = callback_magazzino
 
         self.v_layout = QVBoxLayout()
@@ -49,8 +51,14 @@ class VistaModificaArticolo(QWidget):
         if self.info.text() == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         else:
             if self.elemento_modifica == "Modifica Codice":
+                for articolo in self.controller_articoli.get_lista_articoli():
+                    if articolo.codice == self.info.text():
+                        QMessageBox.critical(self, 'Errore', 'Il codice a barre già presente nel sistema.',
+                                         QMessageBox.Ok, QMessageBox.Ok)
+                        return
                 self.controller.set_codice_articolo(self.info.text())
             if self.elemento_modifica == "Modifica Gruppo Merceologico":
                 self.controller.set_gruppo_merceologico_articolo(self.info.text())
@@ -66,16 +74,19 @@ class VistaModificaArticolo(QWidget):
                 else:
                     QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico',
                                          QMessageBox.Ok, QMessageBox.Ok)
+                    return
             if self.elemento_modifica == "Modifica Sconto":
                 if self.is_int(self.info.text()):
-                    self.controller.set_prezzo_unitario_articolo(int(self.info.text()))
+                    self.controller.set_sconto_perc_articolo(int(self.info.text()))
                 elif self.is_float(self.info.text()):
-                    self.controller.set_prezzo_unitario_articolo(float(self.info.text()))
+                    self.controller.set_sconto_perc_articolo(float(self.info.text()))
                 else:
                     QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico',
                                          QMessageBox.Ok, QMessageBox.Ok)
+                    return
             if self.elemento_modifica == "Modifica Descrizione":
                 self.controller.set_descrizione_articolo(self.info.text())
+            self.callback_articolo()
             self.callback_articoli()
             self.callback_magazzino()
             self.close()

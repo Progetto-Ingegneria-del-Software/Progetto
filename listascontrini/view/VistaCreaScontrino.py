@@ -187,34 +187,37 @@ class VistaCreaScontrino(QWidget):
                     self.add_articolo_in_scontrino()
 
     def crea_scontrino(self):
-        if not self.is_int(self.edit_giorno_scontrino.text()) or not self.is_int(self.edit_mese_scontrino.text()) or not self.is_int(self.edit_anno_scontrino.text()):            QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci una data valida.',
+        if not self.is_int(self.edit_giorno_scontrino.text()) or not self.is_int(self.edit_mese_scontrino.text()) or not self.is_int(self.edit_anno_scontrino.text()):
+            QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci una data valida.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         elif not int(self.edit_giorno_scontrino.text()) > 0 or not int(self.edit_giorno_scontrino.text()) < 32 \
                 or not int(self.edit_mese_scontrino.text()) > 0 or not int(self.edit_mese_scontrino.text()) < 13 \
                 or not int(self.edit_anno_scontrino.text()) > 2020 or not int(self.edit_anno_scontrino.text()):
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci una data valida',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         elif not self.carrello_acquisti:
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci almeno un articolo.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         else:
             for articolo in self.carrello_acquisti:
                 stock_massimo = self.controller_articoli.get_stock_by_codice(articolo["codice"])
                 if int(articolo["quantita"]) > stock_massimo:
                     QMessageBox.critical(self, 'Errore!', 'Non ci sono abbastanza scorte nel magazzino!',
                                          QMessageBox.Ok, QMessageBox.Ok)
-                    self.close()
                     return
             for articolo in self.carrello_acquisti:
                 self.controller_articoli.scarico(articolo["codice"], articolo["quantita"])
 
-            self.data = self.edit_giorno_scontrino.text() + '-' + self.edit_mese_scontrino.text() + '-' + self.edit_anno_scontrino.text()
-            self.controller_scontrini.model.numero_scontrino = self.controller_scontrini.model.numero_scontrino+1
-            self.controller_scontrini.aggiungi_scontrino(Scontrino(self.numero_scontrino, self.data,
+        self.data = self.edit_giorno_scontrino.text() + '-' + self.edit_mese_scontrino.text() + '-' + self.edit_anno_scontrino.text()
+        self.controller_scontrini.model.numero_scontrino = self.controller_scontrini.model.numero_scontrino+1
+        self.controller_scontrini.aggiungi_scontrino(Scontrino(self.numero_scontrino, self.data,
                                                                    self.carrello_acquisti, self.totale))
-            self.callback_magazzino()
-            self.callback_scontrini()
-            self.close()
+        self.callback_magazzino()
+        self.callback_scontrini()
+        self.close()
 
     def is_int(self, val):
         try:

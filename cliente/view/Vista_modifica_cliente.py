@@ -2,22 +2,23 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFormLayout, QLineEdit, QHBoxL
 
 
 class Vista_modifica_cliente(QWidget):
-    def __init__(self, elemento_modifica, controller, callback):
+    def __init__(self, elemento_modifica, controller, controller_clienti, callback, callback_cliente):
         super(Vista_modifica_cliente, self).__init__()
 
         self.elemento_modifica = elemento_modifica
         self.controller = controller
+        self.controller_clienti = controller_clienti
         self.callback = callback
+        self.callback_cliente = callback_cliente
 
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
-        #self.info = QLineEdit(self)
         
         if self.elemento_modifica == "Modifica Nome":
             self.info = QLineEdit(self.controller.get_nome_cliente())
         if self.elemento_modifica == "Modifica Cognome":
             self.info = QLineEdit(self.controller.get_cognome_cliente())
-        if self.elemento_modifica == "Modifica C.F.":
+        if self.elemento_modifica == "Modifica CF":
             self.info = QLineEdit(self.controller.get_cf_cliente())
         if self.elemento_modifica == "Modifica Email":
             self.info = QLineEdit(self.controller.get_email_cliente())
@@ -48,21 +49,28 @@ class Vista_modifica_cliente(QWidget):
         if self.info.text() == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',
                                  QMessageBox.Ok, QMessageBox.Ok)
-        else:
-            if self.elemento_modifica == "Modifica Nome":
-                self.controller.set_nome_cliente(self.info.text())
-            if self.elemento_modifica == "Modifica Cognome":
-                self.controller.set_cognome_cliente(self.info.text())
-            if self.elemento_modifica == "Modifica CF":
-                self.controller.set_cf_cliente(self.info.text())
-            if self.elemento_modifica == "Modifica Email":
-                self.controller.set_email_cliente(self.info.text())
-            if self.elemento_modifica == "Modifica Telefono":
-                self.controller.set_telefono_cliente(self.info.text())
-            if self.elemento_modifica == "Modifica Città":
-                self.controller.set_citta_cliente(self.info.text())
-            if self.elemento_modifica == "Modifica Indirizzo":
-                self.controller.set_indirizzo_cliente(self.info.text())
+            return
+        if self.elemento_modifica == "Modifica Nome":
+            self.controller.set_nome_cliente(self.info.text())
+        if self.elemento_modifica == "Modifica Cognome":
+            self.controller.set_cognome_cliente(self.info.text())
+        if self.elemento_modifica == "Modifica CF":
+            for cliente in self.controller_clienti.get_lista_clienti():
+                if cliente.cf.upper() == self.info.text().upper():
+                    QMessageBox.critical(self, 'Errore di compilazione!',
+                                         'Il codice fiscale inserito è già presente nel sistema.',
+                                         QMessageBox.Ok, QMessageBox.Ok)
+                    return
+            self.controller.set_cf_cliente(self.info.text())
+        if self.elemento_modifica == "Modifica Email":
+            self.controller.set_email_cliente(self.info.text())
+        if self.elemento_modifica == "Modifica Telefono":
+            self.controller.set_telefono_cliente(self.info.text())
+        if self.elemento_modifica == "Modifica Città":
+            self.controller.set_citta_cliente(self.info.text())
+        if self.elemento_modifica == "Modifica Indirizzo":
+            self.controller.set_indirizzo_cliente(self.info.text())
 
-            self.callback()
-            self.close()
+        self.callback_cliente()
+        self.callback()
+        self.close()

@@ -2,12 +2,14 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFormLayout, QLineEdit, QHBoxL
 
 
 class Vista_modifica_clientepiva(QWidget):
-    def __init__(self, elemento_modifica, controller, callback):
+    def __init__(self, elemento_modifica, controller, controller_clientipiva, callback, callback_cliente):
         super(Vista_modifica_clientepiva, self).__init__()
 
         self.elemento_modifica = elemento_modifica
         self.controller = controller
+        self.controller_clientipiva = controller_clientipiva
         self.callback = callback
+        self.callback_cliente = callback_cliente
 
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
@@ -47,18 +49,26 @@ class Vista_modifica_clientepiva(QWidget):
         if self.info.text() == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',
                                  QMessageBox.Ok, QMessageBox.Ok)
-        else:
-            if self.elemento_modifica == "Modifica Ragione Sociale":
-                self.controller.set_ragione_sociale_clientepiva(self.info.text())
-            if self.elemento_modifica == "Modifica Partita IVA":
-                self.controller.set_partita_iva_clientepiva(self.info.text())
-            if self.elemento_modifica == "Modifica Città":
-                self.controller.set_citta_clientepiva(self.info.text())
-            if self.elemento_modifica == "Modifica Indirizzo":
-                self.controller.set_indirizzo_clientepiva(self.info.text())
-            if self.elemento_modifica == "Modifica Telefono":
-                self.controller.set_telefono_clientepiva(self.info.text())
-            if self.elemento_modifica == "Modifica Email":
-                self.controller.set_email_clientepiva(self.info.text())
-            self.callback()
-            self.close()
+            return
+
+        if self.elemento_modifica == "Modifica Ragione Sociale":
+            self.controller.set_ragione_sociale_clientepiva(self.info.text())
+        if self.elemento_modifica == "Modifica Partita IVA":
+            for cliente in self.controller_clientipiva.get_lista_clientipiva():
+                if cliente.partita_iva == self.info.text():
+                    QMessageBox.critical(self, 'Errore di compilazione!',
+                                         'La partita iva digitata è già presente nel sistema.',
+                                         QMessageBox.Ok, QMessageBox.Ok)
+                    return
+            self.controller.set_partita_iva_clientepiva(self.info.text())
+        if self.elemento_modifica == "Modifica Città":
+            self.controller.set_citta_clientepiva(self.info.text())
+        if self.elemento_modifica == "Modifica Indirizzo":
+            self.controller.set_indirizzo_clientepiva(self.info.text())
+        if self.elemento_modifica == "Modifica Telefono":
+            self.controller.set_telefono_clientepiva(self.info.text())
+        if self.elemento_modifica == "Modifica Email":
+            self.controller.set_email_clientepiva(self.info.text())
+        self.callback_cliente()
+        self.callback()
+        self.close()

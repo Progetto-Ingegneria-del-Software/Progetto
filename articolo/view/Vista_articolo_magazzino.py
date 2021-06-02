@@ -35,19 +35,17 @@ class Vista_articolo_magazzino(QWidget):
         button_stock.clicked.connect(lambda: self.show_modifica_articolo("Modifica Quantità"))
         grid_layout.addWidget(button_stock, 0, 1)
 
-        label_codice = QLabel("Descrizione: " + (self.controller.get_descrizione_articolo()))
-        grid_layout.addWidget(label_codice, 1, 0)
-
         button_descrizione = QPushButton("Visualizza Descrizione")
         button_descrizione.clicked.connect(self.show_descrizione_articolo)
-        grid_layout.addWidget(button_descrizione, 1, 1)
+
 
 
         v_layout.addLayout(grid_layout)
+        v_layout.addWidget(button_descrizione)
         self.setLayout(v_layout)
-        self.resize(600, 350)
+        self.resize(400, 100)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Articolo Magazzino | Codice a barre: " + str(self.controller.get_codice_articolo()))
+        self.setWindowTitle("Articolo " + str(self.controller.get_codice_articolo()))
 
 
 
@@ -57,7 +55,7 @@ class Vista_articolo_magazzino(QWidget):
         self.vista_modifica_articolo.show()
 
     def show_descrizione_articolo(self):
-        self.vista_descrizione_articolo = VistaDescrizioneArticolo(self.controller, self.callback)
+        self.vista_descrizione_articolo = VistaDescrizioneArticolo(self.controller)
         self.vista_descrizione_articolo.show()
 
 

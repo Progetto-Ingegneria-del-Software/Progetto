@@ -54,12 +54,17 @@ class Vista_inserisci_clientepiva(QWidget):
         if ragione_sociale == "" or partita_iva == "" or citta == "" or indirizzo == "" or telefono == "" or email == "":
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.',
                                  QMessageBox.Ok, QMessageBox.Ok)
-
-        else:
-            self.controller.model.codice_id = self.controller.model.codice_id + 1
-            self.controller.aggiungi_clientepiva(
-                Cliente_P_Iva(self.controller.model.codice_id, ragione_sociale, partita_iva, citta, indirizzo, telefono, email))
-            self.callback()
-            self.close()
+            return
+        for cliente in self.controller.get_lista_clientipiva():
+            if cliente.partita_iva == partita_iva:
+                QMessageBox.critical(self, 'Errore di compilazione!',
+                                     'La partita iva digitata è già presente nel sistema.',
+                                     QMessageBox.Ok, QMessageBox.Ok)
+                return
+        self.controller.model.codice_id = self.controller.model.codice_id + 1
+        self.controller.aggiungi_clientepiva(
+            Cliente_P_Iva(self.controller.model.codice_id, ragione_sociale, partita_iva, citta, indirizzo, telefono, email))
+        self.callback()
+        self.close()
 
 

@@ -123,7 +123,7 @@ class VistaFattura(QWidget):
 
         self.h_layout5 = QHBoxLayout()
 
-        self.label_totale = QLabel("Totale: {}".format(self.controller.get_totale_fattura()))
+        self.label_totale = QLabel("Totale: €{}".format(self.controller.get_totale_fattura()))
         self.label_totale.setFont(bold_font)
         self.h_layout5.addWidget(self.label_totale)
 

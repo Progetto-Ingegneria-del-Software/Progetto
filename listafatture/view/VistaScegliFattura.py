@@ -45,9 +45,9 @@ class VistaScegliFattura(QWidget):
         self.v_layout.addLayout(self.buttons_layout)
 
         self.setLayout(self.v_layout)
-        self.resize(500, 250)
+        self.resize(350, 150)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Scegli il tipo di fattura")
+        self.setWindowTitle("Scegli fattura")
 
 
 

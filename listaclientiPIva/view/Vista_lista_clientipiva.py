@@ -57,7 +57,7 @@ class Vista_lista_clientipiva(QWidget):
         self.v_layout.addWidget(self.table_view)
 
         self.buttons_layout = QHBoxLayout()
-        self.open_button = QPushButton("Apri Cliente PIva")
+        self.open_button = QPushButton("Visualizza Cliente PIva")
 
         self.open_button.clicked.connect(self.show_selected_info)
 
@@ -97,7 +97,7 @@ class Vista_lista_clientipiva(QWidget):
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_clientepiva = Vista_clientepiva(self.controller.get_clientepiva_by_index(
-                self.table_view.selectedIndexes()[0].row()), self.controller.elimina_clientepiva_by_id, self.update_ui)
+                self.table_view.selectedIndexes()[0].row()), self.controller, self.update_ui)
             self.vista_clientepiva.show()
 
     def show_insert_clientepiva(self):

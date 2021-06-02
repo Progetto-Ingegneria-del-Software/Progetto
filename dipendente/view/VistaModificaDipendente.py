@@ -2,12 +2,13 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFormLayout, QLineEdit, QHBoxL
 
 
 class VistaModificaDipendente(QWidget):
-    def __init__(self, elemento_modifica, controller, callback):
+    def __init__(self, elemento_modifica, controller, callback, callback_dipendente):
         super(VistaModificaDipendente, self).__init__()
 
         self.elemento_modifica = elemento_modifica
         self.controller = controller
         self.callback = callback
+        self.callback_dipendente = callback_dipendente
 
         self.v_layout = QVBoxLayout()
         self.layout = QFormLayout()
@@ -69,6 +70,8 @@ class VistaModificaDipendente(QWidget):
                 else:
                     QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico',
                                          QMessageBox.Ok, QMessageBox.Ok)
+                    return
+            self.callback_dipendente()
             self.callback()
             self.close()
 

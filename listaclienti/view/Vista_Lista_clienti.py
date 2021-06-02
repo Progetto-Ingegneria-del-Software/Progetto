@@ -49,7 +49,7 @@ class Vista_Lista_clienti(QWidget):
         self.v_layout.addWidget(self.table_view)
 
         self.buttons_layout = QHBoxLayout()
-        self.open_button = QPushButton("Apri cliente")
+        self.open_button = QPushButton("Visualizza cliente")
 
 
         self.open_button.clicked.connect(self.show_selected_info)
@@ -93,7 +93,7 @@ class Vista_Lista_clienti(QWidget):
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_cliente = Vista_cliente(self.controller.get_cliente_by_index(
-                self.table_view.selectedIndexes()[0].row()), self.controller.elimina_cliente_by_id, self.update_ui)
+                self.table_view.selectedIndexes()[0].row()), self.controller, self.update_ui)
             self.vista_cliente.show()
 
     def show_insert_cliente(self):
@@ -118,9 +118,6 @@ class Vista_Lista_clienti(QWidget):
         self.table_view.setRowCount(len(self.controller.model.lista_clienti))
         self.table_view.setColumnCount(8)
         self.show_table_view_items(self.controller.get_lista_clienti())
-       # self.controller.save_data()
-        #self.table_view.setRowCount(len(self.controller.model.lista_clienti))
-        #self.table_view.setColumnCount(7)
 
     def show_table_view_items(self, item_list):
         i = 0
@@ -142,7 +139,6 @@ class Vista_Lista_clienti(QWidget):
             item = QTableWidgetItem(str(cliente.indirizzo))
             self.table_view.setItem(i, 7, item)
             i = i + 1
-
 
     def closeEvent(self, event):
         self.controller.save_data()

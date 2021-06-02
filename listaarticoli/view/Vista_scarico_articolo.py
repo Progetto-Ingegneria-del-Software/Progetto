@@ -28,9 +28,9 @@ class Vista_scarico_articolo(QWidget):
         self.v_layout.addWidget(btn_ok)
 
         self.setLayout(self.v_layout)
-        self.resize(400, 250)
+        self.resize(400, 150)
         self.setFixedSize(self.size())
-        self.setWindowTitle("Scarico articolo in magazzino")
+        self.setWindowTitle("Scarico articolo")
 
     def unload_item_view(self):
         i=0

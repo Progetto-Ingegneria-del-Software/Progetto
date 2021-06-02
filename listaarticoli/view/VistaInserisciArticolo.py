@@ -54,14 +54,21 @@ class VistaInserisciArticolo(QWidget):
         if codice == "" or gruppo_merciologico == "" or categoria == "" or marca == "" or prezzo_unitario == "":
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.',
                                  QMessageBox.Ok, QMessageBox.Ok)
-        elif not self.is_float(prezzo_unitario) and not self.is_int(prezzo_unitario):
+            return
+        if not self.is_float(prezzo_unitario) and not self.is_int(prezzo_unitario):
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico nel campo Prezzo Unitario.',
                                  QMessageBox.Ok, QMessageBox.Ok)
-        else:
-            self.controller.aggiungi_articolo(Articolo(codice, gruppo_merciologico, categoria, marca, prezzo_unitario, 0, descrizione, 0))
-            self.callback_articoli()
-            self.callback_magazzino()
-            self.close()
+            return
+        for articolo in self.controller.get_lista_articoli():
+            if articolo.codice == codice:
+                QMessageBox.critical(self, 'Errore',
+                                     'Il codice a barre è già presente nel sistema.',
+                                     QMessageBox.Ok, QMessageBox.Ok)
+                return
+        self.controller.aggiungi_articolo(Articolo(codice, gruppo_merciologico, categoria, marca, prezzo_unitario, 0, descrizione, 0))
+        self.callback_articoli()
+        self.callback_magazzino()
+        self.close()
 
     def is_float(self, val):
         try:

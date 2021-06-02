@@ -49,7 +49,7 @@ class VistaListaFornitori(QWidget):
         self.v_layout.addWidget(self.table_view)
 
         self.buttons_layout = QHBoxLayout()
-        self.open_button = QPushButton("Apri Fornitore")
+        self.open_button = QPushButton("Visualizza Fornitore")
 
         self.open_button.clicked.connect(self.show_selected_info)
 
@@ -88,11 +88,11 @@ class VistaListaFornitori(QWidget):
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_fornitore = VistaFornitore(self.controller.get_fornitore_by_index(
-            self.table_view.selectedIndexes()[0].row()), self.controller.elimina_fornitore_by_id, self.update_table_view)
+            self.table_view.selectedIndexes()[0].row()), self.controller, self.update_table_view)
             self.vista_fornitore.show()
 
     def show_insert_fornitore(self):
-        self.vista_inserisci_fornitore = VistaInserisciFornitore(self.controller, self.show_table_view_items)
+        self.vista_inserisci_fornitore = VistaInserisciFornitore(self.controller, self.update_table_view)
         self.vista_inserisci_fornitore.show()
 
     def delete_fornitore(self):

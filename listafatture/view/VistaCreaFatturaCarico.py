@@ -187,7 +187,7 @@ class VistaCreaFatturaCarico(QWidget):
 
         for articolo in self.carrello_acquisti:
             self.totale += articolo["totale_riga"]
-        self.label_totale.setText("Totale: {}".format(self.truncate(self.totale, 2)))
+        self.label_totale.setText("Totale: €{}".format(self.truncate(self.totale, 2)))
 
     @QtCore.pyqtSlot()
     def deleteClicked(self):
@@ -222,29 +222,34 @@ class VistaCreaFatturaCarico(QWidget):
                     self.add_articolo_in_fattura()
 
     def crea_fattura(self):
-        if not self.is_int(self.edit_giorno_fattura.text()) or not self.is_int(self.edit_mese_fattura.text()) or not self.is_int(self.edit_anno_fattura.text()):            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci una data valida.',
+        if not self.is_int(self.edit_giorno_fattura.text()) or not self.is_int(self.edit_mese_fattura.text()) or not self.is_int(self.edit_anno_fattura.text()):
+            QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci una data valida.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         elif not int(self.edit_giorno_fattura.text()) > 0 or not int(self.edit_giorno_fattura.text()) < 32 \
                 or not int(self.edit_mese_fattura.text()) > 0 or not int(self.edit_mese_fattura.text()) < 13 \
                 or not int(self.edit_anno_fattura.text()) > 2020 or not int(self.edit_anno_fattura.text()):
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci una data valida',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         elif self.fornitore == None:
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci il fornitore.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         elif not self.carrello_acquisti:
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci almeno un articolo.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
         else:
             self.data = self.edit_giorno_fattura.text() + '-' + self.edit_mese_fattura.text() + '-' + self.edit_anno_fattura.text()
             for articolo in self.carrello_acquisti:
                 self.controller_articoli.inserimento_carico(articolo["codice"], articolo["quantita"])
-            self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
-            self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.data, self.fornitore.__dict__,
-                                         self.carrello_acquisti, self.totale))
-            self.callback_magazzino()
-            self.callback()
-            self.close()
+        self.controller_fattura.model.numero_fattura = self.controller_fattura.model.numero_fattura+1
+        self.controller_fattura.aggiungi_fattura(Fattura(self.numero_fattura, self.tipo_fattura, self.data, self.fornitore.__dict__,
+                                                         self.carrello_acquisti, self.totale))
+        self.callback_magazzino()
+        self.callback()
+        self.close()
 
 
     def is_int(self, val):

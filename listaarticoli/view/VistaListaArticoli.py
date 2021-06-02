@@ -91,7 +91,7 @@ class VistaListaArticoli(QWidget):
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_articolo = VistaArticolo(self.controller.get_articolo_by_codice(
-            self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()), self.controller.elimina_articolo_by_codice, self.update_table_view, self.magazzino_update_table)
+            self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()), self.controller, self.update_table_view, self.magazzino_update_table)
             self.vista_articolo.show()
 
 
