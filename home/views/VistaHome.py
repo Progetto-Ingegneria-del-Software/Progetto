@@ -90,14 +90,21 @@ class VistaHome(QWidget):
             tabs = QTabWidget()
            # tabs.addTab(self.Bellaraga(), "Bella Raga")
             tabs.addTab(self.prova(), "Logo")
-            tabs.addTab(self.Dipendenti(), "Dipendenti")
-            tabs.addTab(self.Articoli(), "Articoli")
+            tabs.addTab(self.Scontrini(), "Scontrini")
+            tabs.addTab(self.Fatture(), "Fatture")
             tabs.addTab(self.Magazzino(), "Magazzino")
-            tabs.addTab(self.Fornitori(), "Fornitori")
+            tabs.addTab(self.Articoli(), "Articoli")
             tabs.addTab(self.Clienti(), "Clienti")
             tabs.addTab(self.ClientiPIva(), "Clienti PIVA")
-            tabs.addTab(self.Fatture(), "Fatture")
-            tabs.addTab(self.Scontrini(), "Scontrini")
+            tabs.addTab(self.Fornitori(), "Fornitori")
+            tabs.addTab(self.Dipendenti(), "Dipendenti")
+            
+            
+            
+            
+            
+            
+         
 
             layout.addWidget(tabs)
 
