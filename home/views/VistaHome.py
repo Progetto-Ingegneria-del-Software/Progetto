@@ -14,9 +14,9 @@ class VistaHome(QWidget):
         self.top = 0
         self.width = 1600
         self.height = 480
-        self.initUI()
+        self.show_logo()
 
-    def initUI(self):
+    def show_logo(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
