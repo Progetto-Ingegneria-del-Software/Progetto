@@ -2,10 +2,10 @@ from scontrino.model.Scontrino import Scontrino
 
 class ControlloreScontrino:
 
-    def __init__(self, fattura):
+    def __init__(self, scontrino):
         super(ControlloreScontrino, self).__init__()
 
-        self.model = fattura
+        self.model = scontrino
 
     ###################
     ###   GETTERS   ###
