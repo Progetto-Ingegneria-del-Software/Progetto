@@ -1,7 +1,9 @@
-from PyQt5.QtWidgets import QWidget, QFormLayout, QLabel, QLineEdit, QVBoxLayout, QPushButton, QHBoxLayout, QSizePolicy, \
-    QSpacerItem, QMessageBox
+from PyQt5.QtWidgets import QWidget, QFormLayout, QLineEdit, QVBoxLayout, QPushButton, QHBoxLayout, QMessageBox
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       DI MODIFICA DI UN ARTICOLO PRESENTE NEL SISTEMA         ###
+#####################################################################
 class VistaModificaArticolo(QWidget):
     def __init__(self, elemento_modifica, controller, controller_articoli, callback_articoli, callback_magazzino, callback_articolo):
         super(VistaModificaArticolo, self).__init__()
@@ -47,6 +49,10 @@ class VistaModificaArticolo(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle(self.elemento_modifica)
 
+    ########################################################
+    ###      METODO USATO PER APPLICARE UNA MODIFICA     ###
+    ###  EFFETTUATA AD UN ARTICOLO PRESENTE NEL SISTEMA  ###
+    ########################################################
     def completa_modifica(self):
         if self.info.text() == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',
@@ -91,6 +97,10 @@ class VistaModificaArticolo(QWidget):
             self.callback_magazzino()
             self.close()
 
+    ##########################################################
+    ###           METODO USATO PER VERIFICARE SE           ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA A VARIABILE FLOAT  ###
+    ##########################################################
     def is_float(self, val):
         try:
             num = float(val)
@@ -98,6 +108,10 @@ class VistaModificaArticolo(QWidget):
             return False
         return True
 
+    ##################################################
+    ###       METODO USATO PER VERIFICARE SE       ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA AD INTERO  ###
+    ##################################################
     def is_int(self, val):
         try:
             num = int(val)

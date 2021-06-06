@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFormLayout, QLineEdit, QHBoxLayout, QPushButton, QMessageBox
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       DI MODIFICA DI UN FORNITORE PRESENTE NEL SISTEMA        ###
+#####################################################################
 class VistaModificaFornitore(QWidget):
     def __init__(self, elemento_modifica, controller, controller_fornitore, callback, callback_fornitore):
         super(VistaModificaFornitore, self).__init__()
@@ -42,6 +45,10 @@ class VistaModificaFornitore(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle(self.elemento_modifica)
 
+    #########################################################
+    ###      METODO USATO PER APPLICARE UNA MODIFICA      ###
+    ###  EFFETTUATA AD UN FORNITORE PRESENTE NEL SISTEMA  ###
+    #########################################################
     def completa_modifica(self):
         if self.info.text() == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',

@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFormLayout, QLineEdit, QHBoxLayout, QPushButton, QMessageBox
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        DI MODIFICA DI UN CLIENTE PRESENTE NEL SISTEMA         ###
+#####################################################################
 class Vista_modifica_clientepiva(QWidget):
     def __init__(self, elemento_modifica, controller, controller_clientipiva, callback, callback_cliente):
         super(Vista_modifica_clientepiva, self).__init__()
@@ -45,6 +48,10 @@ class Vista_modifica_clientepiva(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle(self.elemento_modifica)
 
+    ########################################################
+    ###      METODO USATO PER APPLICARE UNA MODIFICA     ###
+    ###   EFFETTUATA AD UN CLIENTE PRESENTE NEL SISTEMA  ###
+    ########################################################
     def completa_modifica(self):
         if self.info.text() == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',

@@ -3,7 +3,10 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QPushButt
 from fornitore.control.ControlloreFornitore import ControlloreFornitore
 from fornitore.view.VistaModificaFornitore import VistaModificaFornitore
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        CON I DATI DI UN FORNITORE PRESENTE NEL SISTEMA        ###
+#####################################################################
 class VistaFornitore(QWidget):
     def __init__(self, fornitore, controller_fornitore, callback):
         super(VistaFornitore, self).__init__()
@@ -71,6 +74,10 @@ class VistaFornitore(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Fornitore " + str(self.controller.get_codice_id_fornitore()))
 
+    ########################################################
+    ###    METODO USATO PER FAR CAMBIARE DINAMICAMENTE   ###
+    ###   LA VISTA DI UN ARTICOLO, A MODIFICA AVVENUTA   ###
+    ########################################################
     def update_info_view(self):
         self.label_ragione_sociale.setText("Ragione Sociale: " + str(self.controller.get_ragione_sociale_fornitore()))
         self.label_partita_iva.setText("Partita IVA: " + str(self.controller.get_partita_iva_fornitore()))
@@ -79,7 +86,11 @@ class VistaFornitore(QWidget):
         self.label_telefono.setText("Telefono: " + str(self.controller.get_telefono_fornitore()))
         self.label_email.setText("Email: " + str(self.controller.get_email_fornitore()))
 
-
+    ###################################################
+    ###    METODO USATO PER ELIMINARE UN FORNITORE  ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_fornitore(self):
         delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare il fornitore ' + str(self.controller.get_codice_id_fornitore()) + '?',
                                           'Il fornitore ' + str(self.controller.get_codice_id_fornitore()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
@@ -90,6 +101,10 @@ class VistaFornitore(QWidget):
             self.callback()
             self.close()
 
+    #################################################
+    ###    METODO USATO PER MOSTRARE ALL'UTENTE   ###
+    ###  L'INTERFACCIA DI MODIFICA DEL FORNITORE  ###
+    #################################################
     def show_modifica_fornitore(self, elemento_modifica):
         self.vista_modifica_fornitore= VistaModificaFornitore(elemento_modifica, self.controller, self.controller_fornitore, self.callback, self.update_info_view)
         self.vista_modifica_fornitore.show()

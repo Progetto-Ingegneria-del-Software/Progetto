@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QLabel, QHBoxLayout
 
-
+#############################################################################
+###       QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA       ###
+###  CON ALL'INTERNO LA DESCRIZIONE DI UN ARTICOLO PRESENTE IN MAGAZZINO  ###
+#############################################################################
 class VistaDescrizioneArticolo(QWidget):
     def __init__(self, controller):
         super(VistaDescrizioneArticolo, self).__init__()

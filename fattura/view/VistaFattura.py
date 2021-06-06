@@ -1,12 +1,12 @@
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QHBoxLayout, QTableWidget, QAbstractItemView, \
-    QHeaderView, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QTableWidget, QAbstractItemView, QHeaderView, QTableWidgetItem
 
 from fattura.controller.ControlloreFattura import ControlloreFattura
-from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
-from listafornitori.control.ControlloreListaFornitori import ControlloreListaFornitori
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        CON I DATI DI UNA FATTURA PRESENTE NEL SISTEMA         ###
+#####################################################################
 class VistaFattura(QWidget):
     def __init__(self, fattura, callback):
         super(VistaFattura, self).__init__()
@@ -134,6 +134,10 @@ class VistaFattura(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Fattura Numero {}".format(self.controller.get_numero_fattura()))
 
+    ####################################################################
+    ###    METODO UTILIZZATO PER MOSTRARE L'INTERFACCIA CON I DATI   ###
+    ###            DEGLI ARTICOLI PRESENTI NELLA FATTURA             ###
+    ####################################################################
     def show_articoli_in_table(self):
         self.table_articoli.setRowCount(len(self.controller.get_articoli_fattura()))
 

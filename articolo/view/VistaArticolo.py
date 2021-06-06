@@ -5,7 +5,10 @@ from articolo.controller.ControlloreArticolo import ControlloreArticolo
 from articolo.view.VistaDescrizioneArticolo import VistaDescrizioneArticolo
 from articolo.view.VistaModificaArticolo import VistaModificaArticolo
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###   CON I DATI DI UN ARTICOLO PRESENTE IN ANAGRAFICA ARTICOLI   ###
+#####################################################################
 class VistaArticolo(QWidget):
     def __init__(self, articolo, controller_articoli, callback_articoli, callback_magazzino):
         super(VistaArticolo, self).__init__()
@@ -79,6 +82,10 @@ class VistaArticolo(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Articolo " + str(self.controller.get_codice_articolo()))
 
+    ########################################################
+    ###    METODO USATO PER FAR CAMBIARE DINAMICAMENTE   ###
+    ###   LA VISTA DI UN ARTICOLO, A MODIFICA AVVENUTA   ###
+    ########################################################
     def update_info_view(self):
         self.label_codice.setText("Codice: " + str(self.controller.get_codice_articolo()))
         self.label_marca.setText("Marca: " + str(self.controller.get_marca_articolo()))
@@ -88,7 +95,11 @@ class VistaArticolo(QWidget):
         self.label_sconto_perc.setText("Sconto: " + str(self.controller.get_sconto_perc_articolo()) + "%")
         self.setWindowTitle("Articolo " + str(self.controller.get_codice_articolo()))
 
-
+    ###################################################
+    ###    METODO USATO PER ELIMINARE UN ARTICOLO   ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_articolo(self):
         delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare l\'articolo ' + str(self.controller.get_codice_articolo()) + '?',
                                           'L\'articolo ' + str(self.controller.get_codice_articolo()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
@@ -100,10 +111,18 @@ class VistaArticolo(QWidget):
             self.callback_magazzino()
             self.close()
 
+    #################################################
+    ###    METODO USATO PER MOSTRARE ALL'UTENTE   ###
+    ###  L'INTERFACCIA DI MODIFICA DELL'ARTICOLO  ###
+    #################################################
     def show_modifica_articolo(self, elemento_modifica):
         self.vista_modifica_articolo = VistaModificaArticolo(elemento_modifica, self.controller, self.controller_articoli, self.callback_articoli, self.callback_magazzino, self.update_info_view)
         self.vista_modifica_articolo.show()
 
+    #########################################################
+    ###       METODO USATO PER MOSTRARE ALL'UTENTE        ###
+    ###  L'INTERFACCIA CON LA DESCRIZIONE DELL' ARTICOLO  ###
+    #########################################################
     def show_descrizione_articolo(self):
         self.vista_descrizione_articolo = VistaDescrizioneArticolo(self.controller)
         self.vista_descrizione_articolo.show()

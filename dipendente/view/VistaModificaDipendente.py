@@ -1,6 +1,9 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QFormLayout, QLineEdit, QHBoxLayout, QPushButton, QMessageBox
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       DI MODIFICA DI UN ARTICOLO PRESENTE NEL SISTEMA         ###
+#####################################################################
 class VistaModificaDipendente(QWidget):
     def __init__(self, elemento_modifica, controller, callback, callback_dipendente):
         super(VistaModificaDipendente, self).__init__()
@@ -80,9 +83,9 @@ class VistaModificaDipendente(QWidget):
             self.close()
 
 
-    ###################################################
-    ##  VERIFICA CHE LA VARIABILE PASSATA SIA FLOAT  ##
-    ###################################################
+    ###############################################################
+    ##  VERIFICA CHE LA VARIABILE PASSATA SIA CASTABILE A FLOAT  ##
+    ###############################################################
     def is_float(self, val):
         try:
             num = float(val)
@@ -91,9 +94,9 @@ class VistaModificaDipendente(QWidget):
         return True
 
 
-    #################################################
-    ##  VERIFICA CHE LA VARIABILE PASSATA SIA INT  ##
-    #################################################
+    #############################################################
+    ##  VERIFICA CHE LA VARIABILE PASSATA SIA CASTABILE A INT  ##
+    #############################################################
     def is_int(self, val):
         try:
             num = int(val)

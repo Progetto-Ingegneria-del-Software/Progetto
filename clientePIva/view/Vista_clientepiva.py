@@ -4,6 +4,10 @@ from clientePIva.control.Controllore_clientepiva import Controllore_clientepiva
 
 from clientePIva.view.Vista_modifica_clientepiva import Vista_modifica_clientepiva
 
+###########################################################################
+###      QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA      ###
+###   CON I DATI DI UN CLIENTE TRA QUELLI MEMORIZZATI CON PARTITA IVA   ###
+###########################################################################
 class Vista_clientepiva(QWidget):
     def __init__(self, clientepiva, controller_clientipiva, callback):
         super(Vista_clientepiva, self).__init__()
@@ -72,6 +76,10 @@ class Vista_clientepiva(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Cliente PIva " + str(self.controller.get_codice_id_clientepiva()))
 
+    ########################################################
+    ###    METODO USATO PER FAR CAMBIARE DINAMICAMENTE   ###
+    ###   LA VISTA DI UN CLIENTE, A MODIFICA AVVENUTA   ###
+    ########################################################
     def update_info_view(self):
         self.label_ragione_sociale.setText("Ragione Sociale: " + str(self.controller.get_ragione_sociale_clientepiva()))
         self.label_partita_iva.setText("Partita IVA: " + str(self.controller.get_partita_iva_clientepiva()))
@@ -80,6 +88,11 @@ class Vista_clientepiva(QWidget):
         self.label_telefono.setText("Telefono: " + str(self.controller.get_telefono_clientepiva()))
         self.label_email.setText("Email: " + str(self.controller.get_email_clientepiva()))
 
+    ###################################################
+    ###    METODO USATO PER ELIMINARE UN CLIENTE    ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_clientepiva(self):
         delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare il Cliente PIva ' + str(self.controller.get_codice_id_clientepiva()) + '?',
                                           'Il Cliente PIva ' + str(self.controller.get_codice_id_clientepiva()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
@@ -90,6 +103,10 @@ class Vista_clientepiva(QWidget):
             self.callback()
             self.close()
 
+    #################################################
+    ###    METODO USATO PER MOSTRARE ALL'UTENTE   ###
+    ###  L'INTERFACCIA DI MODIFICA DI UN CLIENTE  ###
+    #################################################
     def show_modifica_clientepiva(self, elemento_modifica):
         self.vista_modifica_clientepiva= Vista_modifica_clientepiva(elemento_modifica, self.controller, self.controller_clientipiva, self.callback, self.update_info_view)
         self.vista_modifica_clientepiva.show()

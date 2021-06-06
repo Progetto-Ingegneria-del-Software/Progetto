@@ -1,7 +1,9 @@
-from PyQt5.QtWidgets import QWidget, QFormLayout, QLabel, QLineEdit, QVBoxLayout, QPushButton, QHBoxLayout, QSizePolicy, \
-    QSpacerItem, QMessageBox
+from PyQt5.QtWidgets import QWidget, QFormLayout, QLineEdit, QVBoxLayout, QPushButton, QHBoxLayout, QMessageBox
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       DI MODIFICA DI UN ARTICOLO PRESENTE IN MAGAZZINO        ###
+#####################################################################
 class Vista_modifica_articolo_magazzino(QWidget):
     def __init__(self, elemento_modifica, controller, callback):
         super(Vista_modifica_articolo_magazzino, self).__init__()
@@ -32,6 +34,10 @@ class Vista_modifica_articolo_magazzino(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle(self.elemento_modifica)
 
+    ####################################################
+    ###    METODO USATO PER APPLICARE UNA MODIFICA   ###
+    ###    EFFETTUATA AD UN ARTICOLO IN MAGAZZINO    ###
+    ####################################################
     def completa_modifica(self):
         if self.info.text() == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',
@@ -48,6 +54,10 @@ class Vista_modifica_articolo_magazzino(QWidget):
                     QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico, intero e positivo',
                                          QMessageBox.Ok, QMessageBox.Ok)
 
+    ##################################################
+    ###       METODO USATO PER VERIFICARE SE       ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA AD INTERO  ###
+    ##################################################
     def is_int(self, val):
         try:
             num = int(val)

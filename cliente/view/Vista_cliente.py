@@ -3,7 +3,10 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QPushButt
 from cliente.controller.Controllore_cliente import Controllore_cliente
 from cliente.view.Vista_modifica_cliente import Vista_modifica_cliente
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###   CON I DATI DI UN ARTICOLO PRESENTE IN ANAGRAFICA ARTICOLI   ###
+#####################################################################
 class Vista_cliente(QWidget):
     def __init__(self, cliente, controller_clienti, callback):
         super(Vista_cliente, self).__init__()
@@ -78,6 +81,10 @@ class Vista_cliente(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("cliente " + str(self.controller.get_codice_id_cliente()))
 
+    ########################################################
+    ###    METODO USATO PER FAR CAMBIARE DINAMICAMENTE   ###
+    ###   LA VISTA DI UN ARTICOLO, A MODIFICA AVVENUTA   ###
+    ########################################################
     def update_info_view(self):
         self.label_nome.setText("Nome: " + str(self.controller.get_nome_cliente()))
         self.label_cognome.setText("Cognome: " + str(self.controller.get_cognome_cliente()))
@@ -87,6 +94,11 @@ class Vista_cliente(QWidget):
         self.label_citta.setText("Città: " + str(self.controller.get_citta_cliente()))
         self.label_indirizzo.setText("Indirizzo: " + str(self.controller.get_indirizzo_cliente()))
 
+    ###################################################
+    ###    METODO USATO PER ELIMINARE UN CLIENTE    ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_cliente(self):
         delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare il cliente ' + str(self.controller.get_codice_id_cliente()) + '?',
                                           'Il cliente ' + str(self.controller.get_codice_id_cliente()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
@@ -97,6 +109,10 @@ class Vista_cliente(QWidget):
             self.callback()
             self.close()
 
+    #################################################
+    ###    METODO USATO PER MOSTRARE ALL'UTENTE   ###
+    ###   L'INTERFACCIA DI MODIFICA DEL CLIENTE   ###
+    #################################################
     def show_modifica_cliente(self, elemento_modifica):
         self.vista_modifica_cliente = Vista_modifica_cliente(elemento_modifica, self.controller, self.controller_clienti, self.callback, self.update_info_view)
         self.vista_modifica_cliente.show()

@@ -3,7 +3,10 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QLabel, QPushButt
 from dipendente.controller.ControlloreDipendente import ControlloreDipendente
 from dipendente.view.VistaModificaDipendente import VistaModificaDipendente
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###  CON I DATI DI UN DIPENDENTE PRESENTE IN ANAGRAFICA ARTICOLI  ###
+#####################################################################
 class VistaDipendente(QWidget):
     def __init__(self, dipendente, elimina_dipendente, callback):
         super(VistaDipendente, self).__init__()
@@ -78,6 +81,10 @@ class VistaDipendente(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Dipendente " + str(self.controller.get_codice_id_dipendente()))
 
+    ########################################################
+    ###    METODO USATO PER FAR CAMBIARE DINAMICAMENTE   ###
+    ###   LA VISTA DI UN DIPENDENTE, A MODIFICA AVVENUTA   ###
+    ########################################################
     def update_info_view(self):
         self.label_nome.setText("Nome: " + str(self.controller.get_nome_dipendente()))
         self.label_cognome.setText("Cognome: " + str(self.controller.get_cognome_dipendente()))
@@ -87,6 +94,11 @@ class VistaDipendente(QWidget):
         self.label_telefono.setText("Telefono: " + str(self.controller.get_telefono_dipendente()))
         self.label_stipendio.setText("Stipendio: " + str(self.controller.get_stipendio_dipendente()))
 
+    ###################################################
+    ###   METODO USATO PER ELIMINARE UN DIPENDENTE  ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_dipendente(self):
         delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare il dipendente ' + str(self.controller.get_codice_id_dipendente()) + '?',
                                           'Il dipendente ' + str(self.controller.get_codice_id_dipendente()) + ' sarà permanentemente eliminato dal sistema.\nVuoi continuare?',
@@ -97,6 +109,10 @@ class VistaDipendente(QWidget):
             self.callback()
             self.close()
 
+    ####################################################
+    ###     METODO USATO PER MOSTRARE ALL'UTENTE     ###
+    ###  L'INTERFACCIA DI MODIFICA DI UN DIPENDENTE  ###
+    ####################################################
     def show_modifica_dipendente(self, elemento_modifica):
         self.vista_modifica_dipendente = VistaModificaDipendente(elemento_modifica, self.controller, self.callback, self.update_info_view)
         self.vista_modifica_dipendente.show()

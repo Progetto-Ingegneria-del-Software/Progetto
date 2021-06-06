@@ -1,12 +1,12 @@
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QAbstractItemView, QTableWidget, QTableWidgetItem, QTextBrowser, QWidget, QVBoxLayout, \
-    QLabel, QPushButton, QGridLayout, \
-    QMessageBox, QHBoxLayout, QHeaderView
+from PyQt5.QtWidgets import QAbstractItemView, QTableWidget, QTableWidgetItem, QWidget, QVBoxLayout, QLabel, QPushButton, QMessageBox, QHBoxLayout, QHeaderView
 
 from scontrino.controller.ControlloreScontrino import ControlloreScontrino
-from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       CON I DATI DI UNO SCONTRINO PRESENTE NEL SISTEMA        ###
+#####################################################################
 class VistaScontrino(QWidget):
     def __init__(self, scontrino, callback, callback_magazzino, controller_scontrini, controller_articoli):
         super(VistaScontrino, self).__init__()
@@ -80,9 +80,10 @@ class VistaScontrino(QWidget):
         self.setWindowTitle("Scontrino Numero {}".format(self.controller.get_numero_scontrino()))
 
 
-    ##############################################
-    ###     FUNZIONE CHE MOSTRA LA TABELLA     ###
-    ##############################################
+    ####################################################################
+    ###    METODO UTILIZZATO PER MOSTRARE L'INTERFACCIA CON I DATI   ###
+    ###           DEGLI ARTICOLI PRESENTI NELLO SCONTRINO            ###
+    ####################################################################
     def show_articoli_in_table(self):
         self.table_articoli.setRowCount(len(self.controller.get_articoli_scontrino()))
 
@@ -102,6 +103,10 @@ class VistaScontrino(QWidget):
             self.table_articoli.setItem(i, 5, item)
             i = i+1
 
+    #######################################################
+    ###  METODO UTILIZZATO PER ELIMINARE UNO SCONTRINO  ###
+    ###              PRESENTE NEL SISTEMA               ###
+    #######################################################
     def elimina_scontrino(self):
         delete_view = QMessageBox.warning(self, 'Vuoi davvero eliminare lo scontrino ' + str(
             self.scontrino.num_scontrino) + '?',
@@ -116,6 +121,10 @@ class VistaScontrino(QWidget):
             self.callback()
             self.close()
 
+    ###################################################################
+    ###  METODO UTILIZZATO PER RIASSEGNARE LE SCONRTE IN MAGAZZINO  ###
+    ###        IN SEGUITO ALL'ELIMINAZIONE DI UNO SCONTRINO         ###
+    ###################################################################
     def riassegna_articoli_in_magazzino(self, scontrino):
         for articolo_da_riassegnare in scontrino.articoli:
             for articolo in self.controller_articoli.get_lista_articoli():
