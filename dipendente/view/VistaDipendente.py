@@ -69,7 +69,7 @@ class VistaDipendente(QWidget):
         grid_layout.addWidget(button_modifica_stipendio, 7, 1)
 
         v_layout.addLayout(grid_layout)
-        button_elimina_dipendente = QPushButton("Elimina Dipendente " + str(self.controller.get_codice_id_dipendente()))
+        button_elimina_dipendente = QPushButton("Licenzia Dipendente " + str(self.controller.get_codice_id_dipendente()))
         button_elimina_dipendente.clicked.connect(self.delete_dipendente)
         v_layout.addWidget(button_elimina_dipendente)
 

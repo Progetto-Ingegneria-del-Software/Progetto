@@ -57,12 +57,12 @@ class VistaListaDipendenti(QWidget):
         self.buttons_layout.addWidget(self.open_button)
         self.v_layout.addLayout(self.buttons_layout)
 
-        self.insert_button = QPushButton("Inserisci Dipendente")
+        self.insert_button = QPushButton("Assumi Dipendente")
         self.insert_button.clicked.connect(self.show_insert_dipendente)
         self.buttons_layout.addWidget(self.insert_button)
         self.v_layout.addLayout(self.buttons_layout)
 
-        self.delete_button = QPushButton("Elimina Dipendente")
+        self.delete_button = QPushButton("Licenzia Dipendente")
         self.delete_button.clicked.connect(self.delete_dipendente)
         self.buttons_layout.addWidget(self.delete_button)
         self.v_layout.addLayout(self.buttons_layout)

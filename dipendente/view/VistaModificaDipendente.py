@@ -44,6 +44,10 @@ class VistaModificaDipendente(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle(self.elemento_modifica)
 
+
+    ###################################################
+    ##  FUNZIONE CHE COMPLETA LA MODIFICA DEI CAMPI  ##
+    ###################################################
     def completa_modifica(self):
         if self.info.text() == "":
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci l\'informazione richiesta',
@@ -75,6 +79,10 @@ class VistaModificaDipendente(QWidget):
             self.callback()
             self.close()
 
+
+    ###################################################
+    ##  VERIFICA CHE LA VARIABILE PASSATA SIA FLOAT  ##
+    ###################################################
     def is_float(self, val):
         try:
             num = float(val)
@@ -82,6 +90,10 @@ class VistaModificaDipendente(QWidget):
             return False
         return True
 
+
+    #################################################
+    ##  VERIFICA CHE LA VARIABILE PASSATA SIA INT  ##
+    #################################################
     def is_int(self, val):
         try:
             num = int(val)

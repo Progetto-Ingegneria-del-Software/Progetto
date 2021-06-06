@@ -40,14 +40,22 @@ class ListaFatture():
             with open('listafatture/data/lista_fatture_iniziali.json') as f:
                 lista_fatture_iniziali = json.load(f)
             for fattura_iniziale in lista_fatture_iniziali:
-                self.aggiungi_fattura(Fattura(fattura_iniziale["num_fatt"], fattura_iniziale["tipo"], fattura_iniziale["data"],         ###### DA VEDERE #####
+                self.aggiungi_fattura(Fattura(fattura_iniziale["num_fatt"], fattura_iniziale["tipo"], fattura_iniziale["data"],         
                                                 fattura_iniziale["soggetto"], fattura_iniziale["lista_articoli"], fattura_iniziale["totale"]))
 
 
+    ###################################
+    ###  FUNZIONE CHE AGGIUNGE UNA  ###
+    ###     FATTURA ALLA LISTA      ###
+    ###################################
     def aggiungi_fattura(self, fattura):
         self.lista_fatture.append(fattura)
 
 
+    #####################################
+    ###    FUNZIONE CHE PRENDE UNA    ###
+    ###   FATTURA TRAMITE IL NUMERO   ###
+    #####################################
     def get_fattura_by_index(self, index):
         return self.lista_fatture[index]
 

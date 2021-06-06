@@ -89,7 +89,7 @@ class VistaHome(QWidget):
             # Create the tab widget with two tabs
             tabs = QTabWidget()
            # tabs.addTab(self.Bellaraga(), "Bella Raga")
-            tabs.addTab(self.prova(), "Logo")
+            tabs.addTab(self.prova(), "Home")
             tabs.addTab(self.Scontrini(), "Scontrini")
             tabs.addTab(self.Fatture(), "Fatture")
             tabs.addTab(self.Magazzino(), "Magazzino")
@@ -98,13 +98,7 @@ class VistaHome(QWidget):
             tabs.addTab(self.ClientiPIva(), "Clienti PIVA")
             tabs.addTab(self.Fornitori(), "Fornitori")
             tabs.addTab(self.Dipendenti(), "Dipendenti")
-            
-            
-            
-            
-            
-            
-         
+
 
             layout.addWidget(tabs)
 
@@ -129,8 +123,6 @@ class VistaHome(QWidget):
             generalTab = QWidget()
             layout = QVBoxLayout()
 
-
-
             layout.addWidget(VistaListaDipendenti())
 
             generalTab.setLayout(layout)
@@ -151,12 +143,15 @@ class VistaHome(QWidget):
             generalTab.setLayout(layout)
             return generalTab
 
+
+        ###################################################
+        ###  FUNZIONE CHE RICHIAMA L'INTERFACCIA DELLA  ###
+        ###      LISTA DEGLI ARTICOLI IN MAGAZZINO      ###
+        ###################################################
         def Magazzino(self):
             """Create the General page UI."""
             generalTab = QWidget()
             layout = QVBoxLayout()
-
-
 
             layout.addWidget(self.vista_magazzino)
 

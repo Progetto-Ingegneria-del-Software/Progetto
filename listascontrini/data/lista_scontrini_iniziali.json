@@ -1,17 +1,7 @@
 [
     {
-      "num_fatt": 1,
-      "tipo": "Carico",
+      "num_scontrino": 1,
       "data": "05-01-2021",
-      "soggetto": {
-        "codice_id": 2,
-        "ragione_sociale": "carta srl",
-        "partita_iva": "08642151195",
-        "citta": "Macerata",
-        "indirizzo": "Via Celesti 3",
-        "telefono": "3778922646",
-        "email": "cartasrlufficio@cartasrl.com"
-      },
       "lista_articoli": [{
         "codice": "9005235068131",
         "descrizione": "penne nere",
@@ -31,18 +21,8 @@
       "totale": 2.44
     },
     {
-        "num_fatt": 2,
-        "tipo": "Carico",
-        "data": "10-02-2021",
-        "soggetto":  {
-        "codice_id": 1,
-        "ragione_sociale": "Luigi Bruni",
-        "partita_iva": "04917150155",
-        "citta": "Ancona",
-        "indirizzo": "Via Gialli 76",
-        "telefono": 3437588962,
-        "email": "bruniluigi62@gmail.com"
-      },
+      "num_scontrino": 2,
+      "data": "10-02-2021",
       "lista_articoli": [{
         "codice": "4856235112831",
         "descrizione": "classiche gomme per cancellare",
@@ -51,7 +31,7 @@
         "quantita": 1,
         "totale_riga": 0.72
       },
-        {
+      {
         "codice": "7898545117785",
         "descrizione": "penne di alta fattura",
         "prezzo_unitario": 60,
@@ -59,6 +39,6 @@
         "quantita": 1,
         "totale_riga": 54
       }],
-        "totale": 54.72
+      "totale": 54.72
     }
   ]
