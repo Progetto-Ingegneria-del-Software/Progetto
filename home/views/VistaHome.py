@@ -23,7 +23,7 @@ class VistaHome(QWidget):
 
         label = QLabel(self)
         label.setScaledContents(True)
-        pixmap = QPixmap("home/logo/logo.png").scaled(1600, 480, QtCore.Qt.KeepAspectRatio)
+        pixmap = QPixmap("home/logo/Logo Progetto.png").scaled(1550, 480, QtCore.Qt.KeepAspectRatio)
         label.setPixmap(pixmap)
         label.resize(label.pixmap().size())
         self.resize(pixmap.width(), pixmap.height())
