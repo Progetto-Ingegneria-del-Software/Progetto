@@ -1,8 +1,16 @@
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###        CHE L'UTENTE ATTUA CON LA VISTA DEL DIPENDENTE         ###
+#####################################################################
 class ControlloreDipendente():
     def __init__(self, dipendente):
         super(ControlloreDipendente, self).__init__()
 
         self.model = dipendente
+
+    ###################
+    ###   GETTERS   ###
+    ###################
 
     def get_codice_id_dipendente(self):
         return self.model.codice_id
@@ -27,6 +35,10 @@ class ControlloreDipendente():
 
     def get_stipendio_dipendente(self):
         return self.model.stipendio_mensile
+
+    ###################
+    ###   SETTERS   ###
+    ###################
 
     def set_nome_dipendente(self, nome):
         self.model.nome = nome

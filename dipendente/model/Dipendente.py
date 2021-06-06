@@ -1,3 +1,7 @@
+################################################################
+###  QUESTA CLASSE MODELLA I DIPENDENTI DELLA CARTOLIBRERIA  ###
+###             CON I CORRISPONDENTI ATTRIBUTI               ###
+################################################################
 class Dipendente():
     def __init__(self, codice_id, nome, cognome, cf, email, telefono, mansione, stipendio_mensile):
         super(Dipendente, self).__init__()

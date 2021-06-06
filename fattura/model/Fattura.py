@@ -1,6 +1,7 @@
-from fornitore.model.Fornitore import Fornitore
-from listaarticoli.model.ListaArticoli import ListaArticoli
-
+##############################################################
+###  QUESTA CLASSE MODELLA LE FATTURE DELLA CARTOLIBRERIA  ###
+###            CON I CORRISPONDENTI ATTRIBUTI              ###
+##############################################################
 class Fattura():
     def __init__(self, num_fatt, tipo_fatt, data, soggetto, articoli, totale):
         super(Fattura, self).__init__()

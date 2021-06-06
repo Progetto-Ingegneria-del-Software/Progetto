@@ -1,5 +1,7 @@
-from listaarticoli.model.ListaArticoli import ListaArticoli
-
+#################################################################
+###  QUESTA CLASSE MODELLA GLI SCONTRINI DELLA CARTOLIBRERIA  ###
+###              CON I CORRISPONDENTI ATTRIBUTI               ###
+#################################################################
 class Scontrino():
     def __init__(self, num_scontrino, data, articoli, totale):
         super(Scontrino, self).__init__()

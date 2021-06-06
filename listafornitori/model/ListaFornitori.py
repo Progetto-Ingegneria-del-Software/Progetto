@@ -4,7 +4,10 @@ import pickle
 
 from fornitore.model.Fornitore import Fornitore
 
-
+##########################################################################
+###  QUESTA CLASSE MODELLA LA LISTA DEI FORNITORI DELLA CARTOLIBRERIA  ###
+###                  CON I CORRISPONDENTI ATTRIBUTI                    ###
+##########################################################################
 class ListaFornitori():
     def __init__(self):
         super(ListaFornitori, self).__init__()
@@ -13,6 +16,10 @@ class ListaFornitori():
         self.populate_lista_fornitori()
         self.codice_id = self.assegna_contatore_id()
 
+    ############################################################
+    ###   METODO CHE ASSEGNA UN CODICE ID AUTOINCREMENTANTE  ###
+    ###              DIVERSO PER OGNI FORNITORE              ###
+    ############################################################
     def assegna_contatore_id(self):
         self.i = 0
         for fornitore in self.lista_fornitori:
@@ -20,6 +27,10 @@ class ListaFornitori():
                 self.i = fornitore.codice_id
         return self.i
 
+    ####################################################################
+    ###    METODO CHE POPOLA LA LISTA DEI CLIENTI CON LE ISTANZE    ###
+    ###                   PRESENTI NEL FILE PICKLE                   ###
+    ####################################################################
     def populate_lista_fornitori(self):
         if os.path.isfile('listafornitori/data/lista_fornitori_salvata.pickle'):
             with open('listafornitori/data/lista_fornitori_salvata.pickle', 'rb') as f:

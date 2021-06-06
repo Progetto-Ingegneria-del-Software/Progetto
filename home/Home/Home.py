@@ -1,6 +1,5 @@
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout, \
-    QHBoxLayout, QComboBox, QLabel, QSizePolicy, QFrame, QHeaderView
+from PyQt5.QtWidgets import QWidget,QTabWidget, QVBoxLayout
 
 from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 from listaarticoli.view.VistaListaArticoli import VistaListaArticoli
@@ -11,10 +10,13 @@ from listadipendenti.view.VistaListaDipendenti import VistaListaDipendenti
 from listafornitori.view.VistaListaFornitori import VistaListaFornitori
 from listafatture.view.VistaListaFatture import VistaListaFatture
 from listascontrini.view.VistaListaScontrini import VistaListaScontrini
-from listascontrini.view.VistaCreaScontrino import VistaCreaScontrino
 from home.views.VistaHome import VistaHome
 
 
+##############################################################################
+###  QUESTA CLASSE SUDDIVIDE IN TAB LE PRINCIPALI VISTE DELL'APPLICAZIONE  ###
+###                   MOSTRANDONE LA HOME ALL'AVVIO                        ###
+##############################################################################
 class Home(QWidget):
         def __init__(self):
             super(Home, self).__init__()
@@ -23,13 +25,11 @@ class Home(QWidget):
             self.vista_magazzino = Vista_lista_articoli_magazzino(self.controller_lista_articoli)
             self.setWindowTitle("Home")
             self.resize(1600, 600)
-            # Create a top-level layout
+
             layout = QVBoxLayout()
             self.setLayout(layout)
 
-            # Create the tab widget with two tabs
             tabs = QTabWidget()
-           # tabs.addTab(self.Bellaraga(), "Bella Raga")
             tabs.addTab(self.Home(), "Home")
             tabs.addTab(self.Scontrini(), "Scontrini")
             tabs.addTab(self.Fatture(), "Fatture")
@@ -43,9 +43,10 @@ class Home(QWidget):
 
             layout.addWidget(tabs)
 
-
-
-
+        ###################################################
+        ###  FUNZIONE CHE RICHIAMA L'IMMAGINE DEL LOGO  ###
+        ###                  NELLA HOME                 ###
+        ###################################################
         def Home(self):
             """Create the General page UI."""
             generalTab = QWidget()

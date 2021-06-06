@@ -1,10 +1,11 @@
-import sys
-
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QHBoxLayout, QSizePolicy
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtWidgets import QWidget, QLabel
+from PyQt5.QtGui import QPixmap
 
-
+#####################################################
+###  QUESTA CLASSE MOSTRA LA FINESTRA DELLA HOME  ###
+###             CON IL RELATIVO LOGO              ###
+#####################################################
 class VistaHome(QWidget):
 
     def __init__(self):
@@ -20,7 +21,6 @@ class VistaHome(QWidget):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        # Create widget
         label = QLabel(self)
         label.setScaledContents(True)
         pixmap = QPixmap("home/logo/logo.png").scaled(1600, 480, QtCore.Qt.KeepAspectRatio)

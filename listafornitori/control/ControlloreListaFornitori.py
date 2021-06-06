@@ -1,6 +1,9 @@
 from listafornitori.model.ListaFornitori import ListaFornitori
 
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###         CHE L'UTENTE ATTUA CON LA LISTA DEI FORNITORI         ###
+#####################################################################
 class ControlloreListaFornitori():
     def __init__(self):
         super(ControlloreListaFornitori, self).__init__()

@@ -1,6 +1,9 @@
 from listafatture.model.ListaFatture import ListaFatture
 
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###         CHE L'UTENTE ATTUA CON LA LISTA DELLE FATTURE         ###
+#####################################################################
 class ControlloreListaFatture():
     def __init__(self):
         super(ControlloreListaFatture, self).__init__()

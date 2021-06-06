@@ -1,5 +1,7 @@
-from fattura.model.Fattura import Fattura
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###        CHE L'UTENTE ATTUA CON LA VISTA DELLA FATTURA          ###
+#####################################################################
 class ControlloreFattura:
 
     def __init__(self, fattura):

@@ -1,7 +1,10 @@
 from articolo.controller.ControlloreArticolo import ControlloreArticolo
 from listaarticoli.model.ListaArticoli import ListaArticoli
 
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###         CHE L'UTENTE ATTUA CON LA LISTA DEGLI ARTICOLI        ###
+#####################################################################
 class ControlloreListaArticoli():
     def __init__(self):
         super(ControlloreListaArticoli, self).__init__()
@@ -23,6 +26,10 @@ class ControlloreListaArticoli():
     def elimina_articolo_by_codice(self, codice):
         self.model.rimuovi_articolo_by_codice(codice)
 
+    ####################################################################
+    ###  METODO UTILIZZATO PER AUMENTARE LA QUANTITÀ DI UN ARTICOLO  ###
+    ###                    PRESENTE IN MAGAZZINO                     ###
+    ####################################################################
     def inserimento_carico (self, codice_barre, stock):
         for articolo in self.get_lista_articoli():
             if codice_barre == articolo.codice:
@@ -33,6 +40,10 @@ class ControlloreListaArticoli():
                 return True
         return False
 
+    ####################################################################
+    ###  METODO UTILIZZATO PER DIMINUIRE LA QUANTITÀ DI UN ARTICOLO  ###
+    ###                    PRESENTE IN MAGAZZINO                     ###
+    ####################################################################
     def scarico (self, codice_barre, stock):
         for articolo in self.get_lista_articoli():
             if codice_barre == articolo.codice:

@@ -4,7 +4,10 @@ import pickle
 
 from dipendente.model.Dipendente import Dipendente
 
-
+###########################################################################
+###  QUESTA CLASSE MODELLA LA LISTA DEI DIPENDENTI DELLA CARTOLIBRERIA  ###
+###                  CON I CORRISPONDENTI ATTRIBUTI                     ###
+###########################################################################
 class ListaDipendenti():
     def __init__(self):
         super(ListaDipendenti, self).__init__()
@@ -13,6 +16,10 @@ class ListaDipendenti():
         self.populate_lista_dipendenti()
         self.codice_id = self.assegna_contatore_id()
 
+    ############################################################
+    ###   METODO CHE ASSEGNA UN CODICE ID AUTOINCREMENTANTE  ###
+    ###             DIVERSO PER OGNI DIPENDENTE              ###
+    ############################################################
     def assegna_contatore_id(self):
         self.i = 0
         for dipendente in self.lista_dipendenti:
@@ -20,6 +27,10 @@ class ListaDipendenti():
                 self.i = dipendente.codice_id
         return self.i
 
+    ####################################################################
+    ###   METODO CHE POPOLA LA LISTA DEI DIPENDENTI CON LE ISTANZE   ###
+    ###                   PRESENTI NEL FILE PICKLE                   ###
+    ####################################################################
     def populate_lista_dipendenti(self):
         if os.path.isfile('listadipendenti/data/lista_dipendenti_salvata.pickle'):
             with open('listadipendenti/data/lista_dipendenti_salvata.pickle', 'rb') as f:

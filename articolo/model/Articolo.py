@@ -1,3 +1,7 @@
+################################################################
+###  QUESTA CLASSE MODELLA GLI ARTICOLI DELLA CARTOLIBRERIA  ###
+###             CON I CORRISPONDENTI ATTRIBUTI               ###
+################################################################
 class Articolo():
     def __init__(self, codice, gruppo_merceologico, categoria, marca, prezzo_unitario, sconto_perc, descrizione, stock):
         super(Articolo, self).__init__()

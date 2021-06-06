@@ -1,8 +1,16 @@
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###        CHE L'UTENTE ATTUA CON LA VISTA DELL'ARTICOLO          ###
+#####################################################################
 class ControlloreArticolo:
     def __init__(self, articolo):
         super(ControlloreArticolo, self).__init__()
 
         self.model = articolo
+
+    ###################
+    ###   GETTERS   ###
+    ###################
 
     def get_codice_articolo(self):
         return self.model.codice
@@ -27,6 +35,10 @@ class ControlloreArticolo:
 
     def get_stock_articolo(self):
         return self.model.stock
+
+    ###################
+    ###   SETTERS   ###
+    ###################
 
     def set_codice_articolo(self, codice):
         self.model.codice = codice

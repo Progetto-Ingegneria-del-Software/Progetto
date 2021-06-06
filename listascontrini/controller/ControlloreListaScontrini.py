@@ -1,6 +1,9 @@
 from listascontrini.model.ListaScontrini import ListaScontrini
 
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###        CHE L'UTENTE ATTUA CON LA LISTA DEGLI SCONTRINI        ###
+#####################################################################
 class ControlloreListaScontrini():
     def __init__(self):
         super(ControlloreListaScontrini, self).__init__()

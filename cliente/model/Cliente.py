@@ -1,3 +1,7 @@
+################################################################
+###   QUESTA CLASSE MODELLA I CLIENTI DELLA CARTOLIBRERIA    ###
+###             CON I CORRISPONDENTI ATTRIBUTI               ###
+################################################################
 class Cliente():
     def __init__(self, codice_id, nome, cognome, cf, email, telefono, citta, indirizzo):
         super(Cliente, self).__init__()

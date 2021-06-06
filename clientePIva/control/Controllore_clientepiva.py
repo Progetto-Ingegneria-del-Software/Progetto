@@ -1,11 +1,16 @@
-from clientePIva.model.Cliente_P_Iva import Cliente_P_Iva
-
-
+###############################################################################
+###       QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI       ###
+###  CHE L'UTENTE ATTUA CON LA VISTA DEL CLIENTE POSSESSORE DI PARTITA IVA  ###
+###############################################################################
 class Controllore_clientepiva():
     def __init__(self, clientepiva):
         super(Controllore_clientepiva, self).__init__()
 
         self.model = clientepiva
+
+    ###################
+    ###   GETTERS   ###
+    ###################
 
     def get_codice_id_clientepiva(self):
         return self.model.codice_id
@@ -27,6 +32,10 @@ class Controllore_clientepiva():
 
     def get_email_clientepiva(self):
         return self.model.email
+
+    ###################
+    ###   SETTERS   ###
+    ###################
 
     def set_partita_iva_clientepiva(self, partita_iva):
         self.model.partita_iva = partita_iva

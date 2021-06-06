@@ -1,10 +1,10 @@
-import json
 import os
 import pickle
 
-from cliente.model.Cliente import Cliente
-
-
+########################################################################
+###  QUESTA CLASSE MODELLA LA LISTA DEI CLIENTI DELLA CARTOLIBRERIA  ###
+###                 CON I CORRISPONDENTI ATTRIBUTI                   ###
+########################################################################
 class Lista_clienti():
     def __init__(self):
         super(Lista_clienti, self).__init__()
@@ -13,6 +13,10 @@ class Lista_clienti():
         self.populate_lista_clienti()
         self.codice_id = self.assegna_contatore_id()
 
+    ############################################################
+    ###   METODO CHE ASSEGNA UN CODICE ID AUTOINCREMENTANTE  ###
+    ###               DIVERSO PER OGNI CLIENTE               ###
+    ############################################################
     def assegna_contatore_id(self):
         self.i = 0
         for cliente in self.lista_clienti:
@@ -20,6 +24,10 @@ class Lista_clienti():
                 self.i = cliente.codice_id
         return self.i
 
+    ####################################################################
+    ###    METODO CHE POPOLA LA LISTA DEI CLIENTI CON LE ISTANZE    ###
+    ###                   PRESENTI NEL FILE PICKLE                   ###
+    ####################################################################
     def populate_lista_clienti(self):
         if os.path.isfile('listaclienti/data/lista_clienti_salvata.pickle'):
             with open('listaclienti/data/lista_clienti_salvata.pickle', 'rb') as f:
@@ -30,11 +38,6 @@ class Lista_clienti():
 
     def get_cliente_by_index(self, index):
         return self.lista_clienti[index]
-
-    #def get_cliente_by_id(self, id):
-       # for cliente in self.lista_clienti:
-        #    if id == cliente.codice_id:
-          #      return cliente
 
     def rimuovi_cliente_by_id(self, id):
         for cliente in self.lista_clienti:

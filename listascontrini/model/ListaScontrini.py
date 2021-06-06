@@ -2,9 +2,12 @@ import json
 import os
 import pickle
 
-from scontrino.model.Scontrino import Scontrino   #Viene importata la classe di modellazione di uno scontrino
+from scontrino.model.Scontrino import Scontrino
 
-
+############################################################################
+###  QUESTA CLASSE MODELLA LA LISTA DEGLI SCONTRINI DELLA CARTOLIBRERIA  ###
+###                   CON I CORRISPONDENTI ATTRIBUTI                     ###
+############################################################################
 class ListaScontrini():
 
     def __init__(self):

@@ -1,11 +1,16 @@
-from fornitore.model.Fornitore import Fornitore
-
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###        CHE L'UTENTE ATTUA CON LA VISTA DEL FORNITORE          ###
+#####################################################################
 class ControlloreFornitore():
     def __init__(self, fornitore):
         super(ControlloreFornitore, self).__init__()
 
         self.model = fornitore
+
+    ###################
+    ###   GETTERS   ###
+    ###################
 
     def get_codice_id_fornitore(self):
         return self.model.codice_id
@@ -27,6 +32,10 @@ class ControlloreFornitore():
 
     def get_email_fornitore(self):
         return self.model.email
+
+    ###################
+    ###   SETTERS   ###
+    ###################
 
     def set_partita_iva_fornitore(self, partita_iva):
         self.model.partita_iva = partita_iva

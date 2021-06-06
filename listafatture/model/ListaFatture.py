@@ -2,9 +2,12 @@ import json
 import os
 import pickle
 
-from fattura.model.Fattura import Fattura   #Viene importata la classe di modellazione di una fattura
+from fattura.model.Fattura import Fattura
 
-
+##########################################################################
+###  QUESTA CLASSE MODELLA LA LISTA DELLE FATTURE DELLA CARTOLIBRERIA  ###
+###                  CON I CORRISPONDENTI ATTRIBUTI                    ###
+##########################################################################
 class ListaFatture():
 
     def __init__(self):

@@ -1,7 +1,9 @@
-
 from listaclientiPIva.model.Lista_clientipiva import Lista_clientipiva
 
-
+##################################################################################
+###         QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI        ###
+###  CHE L'UTENTE ATTUA CON LA LISTA DEI DIPENDENTI POSSESSORI DI PARTITA IVA  ###
+##################################################################################
 class Controllore_lista_clientipiva():
     def __init__(self):
         super(Controllore_lista_clientipiva, self).__init__()

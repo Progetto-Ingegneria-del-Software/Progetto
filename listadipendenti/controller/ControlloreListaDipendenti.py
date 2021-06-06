@@ -1,6 +1,9 @@
 from listadipendenti.model.ListaDipendenti import ListaDipendenti
 
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###         CHE L'UTENTE ATTUA CON LA LISTA DEI DIPENDENTI        ###
+#####################################################################
 class ControlloreListaDipendenti():
     def __init__(self):
         super(ControlloreListaDipendenti, self).__init__()

@@ -1,5 +1,7 @@
-from scontrino.model.Scontrino import Scontrino
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###       CHE L'UTENTE ATTUA CON LA VISTA DEGLI SCONTRINI         ###
+#####################################################################
 class ControlloreScontrino:
 
     def __init__(self, scontrino):

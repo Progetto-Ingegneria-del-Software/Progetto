@@ -1,3 +1,7 @@
+###############################################################
+###  QUESTA CLASSE MODELLA I FORNITORI DELLA CARTOLIBRERIA  ###
+###            CON I CORRISPONDENTI ATTRIBUTI               ###
+###############################################################
 class Fornitore():
     def __init__(self, codice_id, ragione_sociale, partita_iva, citta, indirizzo, telefono, email):
         super(Fornitore, self).__init__()

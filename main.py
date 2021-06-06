@@ -3,6 +3,10 @@ from PyQt5.QtWidgets import QApplication
 
 from home.Home.Home import Home
 
+###########################
+###     ENTRY POINT     ###
+###  DELL'APPLICAZIONE  ###
+###########################
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     vista_home = Home()

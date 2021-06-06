@@ -1,6 +1,9 @@
 from listaclienti.model.Lista_clienti import Lista_clienti
 
-
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###          CHE L'UTENTE ATTUA CON LA LISTA DEI CLIENTI          ###
+#####################################################################
 class Controllore_Lista_clienti():
     def __init__(self):
         super(Controllore_Lista_clienti, self).__init__()

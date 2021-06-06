@@ -1,8 +1,16 @@
+#####################################################################
+###  QUESTA CLASSE VIENE UTILIZZATA PER ELABORARE LE INTERAZIONI  ###
+###          CHE L'UTENTE ATTUA CON LA VISTA DEL CLIENTE          ###
+#####################################################################
 class Controllore_cliente():
     def __init__(self, cliente):
         super(Controllore_cliente, self).__init__()
 
         self.model = cliente
+
+    ###################
+    ###   GETTERS   ###
+    ###################
 
     def get_codice_id_cliente(self):
         return self.model.codice_id
@@ -27,6 +35,10 @@ class Controllore_cliente():
 
     def get_indirizzo_cliente(self):
         return self.model.indirizzo
+
+    ###################
+    ###   SETTERS   ###
+    ###################
 
     def set_nome_cliente(self, nome):
         self.model.nome = nome
