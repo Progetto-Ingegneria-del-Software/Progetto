@@ -6,10 +6,11 @@ from fattura.model.Fattura import Fattura
 from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 from listaclienti.controller.Controllore_Lista_clienti import Controllore_Lista_clienti
 from listaclientiPIva.control.Controllore_lista_clientipiva import Controllore_lista_clientipiva
-from listafatture.controller.ControlloreListaFatture import ControlloreListaFatture
-from listafornitori.control.ControlloreListaFornitori import ControlloreListaFornitori
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###            DI CREAZIONE DI UNA FATTURA DI SCARICO             ###
+#####################################################################
 class VistaCreaFatturaScarico(QWidget):
     def __init__(self, controller_articoli, controller_fattura, callback, callback_magazzino):
         super(VistaCreaFatturaScarico, self).__init__()
@@ -153,6 +154,10 @@ class VistaCreaFatturaScarico(QWidget):
             self.label_dati1_cliente.setText("Codice ID: Ragione Sociale: Partita IVA: Città:")
             self.label_dati2_cliente.setText("Indirizzo: Telefono: Email:")
 
+    ##########################################################
+    ###  METODO USATO PER CERCARE ALL'INTERNO DEL SISTEMA  ###
+    ###               UN DETERMINATO CLIENTE               ###
+    ##########################################################
     def search_cliente(self, tipologia_cliente):
         if tipologia_cliente == "Cliente":
             controller_cliente = Controllore_Lista_clienti()
@@ -177,6 +182,10 @@ class VistaCreaFatturaScarico(QWidget):
                     self.label_dati1_cliente.setText("Codice ID: {}, Ragione Sociale: {}, Partita IVA: {}, Città: {},".format(cliente.codice_id, cliente.ragione_sociale, cliente.partita_iva, cliente.citta, cliente.indirizzo, cliente.telefono, cliente.email))
                     self.label_dati2_cliente.setText("Indirizzo: {}, Telefono: {}, Email: {}.".format(cliente.indirizzo, cliente.telefono, cliente.email))
 
+    #################################################
+    ###  METODO USATO PER INSERIRE NELLA FATTURA  ###
+    ###                UN ARTICOLO                ###
+    #################################################
     def add_articolo_in_fattura(self):
         controller_lista_articoli = ControlloreListaArticoli()
         lista_articoli = controller_lista_articoli.get_lista_articoli()
@@ -194,6 +203,10 @@ class VistaCreaFatturaScarico(QWidget):
                 self.carrello_acquisti.append(articolo_dict)
         self.show_table_items()
 
+    ############################################
+    ###  METODO USATO PER MOSTRARE LA LISTA  ###
+    ###      DEGLI ARTICOLI ACQUISTATI       ###
+    ############################################
     def show_table_items(self):
         i = 0
         self.table_articoli.setRowCount(len(self.carrello_acquisti))
@@ -222,6 +235,10 @@ class VistaCreaFatturaScarico(QWidget):
             self.totale += articolo["totale_riga"]
         self.label_totale.setText("Totale: €{}".format(self.truncate(self.totale, 2)))
 
+    ################################################
+    ###  METODO USATO PER RIMUOVERE UN ARTICOLO  ###
+    ###    TRA QUELLI INSERITI NELLA FATTURA     ###
+    ################################################
     @QtCore.pyqtSlot()
     def deleteClicked(self):
         button = self.sender()
@@ -231,6 +248,10 @@ class VistaCreaFatturaScarico(QWidget):
             self.carrello_acquisti.pop(row)
             self.show_table_items()
 
+    ###########################################
+    ###  METODO PER CONTROLLARE CHE I DATI  ###
+    ###       INSERITI SONO CORRETTI        ###
+    ###########################################
     def controllo_inserimento(self):
         if self.search_bar_quantita.text() == "":
             QMessageBox.critical(self, 'Errore',
@@ -254,6 +275,10 @@ class VistaCreaFatturaScarico(QWidget):
                 else:
                     self.add_articolo_in_fattura()
 
+    ############################################
+    ###  METODO USATO PER INSERIRE LA NUOVA  ###
+    ###         FATTURA NEL SISTEMA          ###
+    ############################################
     def crea_fattura(self):
         if not self.is_int(self.edit_giorno_fattura.text()) or not self.is_int(self.edit_mese_fattura.text()) or not self.is_int(self.edit_anno_fattura.text()):
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci una data valida.',
@@ -290,6 +315,10 @@ class VistaCreaFatturaScarico(QWidget):
         self.callback()
         self.close()
 
+    ##################################################
+    ###       METODO USATO PER VERIFICARE SE       ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA AD INTERO  ###
+    ##################################################
     def is_int(self, val):
         try:
             num = int(val)
@@ -297,6 +326,10 @@ class VistaCreaFatturaScarico(QWidget):
             return False
         return True
 
+    ######################################
+    ###  METODO USATO PER ARROTONDARE  ###
+    ###   UNA VARIABILE DI TIPO FLOAT  ###
+    ######################################
     def truncate(self, f, n):
         s = '{}'.format(f)
         if 'e' in s or 'E' in s:

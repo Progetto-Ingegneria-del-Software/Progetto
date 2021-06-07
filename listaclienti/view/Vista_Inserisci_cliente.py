@@ -1,10 +1,12 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QSpacerItem, QSizePolicy, QPushButton, QMessageBox, \
     QLabel, QLineEdit
 
-
 from cliente.model.Cliente import Cliente
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        DI INSERIMENTO DI UN NUOVO CLIENTE NEL SISTEMA         ###
+#####################################################################
 class Vista_Inserisci_cliente(QWidget):
     def __init__(self, controller, callback):
         super(Vista_Inserisci_cliente, self).__init__()
@@ -23,7 +25,6 @@ class Vista_Inserisci_cliente(QWidget):
 
         self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
 
-
         btn_ok = QPushButton("Inserisci")
         btn_ok.clicked.connect(self.add_cliente)
 
@@ -34,6 +35,10 @@ class Vista_Inserisci_cliente(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Inserisci cliente")
 
+    ########################################################
+    ###  METODO USATO PER MOSTRARE GLI ELEMENTI GRAFICI  ###
+    ###    ALL'INTERNO DELL'INTERFACCIA DI INSERIMENTO   ###
+    ########################################################
     def add_item_view(self):
         i = 0
         for name in self.labels:
@@ -44,6 +49,10 @@ class Vista_Inserisci_cliente(QWidget):
             self.info[name] = self.current_text_edit
             i = i + 1
 
+    #######################################################
+    ###   METODO USATO PER AGGIUNGERE IL NUOVO CLIENTE  ###
+    ###                   NEL SISTEMA                   ###
+    #######################################################
     def add_cliente(self):
 
         nome = self.info["Nome:"].text()

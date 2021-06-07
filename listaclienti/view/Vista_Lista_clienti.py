@@ -5,7 +5,10 @@ from cliente.view.Vista_cliente import Vista_cliente
 from listaclienti.controller.Controllore_Lista_clienti import Controllore_Lista_clienti
 from listaclienti.view.Vista_Inserisci_cliente import Vista_Inserisci_cliente
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###         DELLA LISTA DEI CLIENTI PRESENTI NEL SISTEMA          ###
+#####################################################################
 class Vista_Lista_clienti(QWidget):
     def __init__(self):
         super(Vista_Lista_clienti, self).__init__()
@@ -51,10 +54,7 @@ class Vista_Lista_clienti(QWidget):
         self.buttons_layout = QHBoxLayout()
         self.open_button = QPushButton("Visualizza cliente")
 
-
         self.open_button.clicked.connect(self.show_selected_info)
-
-
 
         self.buttons_layout.addWidget(self.open_button)
         self.v_layout.addLayout(self.buttons_layout)
@@ -73,6 +73,11 @@ class Vista_Lista_clienti(QWidget):
         self.resize(1500, 480)
         self.setWindowTitle("Clienti")
 
+    ##########################################################
+    ###  METODO USATO PER CERCARE ALL'INTERNO DEL SISTEMA  ###
+    ###       UN DETERMINATO SOTTOINSIEME DI CLIENTI       ###
+    ###            FILTRATO PER NOME E COGNOME             ###
+    ##########################################################
     def filter_clienti(self):
         self.table_view.clearContents()
         self.table_view.model().removeRows(0, self.table_view.rowCount())
@@ -90,16 +95,29 @@ class Vista_Lista_clienti(QWidget):
         self.table_view.setColumnCount(8)
         self.show_table_view_items(filter_list)
 
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###            DEL SINGOLO CLIENTE SELEZIONATO           ###
+    ############################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_cliente = Vista_cliente(self.controller.get_cliente_by_index(
                 self.table_view.selectedIndexes()[0].row()), self.controller, self.update_ui)
             self.vista_cliente.show()
 
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###          DI INSERIMENTO DI UN NUOVO CLIENTE          ###
+    ############################################################
     def show_insert_cliente(self):
         self.vista_inserisci_cliente = Vista_Inserisci_cliente(self.controller, self.update_ui)
         self.vista_inserisci_cliente.show()
 
+    ###################################################
+    ###    METODO USATO PER ELIMINARE UN CLIENTE    ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_cliente(self):
         if self.table_view.selectedIndexes():
             cliente_selezionato = self.controller.get_cliente_by_index(
@@ -113,12 +131,20 @@ class Vista_Lista_clienti(QWidget):
                 self.controller.elimina_cliente_by_id(cliente_selezionato.codice_id)
                 self.update_ui()
 
+    ##############################################################
+    ###  METODO USATO PER AGGIORNARE L'INTERFACCIA CHE MOSTRA  ###
+    ###        LA LISTA DEI CLIENTI IN MANIERA DINAMICA        ###
+    ##############################################################
     def update_ui(self):
         self.controller.save_data()
         self.table_view.setRowCount(len(self.controller.model.lista_clienti))
         self.table_view.setColumnCount(8)
         self.show_table_view_items(self.controller.get_lista_clienti())
 
+    #################################################################
+    ###    METODO USATO PER MOSTRARE NELLA TABELLA GLI ELEMENTI   ###
+    ###              PRESENTI NELLA LISTA DEI CLIENTI             ###
+    #################################################################
     def show_table_view_items(self, item_list):
         i = 0
         for cliente in item_list:
@@ -140,6 +166,10 @@ class Vista_Lista_clienti(QWidget):
             self.table_view.setItem(i, 7, item)
             i = i + 1
 
+    ####################################################
+    ###  METODO USATO PER SALVARE I DATI AGGIORNATI  ###
+    ###        ALLA CHIUSURA DELL'INTERFACCIA        ###
+    ####################################################
     def closeEvent(self, event):
         self.controller.save_data()
         event.accept()

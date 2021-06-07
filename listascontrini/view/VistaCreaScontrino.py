@@ -2,10 +2,12 @@ from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import QAbstractItemView, QHBoxLayout, QHeaderView, QTableWidget, QTableWidgetItem, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox
 
 from scontrino.model.Scontrino import Scontrino
-from scontrino.controller.ControlloreScontrino import ControlloreScontrino
-from listascontrini.controller.ControlloreListaScontrini import ControlloreListaScontrini
 from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###              DI CREAZIONE DI UN NUOVO SCONTRINO               ###
+#####################################################################
 class VistaCreaScontrino(QWidget):
     def __init__(self, controller_scontrini, controller_articoli, callback_scontrini, callback_magazzino):
         super(VistaCreaScontrino, self).__init__()
@@ -126,6 +128,10 @@ class VistaCreaScontrino(QWidget):
                 self.carrello_acquisti.append(articolo_dict)
         self.show_table_items()
 
+    ############################################
+    ###  METODO USATO PER MOSTRARE LA LISTA  ###
+    ###      DEGLI ARTICOLI ACQUISTATI       ###
+    ############################################
     def show_table_items(self):
         i = 0
         self.table_articoli.setRowCount(len(self.carrello_acquisti))
@@ -154,6 +160,10 @@ class VistaCreaScontrino(QWidget):
             self.totale += articolo["totale_riga"]
         self.label_totale.setText("Totale: €{}".format(self.truncate(self.totale, 2)))
 
+    ################################################
+    ###  METODO USATO PER RIMUOVERE UN ARTICOLO  ###
+    ###   TRA QUELLI INSERITI NELLO SCONTRINO    ###
+    ################################################
     @QtCore.pyqtSlot()
     def deleteClicked(self):
         button = self.sender()
@@ -163,6 +173,10 @@ class VistaCreaScontrino(QWidget):
             self.carrello_acquisti.pop(row)
             self.show_table_items()
 
+    ###########################################
+    ###  METODO PER CONTROLLARE CHE I DATI  ###
+    ###       INSERITI SONO CORRETTI        ###
+    ###########################################
     def controllo_inserimento(self):
         if self.search_bar_quantita.text() == "":
             QMessageBox.critical(self, 'Errore',
@@ -186,6 +200,10 @@ class VistaCreaScontrino(QWidget):
                 else:
                     self.add_articolo_in_scontrino()
 
+    ############################################
+    ###  METODO USATO PER INSERIRE IL NUOVO  ###
+    ###        SCONTRINO NEL SISTEMA         ###
+    ############################################
     def crea_scontrino(self):
         if not self.is_int(self.edit_giorno_scontrino.text()) or not self.is_int(self.edit_mese_scontrino.text()) or not self.is_int(self.edit_anno_scontrino.text()):
             QMessageBox.critical(self, 'Errore!', 'Per favore, inserisci una data valida.',
@@ -219,6 +237,10 @@ class VistaCreaScontrino(QWidget):
         self.callback_scontrini()
         self.close()
 
+    ##################################################
+    ###       METODO USATO PER VERIFICARE SE       ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA AD INTERO  ###
+    ##################################################
     def is_int(self, val):
         try:
             num = int(val)
@@ -226,6 +248,10 @@ class VistaCreaScontrino(QWidget):
             return False
         return True
 
+    ######################################
+    ###  METODO USATO PER ARROTONDARE  ###
+    ###   UNA VARIABILE DI TIPO FLOAT  ###
+    ######################################
     def truncate(self, f, n):
         s = '{}'.format(f)
         if 'e' in s or 'E' in s:

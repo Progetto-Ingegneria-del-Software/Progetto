@@ -3,7 +3,10 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QSpacerItem, QSiz
 
 from fornitore.model.Fornitore import Fornitore
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       DI INSERIMENTO DI UN NUOVO FORNITORE NEL SISTEMA        ###
+#####################################################################
 class VistaInserisciFornitore(QWidget):
     def __init__(self, controller, callback):
         super(VistaInserisciFornitore, self).__init__()
@@ -32,6 +35,10 @@ class VistaInserisciFornitore(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Inserisci Fornitore")
 
+    ########################################################
+    ###  METODO USATO PER MOSTRARE GLI ELEMENTI GRAFICI  ###
+    ###    ALL'INTERNO DELL'INTERFACCIA DI INSERIMENTO   ###
+    ########################################################
     def add_item_view(self):
         i = 0
         for name in self.labels:
@@ -42,6 +49,10 @@ class VistaInserisciFornitore(QWidget):
             self.info[name] = self.current_text_edit
             i = i + 1
 
+    #########################################################
+    ###   METODO USATO PER AGGIUNGERE IL NUOVO FORNITORE  ###
+    ###                     NEL SISTEMA                   ###
+    #########################################################
     def add_fornitore(self):
         ragione_sociale = self.info["Ragione Sociale:"].text()
         partita_iva = self.info["Partita IVA:"].text()
@@ -49,7 +60,6 @@ class VistaInserisciFornitore(QWidget):
         indirizzo = self.info["Indirizzo:"].text()
         telefono = self.info["Telefono:"].text()
         email = self.info["Email:"].text()
-
 
         if ragione_sociale == "" or partita_iva == "" or citta == "" or indirizzo == "" or telefono == "" or email == "":
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, inserisci tutte le informazioni richieste.',

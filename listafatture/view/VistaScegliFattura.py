@@ -1,12 +1,13 @@
-#from listafatture.view.VistaCreaFattura import VistaCreaFattura
 from listafatture.view.VistaCreaFatturaCarico import VistaCreaFatturaCarico
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QVBoxLayout, QGridLayout, QWidget, QLabel, QHBoxLayout, QPushButton
+from PyQt5.QtWidgets import QVBoxLayout, QWidget, QLabel, QHBoxLayout, QPushButton
 
-from fattura.controller.ControlloreFattura import ControlloreFattura
 from listafatture.view.VistaCreaFatturaScarico import VistaCreaFatturaScarico
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        DI SCELTA PER IL TIPO DI FATTURA DA EFFETTUARE         ###
+#####################################################################
 class VistaScegliFattura(QWidget):
     def __init__(self, controller_articoli, controller, callback, callback_magazzino):
         super(VistaScegliFattura, self).__init__()
@@ -49,8 +50,6 @@ class VistaScegliFattura(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Scegli fattura")
 
-
-
     #########################################
     ###  FUNZIONE CHE IMPOSTA IL TIPO DI  ### 
     ###        FATTURA SU "CARICO"        ###
@@ -59,7 +58,6 @@ class VistaScegliFattura(QWidget):
         self.vista_crea_fattura_carico = VistaCreaFatturaCarico(self.controller_articoli, self.controller, self.callback, self.callback_magazzino)
         self.vista_crea_fattura_carico.show()
         self.close()
-    
 
     #########################################
     ###  FUNZIONE CHE IMPOSTA IL TIPO DI  ### 
@@ -69,4 +67,3 @@ class VistaScegliFattura(QWidget):
         self.vista_crea_fattura_scarico = VistaCreaFatturaScarico(self.controller_articoli, self.controller, self.callback, self.callback_magazzino)
         self.vista_crea_fattura_scarico.show()
         self.close()
-    

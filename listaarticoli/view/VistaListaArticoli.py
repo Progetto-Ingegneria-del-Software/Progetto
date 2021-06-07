@@ -2,11 +2,12 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTab
     QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
 
 from articolo.view.VistaArticolo import VistaArticolo
-from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 from listaarticoli.view.VistaInserisciArticolo import VistaInserisciArticolo
-from listaarticoli.view.Vista_lista_articoli_magazzino import Vista_lista_articoli_magazzino
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        DELLA LISTA DEGLI ARTICOLI PRESENTI NEL SISTEMA        ###
+#####################################################################
 class VistaListaArticoli(QWidget):
     def __init__(self, controller, magazzino_update_table):
         super(VistaListaArticoli, self).__init__()
@@ -73,6 +74,11 @@ class VistaListaArticoli(QWidget):
         self.resize(1500, 480)
         self.setWindowTitle("Articoli")
 
+    ##########################################################
+    ###  METODO USATO PER CERCARE ALL'INTERNO DEL SISTEMA  ###
+    ###       UN DETERMINATO SOTTOINSIEME DI ARTICOLI      ###
+    ###           FILTRATO PER CATEGORIA E MARCA           ###
+    ##########################################################
     def filter_articoli(self):
         self.table_view.clearContents()
         self.table_view.model().removeRows(0, self.table_view.rowCount())
@@ -88,17 +94,29 @@ class VistaListaArticoli(QWidget):
         self.table_view.setColumnCount(7)
         self.show_table_view_items(filter_list)
 
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###           DEL SINGOLO ARTICOLO SELEZIONATO           ###
+    ############################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_articolo = VistaArticolo(self.controller.get_articolo_by_codice(
             self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()), self.controller, self.update_table_view, self.magazzino_update_table)
             self.vista_articolo.show()
 
-
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###         DI INSERIMENTO DI UN NUOVO ARTICOLO          ###
+    ############################################################
     def show_insert_articolo(self):
         self.vista_inserisci_articolo = VistaInserisciArticolo(self.controller, self.update_table_view, self.magazzino_update_table)
         self.vista_inserisci_articolo.show()
 
+    ###################################################
+    ###    METODO USATO PER ELIMINARE UN ARTICOLO   ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_articolo(self):
         if self.table_view.selectedIndexes():
             articolo_selezionato = self.controller.get_articolo_by_codice(
@@ -112,6 +130,10 @@ class VistaListaArticoli(QWidget):
                 self.magazzino_update_table()
                 self.update_table_view()
 
+    ##############################################################
+    ###  METODO USATO PER AGGIORNARE L'INTERFACCIA CHE MOSTRA  ###
+    ###       LA LISTA DEGLI ARTICOLI IN MANIERA DINAMICA      ###
+    ##############################################################
     def update_table_view(self):
         self.controller.save_data()
 
@@ -119,6 +141,10 @@ class VistaListaArticoli(QWidget):
         self.table_view.setColumnCount(7)
         self.show_table_view_items(self.controller.get_lista_articoli())
 
+    #################################################################
+    ###    METODO USATO PER MOSTRARE NELLA TABELLA GLI ELEMENTI   ###
+    ###            PRESENTI NELLA LISTA DEGLI ARTICOLI            ###
+    #################################################################
     def show_table_view_items(self, item_list):
         i = 0
         for articolo in item_list:
@@ -138,6 +164,10 @@ class VistaListaArticoli(QWidget):
             self.table_view.setItem(i, 6, item)
             i = i + 1
 
+    ####################################################
+    ###  METODO USATO PER SALVARE I DATI AGGIORNATI  ###
+    ###        ALLA CHIUSURA DELL'INTERFACCIA        ###
+    ####################################################
     def closeEvent(self, event):
         self.controller.save_data()
         event.accept()

@@ -2,8 +2,11 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QSpacerItem
     QMessageBox, QGridLayout
 
 from articolo.model.Articolo import Articolo
-from listaarticoli.view.Vista_lista_articoli_magazzino import Vista_lista_articoli_magazzino
 
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        DI INSERIMENTO DI UN NUOVO ARTICOLO NEL SISTEMA        ###
+#####################################################################
 class VistaInserisciArticolo(QWidget):
     def __init__(self, controller, callback_articoli, callback_magazzino):
         super(VistaInserisciArticolo, self).__init__()
@@ -33,6 +36,10 @@ class VistaInserisciArticolo(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Inserisci Articolo")
 
+    ########################################################
+    ###  METODO USATO PER MOSTRARE GLI ELEMENTI GRAFICI  ###
+    ###    ALL'INTERNO DELL'INTERFACCIA DI INSERIMENTO   ###
+    ########################################################
     def add_item_view(self):
         i=0
         for name in self.labels:
@@ -43,6 +50,10 @@ class VistaInserisciArticolo(QWidget):
             self.info[name] = self.current_text_edit
             i = i+1
 
+    ########################################################
+    ###   METODO USATO PER AGGIUNGERE IL NUOVO ARTICOLO  ###
+    ###                     NEL SISTEMA                  ###
+    ########################################################
     def add_articolo(self):
         codice = self.info["Codice a Barre:"].text()
         gruppo_merciologico = self.info["Gruppo Merceologico:"].text()
@@ -70,6 +81,10 @@ class VistaInserisciArticolo(QWidget):
         self.callback_magazzino()
         self.close()
 
+    ##########################################################
+    ###           METODO USATO PER VERIFICARE SE           ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA A VARIABILE FLOAT  ###
+    ##########################################################
     def is_float(self, val):
         try:
             num = float(val)
@@ -77,6 +92,10 @@ class VistaInserisciArticolo(QWidget):
             return False
         return True
 
+    ##################################################
+    ###       METODO USATO PER VERIFICARE SE       ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA AD INTERO  ###
+    ##################################################
     def is_int(self, val):
         try:
             num = int(val)

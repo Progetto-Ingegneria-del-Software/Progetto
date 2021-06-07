@@ -5,7 +5,10 @@ from fornitore.view.VistaFornitore import VistaFornitore
 from listafornitori.control.ControlloreListaFornitori import ControlloreListaFornitori
 from listafornitori.view.VistaInserisciFornitore import VistaInserisciFornitore
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        DELLA LISTA DEI FORNITORI PRESENTI NEL SISTEMA         ###
+#####################################################################
 class VistaListaFornitori(QWidget):
     def __init__(self):
         super(VistaListaFornitori, self).__init__()
@@ -70,6 +73,11 @@ class VistaListaFornitori(QWidget):
         self.resize(1500, 480)
         self.setWindowTitle("Fornitori")
 
+    ##########################################################
+    ###  METODO USATO PER CERCARE ALL'INTERNO DEL SISTEMA  ###
+    ###       UN DETERMINATO SOTTOINSIEME DI FORNITORI     ###
+    ###            FILTRATI PER RAGIONE SOCIALE            ###
+    ##########################################################
     def filter_fornitori(self):
         self.table_view.clearContents()
         self.table_view.model().removeRows(0, self.table_view.rowCount())
@@ -85,16 +93,29 @@ class VistaListaFornitori(QWidget):
         self.table_view.setColumnCount(7)
         self.show_table_view_items(filter_list)
 
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###          DEL SINGOLO FORNITORE SELEZIONATO           ###
+    ############################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_fornitore = VistaFornitore(self.controller.get_fornitore_by_index(
             self.table_view.selectedIndexes()[0].row()), self.controller, self.update_table_view)
             self.vista_fornitore.show()
 
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###         DI INSERIMENTO DI UN NUOVO FORNITORE         ###
+    ############################################################
     def show_insert_fornitore(self):
         self.vista_inserisci_fornitore = VistaInserisciFornitore(self.controller, self.update_table_view)
         self.vista_inserisci_fornitore.show()
 
+    ###################################################
+    ###   METODO USATO PER ELIMINARE UN FORNITORE   ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_fornitore(self):
         if self.table_view.selectedIndexes():
             fornitore_selezionato = self.controller.get_fornitore_by_index(
@@ -107,12 +128,20 @@ class VistaListaFornitori(QWidget):
                 self.controller.elimina_fornitore_by_id(fornitore_selezionato.codice_id)
                 self.update_table_view()
 
+    ##############################################################
+    ###  METODO USATO PER AGGIORNARE L'INTERFACCIA CHE MOSTRA  ###
+    ###       LA LISTA DEI FORNITORI IN MANIERA DINAMICA       ###
+    ##############################################################
     def update_table_view(self):
         self.controller.save_data()
         self.table_view.setRowCount(len(self.controller.model.lista_fornitori))
         self.table_view.setColumnCount(7)
         self.show_table_view_items(self.controller.get_lista_fornitori())
 
+    #################################################################
+    ###    METODO USATO PER MOSTRARE NELLA TABELLA GLI ELEMENTI   ###
+    ###            PRESENTI NELLA LISTA DEI FORNITORI             ###
+    #################################################################
     def show_table_view_items(self, item_list):
         i = 0
         for fornitore in item_list:
@@ -132,6 +161,10 @@ class VistaListaFornitori(QWidget):
             self.table_view.setItem(i, 6, item)
             i = i + 1
 
+    ####################################################
+    ###  METODO USATO PER SALVARE I DATI AGGIORNATI  ###
+    ###        ALLA CHIUSURA DELL'INTERFACCIA        ###
+    ####################################################
     def closeEvent(self, event):
         self.controller.save_data()
         event.accept()

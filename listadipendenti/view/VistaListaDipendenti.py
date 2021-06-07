@@ -5,7 +5,10 @@ from dipendente.view.VistaDipendente import VistaDipendente
 from listadipendenti.controller.ControlloreListaDipendenti import ControlloreListaDipendenti
 from listadipendenti.view.VistaInserisciDipendente import VistaInserisciDipendente
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        DELLA LISTA DEI DIPENDENTI PRESENTI NEL SISTEMA        ###
+#####################################################################
 class VistaListaDipendenti(QWidget):
     def __init__(self):
         super(VistaListaDipendenti, self).__init__()
@@ -71,6 +74,11 @@ class VistaListaDipendenti(QWidget):
         self.resize(1500, 480)
         self.setWindowTitle("Dipendenti")
 
+    ##########################################################
+    ###  METODO USATO PER CERCARE ALL'INTERNO DEL SISTEMA  ###
+    ###      UN DETERMINATO SOTTOINSIEME DI DIPENDENTI     ###
+    ###            FILTRATO PER NOME E COGNOME             ###
+    ##########################################################
     def filter_dipendenti(self):
         self.table_view.clearContents()
         self.table_view.model().removeRows(0, self.table_view.rowCount())
@@ -86,16 +94,29 @@ class VistaListaDipendenti(QWidget):
         self.table_view.setColumnCount(8)
         self.show_table_view_items(filter_list)
 
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###          DEL SINGOLO DIPENDENTE SELEZIONATO          ###
+    ############################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_dipendente = VistaDipendente(self.controller.get_dipendente_by_id(
             int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.controller.elimina_dipendente_by_id, self.update_table_view)
             self.vista_dipendente.show()
 
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###        DI INSERIMENTO DI UN NUOVO DIPENDENTE         ###
+    ############################################################
     def show_insert_dipendente(self):
         self.vista_inserisci_dipendente = VistaInserisciDipendente(self.controller, self.update_table_view)
         self.vista_inserisci_dipendente.show()
 
+    ###################################################
+    ###   METODO USATO PER ELIMINARE UN DIPENDENTE  ###
+    ###   PRESENTE NEL SISTEMA DOPO AVER CLICCATO   ###
+    ###          SUL CORRISPONDENTE BOTTONE         ###
+    ###################################################
     def delete_dipendente(self):
         if self.table_view.selectedIndexes():
             dipendente_selezionato = self.controller.get_dipendente_by_id(
@@ -108,12 +129,20 @@ class VistaListaDipendenti(QWidget):
                 self.controller.elimina_dipendente_by_id(dipendente_selezionato.codice_id)
                 self.update_table_view()
 
+    ##############################################################
+    ###  METODO USATO PER AGGIORNARE L'INTERFACCIA CHE MOSTRA  ###
+    ###       LA LISTA DEI DIPENDENTI IN MANIERA DINAMICA      ###
+    ##############################################################
     def update_table_view(self):
         self.controller.save_data()
         self.table_view.setRowCount(len(self.controller.model.lista_dipendenti))
         self.table_view.setColumnCount(8)
         self.show_table_view_items(self.controller.get_lista_dipendenti())
 
+    #################################################################
+    ###    METODO USATO PER MOSTRARE NELLA TABELLA GLI ELEMENTI   ###
+    ###            PRESENTI NELLA LISTA DEI DIPENDENTI            ###
+    #################################################################
     def show_table_view_items(self, item_list):
         i = 0
         for dipendente in item_list:
@@ -135,6 +164,10 @@ class VistaListaDipendenti(QWidget):
             self.table_view.setItem(i, 7, item)
             i = i + 1
 
+    ####################################################
+    ###  METODO USATO PER SALVARE I DATI AGGIORNATI  ###
+    ###        ALLA CHIUSURA DELL'INTERFACCIA        ###
+    ####################################################
     def closeEvent(self, event):
         self.controller.save_data()
         event.accept()

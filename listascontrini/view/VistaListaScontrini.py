@@ -1,4 +1,3 @@
-from os import times
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
     QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
 
@@ -6,6 +5,10 @@ from scontrino.view.VistaScontrino import VistaScontrino
 from listascontrini.controller.ControlloreListaScontrini import ControlloreListaScontrini
 from listascontrini.view.VistaCreaScontrino import VistaCreaScontrino
 
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       DELLA LISTA DEGLI SCONTRINI PRESENTI NEL SISTEMA        ###
+#####################################################################
 class VistaListaScontrini(QWidget):
     def __init__(self, controller_articoli, callback_magazzino):
         super(VistaListaScontrini, self).__init__()
@@ -75,7 +78,6 @@ class VistaListaScontrini(QWidget):
         self.resize(1500, 480)
         self.setWindowTitle("Scontrini")
 
-
     #############################################
     ###  FUNZIONE CHE EFFETTUA IL FILTRAGGIO  ###
     ###   DEGLI SCONTRINI IN BASE AL NUMERO   ###
@@ -95,7 +97,6 @@ class VistaListaScontrini(QWidget):
         self.table_view.setColumnCount(7)
         self.show_table_view_items(filter_list)
 
-
     ####################################################
     ###  FUNZIONE CHE MOSTRA LE INFORMAZIONI DI UNO  ###
     ###      SCONTRINO SELEZIONATO NELLA LISTA       ###
@@ -105,7 +106,6 @@ class VistaListaScontrini(QWidget):
             self.vista_fattura = VistaScontrino(self.controller.get_scontrino_by_numero(
                 int(self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text())), self.update_table_view, self.callback_magazzino, self.controller, self.controller_articoli)
             self.vista_fattura.show()
-
 
     #####################################################
     ###  FUNZIONE CHE MOSTRA L'INTERFACCIA DI SCELTA  ###
@@ -119,6 +119,10 @@ class VistaListaScontrini(QWidget):
         self.vista_crea_scontrino = VistaCreaScontrino(self.controller, self.controller_articoli, self.update_table_view, self.callback_magazzino) # Viene aperta l'interfaccia di creazione dello scontrino
         self.vista_crea_scontrino.show()
 
+    ####################################
+    ###  METODO USATO PER ELIMINARE  ###
+    ###  UNO SCONTRINO DAL SISTEMA   ###
+    ####################################
     def delete_scontrino(self):
         if self.table_view.selectedIndexes():
             scontrino_selezionato = self.controller.get_scontrino_by_numero(
@@ -133,6 +137,11 @@ class VistaListaScontrini(QWidget):
                 self.controller.elimina_scontrino_by_numero(scontrino_selezionato.num_scontrino)
                 self.update_table_view()
 
+    ###################################################
+    ###   METODO USATO PER RIASSEGNARE LE QUANTITÀ  ###
+    ###         DEGLI ARTICOLI IN MAGAZZINO         ###
+    ###  IN SEGUITO ALLA RIMOZIONE DELLO SCONTRINO  ###
+    ###################################################
     def riassegna_articoli_in_magazzino(self, scontrino):
         for articolo_da_riassegnare in scontrino.articoli:
             for articolo in self.controller_articoli.get_lista_articoli():
@@ -165,7 +174,10 @@ class VistaListaScontrini(QWidget):
             self.table_view.setItem(i, 2, item)
             i = i + 1
 
-
+    ####################################################
+    ###  METODO USATO PER SALVARE I DATI AGGIORNATI  ###
+    ###        ALLA CHIUSURA DELL'INTERFACCIA        ###
+    ####################################################
     def closeEvent(self, event):
         self.controller.save_data()
         event.accept()

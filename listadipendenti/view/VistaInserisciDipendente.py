@@ -3,7 +3,10 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGridLayout, QSpacerItem, QSiz
 
 from dipendente.model.Dipendente import Dipendente
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       DI INSERIMENTO DI UN NUOVO DIPENDENTE NEL SISTEMA       ###
+#####################################################################
 class VistaInserisciDipendente(QWidget):
     def __init__(self, controller, callback):
         super(VistaInserisciDipendente, self).__init__()
@@ -32,6 +35,10 @@ class VistaInserisciDipendente(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Inserisci Dipendente")
 
+    ########################################################
+    ###  METODO USATO PER MOSTRARE GLI ELEMENTI GRAFICI  ###
+    ###    ALL'INTERNO DELL'INTERFACCIA DI INSERIMENTO   ###
+    ########################################################
     def add_item_view(self):
         i=0
         for name in self.labels:
@@ -42,6 +49,10 @@ class VistaInserisciDipendente(QWidget):
             self.info[name] = self.current_text_edit
             i = i+1
 
+    ##########################################################
+    ###   METODO USATO PER AGGIUNGERE IL NUOVO DIPENDENTE  ###
+    ###                      NEL SISTEMA                   ###
+    ##########################################################
     def add_dipendente(self):
         nome = self.info["Nome:"].text()
         cognome = self.info["Cognome:"].text()
@@ -65,6 +76,10 @@ class VistaInserisciDipendente(QWidget):
             self.callback()
             self.close()
 
+    ##########################################################
+    ###           METODO USATO PER VERIFICARE SE           ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA A VARIABILE FLOAT  ###
+    ##########################################################
     def is_float(self, val):
         try:
             num = float(val)
@@ -72,6 +87,10 @@ class VistaInserisciDipendente(QWidget):
             return False
         return True
 
+    ##################################################
+    ###       METODO USATO PER VERIFICARE SE       ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA AD INTERO  ###
+    ##################################################
     def is_int(self, val):
         try:
             num = int(val)

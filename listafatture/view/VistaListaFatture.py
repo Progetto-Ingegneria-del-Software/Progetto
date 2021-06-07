@@ -1,13 +1,14 @@
-from fattura.model.Fattura import Fattura
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
-    QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
+    QAbstractItemView, QHeaderView, QLineEdit, QLabel
 
 from fattura.view.VistaFattura import VistaFattura
 from listafatture.controller.ControlloreListaFatture import ControlloreListaFatture
-from fattura.controller.ControlloreFattura import ControlloreFattura
 from listafatture.view.VistaScegliFattura import VistaScegliFattura
 
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###        DELLA LISTA DELLE FATTURE PRESENTI NEL SISTEMA         ###
+#####################################################################
 class VistaListaFatture(QWidget):
     def __init__(self, controller_articoli, callback_magazzino):
         super(VistaListaFatture, self).__init__()
@@ -144,7 +145,10 @@ class VistaListaFatture(QWidget):
             self.table_view.setItem(i, 4, item)
             i = i + 1
 
-
+    ####################################################
+    ###  METODO USATO PER SALVARE I DATI AGGIORNATI  ###
+    ###        ALLA CHIUSURA DELL'INTERFACCIA        ###
+    ####################################################
     def closeEvent(self, event):
         self.controller.save_data()
         event.accept()

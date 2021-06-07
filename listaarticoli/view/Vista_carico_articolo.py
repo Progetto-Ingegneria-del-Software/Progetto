@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QSpacerItem, QSizePolicy, QPushButton, \
     QMessageBox, QGridLayout
 
-#from articolo.model.Articolo import Articolo
-
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###            DI CARICO DI UN ARTICOLO DEL MAGAZZINO             ###
+#####################################################################
 class Vista_carico_articolo(QWidget):
     def __init__(self, controller, callback):
         super(Vista_carico_articolo, self).__init__()
@@ -32,6 +33,10 @@ class Vista_carico_articolo(QWidget):
         self.setFixedSize(self.size())
         self.setWindowTitle("Carico articolo")
 
+    ########################################################
+    ###  METODO USATO PER MOSTRARE GLI ELEMENTI GRAFICI  ###
+    ###      ALL'INTERNO DELL'INTERFACCIA DI CARICO      ###
+    ########################################################
     def load_item_view(self):
         i=0
         for name in self.labels:
@@ -42,6 +47,10 @@ class Vista_carico_articolo(QWidget):
             self.info[name] = self.current_text_edit
             i = i+1
 
+    ###############################################
+    ###  METODO USATO PER AGGIUNGERE IL CARICO  ###
+    ###       DELL' ARTICOLO NEL SISTEMA        ###
+    ###############################################
     def load_articolo(self):
         codice_immesso = self.info["Codice a barre:"].text()
         stock = self.info["Quantità da incrementare:"].text()
@@ -63,6 +72,10 @@ class Vista_carico_articolo(QWidget):
                                  'Per favore, inserisci un valore numerico, intero e positivo per incrementare la quantità.',
                                  QMessageBox.Ok, QMessageBox.Ok)
 
+    ##########################################################
+    ###           METODO USATO PER VERIFICARE SE           ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA A VARIABILE FLOAT  ###
+    ##########################################################
     def is_float(self, val):
         try:
             num = float(val)
@@ -70,10 +83,13 @@ class Vista_carico_articolo(QWidget):
             return False
         return True
 
+    ##################################################
+    ###       METODO USATO PER VERIFICARE SE       ###
+    ###  UNA STRINGA PUÒ ESSERE CASTATA AD INTERO  ###
+    ##################################################
     def is_int(self, val):
         try:
             num = int(val)
         except ValueError:
             return False
         return True
-

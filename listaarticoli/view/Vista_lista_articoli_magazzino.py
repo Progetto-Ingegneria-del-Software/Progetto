@@ -1,16 +1,15 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QTableWidget, QTableWidgetItem, \
-    QAbstractItemView, QHeaderView, QMessageBox, QLineEdit, QLabel
+    QAbstractItemView, QHeaderView, QLineEdit, QLabel
 
-from articolo.view.VistaArticolo import VistaArticolo
 from articolo.view.Vista_articolo_magazzino import Vista_articolo_magazzino
 
-from listaarticoli.controller.ControlloreListaArticoli import ControlloreListaArticoli
 from listaarticoli.view.Vista_carico_articolo import Vista_carico_articolo
 from listaarticoli.view.Vista_scarico_articolo import Vista_scarico_articolo
 
-
-
-
+#####################################################################
+###   QUESTA CLASSE SERVE PER MOSTRARE ALL'UTENTE L'INTERFACCIA   ###
+###       DELLA LISTA DEGLI ARTICOLI PRESENTI NEL MAGAZZINO       ###
+#####################################################################
 class Vista_lista_articoli_magazzino(QWidget):
 
 
@@ -78,6 +77,10 @@ class Vista_lista_articoli_magazzino(QWidget):
         self.resize(1500, 480)
         self.setWindowTitle("Magazzino")
 
+    ############################################################
+    ###  METODO USATO PER CERCARE ALL'INTERNO DEL MAGAZZINO  ###
+    ###               UN DETERMINATO ARTICOLO                ###
+    ############################################################
     def filter_articoli(self):
         self.table_view.clearContents()
         self.table_view.model().removeRows(0, self.table_view.rowCount())
@@ -92,33 +95,46 @@ class Vista_lista_articoli_magazzino(QWidget):
         self.table_view.setColumnCount(3)
         self.show_table_view_items(filter_list)
 
-
-
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###           DEL SINGOLO ARTICOLO SELEZIONATO           ###
+    ############################################################
     def show_selected_info(self):
         if self.table_view.selectedIndexes():
             self.vista_articolo = Vista_articolo_magazzino(self.controller.get_articolo_by_codice(
             self.table_view.item(self.table_view.selectionModel().currentIndex().row(), 0).text()), self.update_table_view)
             self.vista_articolo.show()
 
-
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###              DI CARICO DI UN ARTICOLO                ###
+    ############################################################
     def show_increment_articolo(self):
         self.vista_carico_articolo = Vista_carico_articolo(self.controller, self.update_table_view)
         self.vista_carico_articolo.show()
 
+    ############################################################
+    ###  METODO USATO PER MOSTRARE ALL'UTENTE L'INTERFACCIA  ###
+    ###              DI SCARICO DI UN ARTICOLO               ###
+    ############################################################
     def show_decrement_articolo(self):
         self.vista_scarico_articolo = Vista_scarico_articolo(self.controller, self.update_table_view)
         self.vista_scarico_articolo.show()
 
-
-
+    ##############################################################
+    ###  METODO USATO PER AGGIORNARE L'INTERFACCIA CHE MOSTRA  ###
+    ###       LA LISTA DEGLI ARTICOLI IN MANIERA DINAMICA      ###
+    ##############################################################
     def update_table_view(self):
         self.controller.save_data()
         self.table_view.setRowCount(len(self.controller.model.lista_articoli))
         self.table_view.setColumnCount(3)
         self.show_table_view_items(self.controller.get_lista_articoli())
 
-#mostra gli articoli in ordine crescente secondo l'attributo stock (quantità),
-# in modo da avere a colpo d'occhio gli articoli esauriti o non riforniti e i meno riforniti
+    #################################################################
+    ###    METODO USATO PER MOSTRARE NELLA TABELLA GLI ELEMENTI   ###
+    ###                  PRESENTI NEL MAGAZZINO                   ###
+    #################################################################
     def show_table_view_items(self, item_list):
         i = 0
 
@@ -131,6 +147,10 @@ class Vista_lista_articoli_magazzino(QWidget):
             self.table_view.setItem(i, 2, item)
             i = i + 1
 
+    ####################################################
+    ###  METODO USATO PER SALVARE I DATI AGGIORNATI  ###
+    ###        ALLA CHIUSURA DELL'INTERFACCIA        ###
+    ####################################################
     def closeEvent(self, event):
         self.controller.save_data()
         event.accept()
