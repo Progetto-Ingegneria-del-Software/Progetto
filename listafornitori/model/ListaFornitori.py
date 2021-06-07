@@ -43,17 +43,37 @@ class ListaFornitori():
                                                 fornitore_iniziale["citta"], fornitore_iniziale["indirizzo"], fornitore_iniziale["telefono"],
                                                 fornitore_iniziale["email"]))
 
+
+    ##################################
+    ###  FUNZIONE CHE AGGIUNGE UN  ###
+    ###    FORNITORE ALLA LISTA    ###
+    ##################################
     def aggiungi_fornitore(self, fornitore):
         self.lista_fornitori.append(fornitore)
 
+
+    #####################################
+    ###     FUNZIONE CHE PRENDE UN    ###
+    ###  FORNITORE TRAMITE IL CODICE  ###
+    #####################################
     def get_fornitore_by_index(self, index):
         return self.lista_fornitori[index]
 
+
+    #####################################
+    ###    FUNZIONE CHE ELIMINA UN    ###
+    ###  FORNITORE TRAMITE IL CODICE  ###
+    #####################################
     def rimuovi_fornitore_by_id(self, id):
         for fornitore in self.lista_fornitori:
             if id == fornitore.codice_id:
                 self.lista_fornitori.remove(fornitore)
 
+
+    ####################################################
+    ###    FUNZIONE CHE SALVA I DATI ALL'INTERNO     ### 
+    ###   DEL FILE "lista_fornitori_salvata.pickle"  ###
+    ####################################################
     def save_data(self):
         with open('listafornitori/data/lista_fornitori_salvata.pickle', 'wb') as handle:
             pickle.dump(self.lista_fornitori, handle, pickle.HIGHEST_PROTOCOL)

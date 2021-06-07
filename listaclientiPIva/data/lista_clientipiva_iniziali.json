@@ -1,0 +1,20 @@
+[
+  {
+    "codice_id": 1,
+    "ragione_sociale": "Apple s.p.a.",
+    "partita_iva": "04917150155",
+    "citta": "Milano",
+    "indirizzo": "Via Gialli 76",
+    "telefono": 3437588962,
+    "email": "commerciale@apple.com"
+  },
+  {
+    "codice_id": 2,
+    "ragione_sociale": "Computer s.r.l.",
+    "partita_iva": "08642151195",
+    "citta": "Macerata",
+    "indirizzo": "Via dei prati, 7",
+    "telefono": 3778922646,
+    "email": "info@computersrl.com"
+  }
+]
