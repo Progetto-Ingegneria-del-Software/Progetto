@@ -261,6 +261,11 @@ class VistaCreaFatturaScarico(QWidget):
             QMessageBox.critical(self, 'Errore',
                                  "Il campo Quantità deve contenere un numero intero!",
                                  QMessageBox.Ok, QMessageBox.Ok)
+        elif int(self.search_bar_quantita.text())<1:
+            QMessageBox.critical(self, 'Errore',
+                                 "Il campo Quantità deve contenere un numero positivo!",
+                                 QMessageBox.Ok, QMessageBox.Ok)
+            return
         else:
             if not self.carrello_acquisti:
                 self.add_articolo_in_fattura()

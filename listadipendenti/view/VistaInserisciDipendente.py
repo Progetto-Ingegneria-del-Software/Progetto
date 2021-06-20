@@ -65,16 +65,22 @@ class VistaInserisciDipendente(QWidget):
         if nome == "" or cognome == "" or cf == "" or stipendio == "":
             QMessageBox.critical(self, 'Errore di compilazione!', 'Per favore, riempi i seguenti campi: Nome, Cognome, Codice Fiscale e Stipendio.',
                                  QMessageBox.Ok, QMessageBox.Ok)
+            return
                             
         elif not self.is_float(stipendio) and not self.is_int(stipendio):
             QMessageBox.critical(self, 'Errore', 'Per favore, inserisci un valore numerico nel campo Stipendio.',
                                  QMessageBox.Ok, QMessageBox.Ok)
-
-        else:
-            self.controller.model.codice_id = self.controller.model.codice_id+1
-            self.controller.aggiungi_dipendente(Dipendente(self.controller.model.codice_id, nome, cognome, cf, email, telefono, mansione, stipendio))
-            self.callback()
-            self.close()
+            return
+        for dipendente in self.controller.get_lista_dipendenti():
+            if dipendente.cf.upper() == cf.upper():
+                QMessageBox.critical(self, 'Errore di compilazione!',
+                                     'Il codice fiscale inserito è già presente nel sistema.',
+                                     QMessageBox.Ok, QMessageBox.Ok)
+                return
+        self.controller.model.codice_id = self.controller.model.codice_id+1
+        self.controller.aggiungi_dipendente(Dipendente(self.controller.model.codice_id, nome, cognome, cf, email, telefono, mansione, stipendio))
+        self.callback()
+        self.close()
 
     ##########################################################
     ###           METODO USATO PER VERIFICARE SE           ###
