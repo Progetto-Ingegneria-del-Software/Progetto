@@ -85,11 +85,11 @@ class VistaListaFatture(QWidget):
         ## In questo ciclo vengono iterate tutte le fatture in cerca di quella con il numero cercato ##
         for fattura in self.controller.get_lista_fatture():
 
-            if self.search_bar.text() in  fattura.num_fatt  or fattura.num_fatt in self.search_bar.text():
+            if int(self.search_bar.text()) == int(fattura.num_fatt)  or int(fattura.num_fatt) == int(self.search_bar.text()):
                 filter_list.append(fattura)  # Una volta trovata la fattura viene messa in append alla lista
 
         self.table_view.setRowCount(len(filter_list))
-        self.table_view.setColumnCount(7)
+        self.table_view.setColumnCount(5)
         self.show_table_view_items(filter_list)
 
 
