@@ -90,11 +90,11 @@ class VistaListaScontrini(QWidget):
         ## In questo ciclo vengono iterati tutti gli scontrini in cerca di quello con il numero cercato ##
         for scontrino in self.controller.get_lista_scontrini():
 
-            if self.search_bar.text() in  scontrino.num_scontrino  or scontrino.num_scontrino in self.search_bar.text():
+            if int(self.search_bar.text()) ==  int(scontrino.num_scontrino)  or int(scontrino.num_scontrino) == int(self.search_bar.text()):
                 filter_list.append(scontrino)  # Una volta trovata la fattura viene messa in append alla lista
 
         self.table_view.setRowCount(len(filter_list))
-        self.table_view.setColumnCount(7)
+        self.table_view.setColumnCount(3)
         self.show_table_view_items(filter_list)
 
     ####################################################
